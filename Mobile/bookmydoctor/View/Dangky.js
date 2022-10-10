@@ -66,7 +66,7 @@ function Dangky(props){
                         setemail(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
-                    placeholder="so dien thoai cua ban"
+                    placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>
                 <View style={{
@@ -91,7 +91,7 @@ function Dangky(props){
                         setpassword(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
-                    placeholder="mat khau cua ban"
+                    placeholder=""
                     secureTextEntry={true}
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>
@@ -117,7 +117,7 @@ function Dangky(props){
                         setpassword(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
-                    placeholder="mat khau cua ban"
+                    placeholder=""
                     secureTextEntry={true}
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>

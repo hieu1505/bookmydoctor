@@ -64,7 +64,7 @@ function Login(props) {
                         setemail(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
-                    placeholder="so dien thoai cua ban"
+                    placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>
                 <View style={{
@@ -89,7 +89,7 @@ function Login(props) {
                         setpassword(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
-                    placeholder="mat khau cua ban"
+                    placeholder=""
                     secureTextEntry={true}
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>
@@ -152,7 +152,7 @@ function Login(props) {
                     padding: 8,
                     fontSize: fontSizes.h6,
                     color: "black", alignSelf: 'center',
-                }}>ggg</Text>
+                }}></Text>
                 <View style={{
                     height: 1, backgroundColor: 'black',
                     flex: 1
