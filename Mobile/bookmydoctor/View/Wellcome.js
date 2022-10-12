@@ -1,158 +1,110 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Text,
     View,
     Image,
     ImageBackground,
-    TouchableOpacity
-
-
+    TouchableOpacity,
+    TextInput
 } from "react-native";
-
 import { fontSizes } from '../constants'
 
-
+import Icon from 'react-native-vector-icons/EvilIcons'
+import Icon2 from 'react-native-vector-icons/FontAwesome'
 function Wellcome(props) {
-    return <View style={{
-        backgroundColor: "white",
-        flex: 100
-    }}>
-        <ImageBackground source={require('../icon/bk.jpg')}
-            resizeMode='cover'
-            style={{
-                flex: 100,
 
-            }}>
+
+    return <View style={{ flex: 100, backgroundColor: 'white' }}>
+        <View style={{
+            flex: 8,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingStart: 10,
+            paddingEnd: 10
+        }}>
+            <Icon name='navicon' size={50} color={'black'} />
+            <Image source={require('../img/logoApp.png')} style={{ width: 180, height: 30 }} />
+            <TouchableOpacity style={{
+                fontWeight: 'bold',
+                fontSize: 20,
+                borderColor: 'blue',
+                borderWidth: 2,
+                borderRadius: 5
+            }}><Text style={{ color: 'blue' }}>Dang Nhap</Text></TouchableOpacity>
+        </View>
+        <View style={{
+            marginHorizontal: 10,
+            marginTop: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            flex: 8,
+        }}>
+            <Icon name='search'
+                size={25} color={'black'}
+                style={{
+                    position: 'absolute',
+                    alignItems: 'center',
+                    left: 10
+                }}></Icon>
+            <TextInput autoCorrect={false}
+                style={{
+                    backgroundColor: 'black',
+                    paddingStart: 40,
+                    height: 40,
+                    flex: 1,
+                    marginEnd: 10,
+                    borderRadius: 5,
+                    opacity: 0.5,
+                }} />
+        </View>
+        <View style={{
+            flex: 72,
+            backgroundColor: 'red',
+            paddingTop: 30
+        }}>
+        </View>
+        <View style={{
+            flex: 10,
+            flexDirection: 'row'
+        }}>
             <View style={{
-                flexDirection: 'row',
-                height: 50,
-                flex: 20,
-                justifyContent: 'space-around',
-                marginTop: 15
-
-
-            }}>
-                <Image source={require('../icon/heart.png')}
-                    style={{
-                        marginStart: 10,
-                        width: 30,
-                        height: 30
-                    }}></Image>
-
-                <Text style={{
-                    color: "white"
-                }}>Theo dõi sức khỏe và Hỏi Bác sĩ miễn phí </Text>
-                <Image source={require('../icon/question.png')}
-                    style={{
-                        marginEnd: 10,
-                        width: 20,
-                        height: 20
-                    }}></Image>
-
-            </View>
-            <View style={{
-                flex: 20,
-                width: '100%',
-
+                flexDirection: 'column',
+                padding: 8,
                 justifyContent: 'center',
                 alignItems: 'center'
-            }}
-            >
-                <Text style={{ marginBottom: 7, color: 'white', fontSize: 20 }}>Chào Mừng Bạn </Text>
-                <Text style={{ marginBottom: 7, color: 'white', fontSize: 18 }}>Đến Với Booking My Doctor </Text>
-            </View>
+            }}><Icon2 name='home' size={30} color={'blue'} />
+                <Text>ca nhan</Text></View>
             <View style={{
-                flex: 40,
-                marginTop: 40
-
-
-            }}
-            >
-                <TouchableOpacity style={{
-                    borderColor: 'white',
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    height: 40,
-                    marginHorizontal: 65,
-                    marginVertical: 5,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-
-                }}>
-                    <Text style={{
-                        color: 'white'
-                    }}>chuyen khoa</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    borderColor: 'white',
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    height: 40,
-                    marginHorizontal: 65,
-                    marginVertical: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-
-                }}>
-                    <Text style={{
-                        color: 'white'
-                    }}>co so y te</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    borderColor: 'white',
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    height: 40,
-                    marginHorizontal: 65,
-                    marginVertical: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-
-                }}>
-                    <Text style={{
-                        color: 'white'
-                    }}>bac si</Text>
-                </TouchableOpacity>
-            </View>
-
+                flexDirection: 'column',
+                padding: 8,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}><Icon2 name='bell' size={30} color={'blue'} />
+                <Text>thong bao</Text></View>
+       
+        <View style={{
+                flexDirection: 'column',
+                padding: 8,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}><Icon name='calendar' size={30} color={'blue'} />
+                <Text>lich hen</Text></View>
             <View style={{
-                flex: 20,
-                
-
-            }}
-            >
-                <TouchableOpacity style={{
-                    borderColor: 'white',
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    height: 40,
-                    marginHorizontal: 65,
-                    marginVertical: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-
-                }}>
-                    <Text style={{
-                        color: 'white'
-                    }}>Dang Nhap</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    justifyContent:'center',
-                    alignItems:'center',
-                    padding:10
-                }}>
-                <Text style={{
-                    marginBottom: 7,
-                    color: "white",
-                    fontSize: 18,
-                    textDecorationLine:'underline', 
-                }}>Dang ky</Text>
-                </TouchableOpacity>
-                
-            </View>
-
-        </ImageBackground>
-
+                flexDirection: 'column',
+                padding: 8,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}><Icon2 name='comments' size={30} color={'blue'} />
+                <Text>cong dong</Text></View>
+            <View style={{
+                flexDirection: 'column',
+                padding: 8,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}><Icon2 name='user' size={30} color={'blue'} />
+                <Text>ca nhan</Text></View>
+        </View>
     </View>
 }
 export default Wellcome

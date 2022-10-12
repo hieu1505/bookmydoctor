@@ -1,14 +1,11 @@
 /**
  * @format
  */
-
  import {AppRegistry} from 'react-native';
-
- import {Login,Wellcome,Dangky,DoctorList,Settings} from './View'
- import {name as appName} from './app.json';
- 
- 
- AppRegistry.registerComponent(appName, ()=>() =><DoctorList/>)
+ import {Login,Dangky,Wellcome,User} from './View'
+ import {name as appName} from './app.json'; 
+ import Clinicitem from './component/Clinicitem'
+ AppRegistry.registerComponent(appName, ()=>() =><User/>)
 
 
  
