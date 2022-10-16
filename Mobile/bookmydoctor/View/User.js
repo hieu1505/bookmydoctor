@@ -31,12 +31,21 @@ function User(props) {
     function onPressRadioButton(radioArray) {
         setgender(radioArray);
     }
+    const [keyboardIsShow, setkeyboardIsShow] = useState(false)
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', () => {
+            setkeyboardIsShow(true)
+        })
+        Keyboard.addListener('keyboardDidHide', () => {
+            setkeyboardIsShow(false)
+        })
+    })
     return <View style={{
         flex: 100,
         backgroundColor: 'white'
     }}>
         <View style={{
-            flex: 20,
+            flex: 30,
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column'
@@ -52,7 +61,7 @@ function User(props) {
             }}>nguyen van a</Text>
         </View>
         <View style={{
-            flex: 60,
+            flex: 50,
             paddingTop: 70,
 
         }}>
@@ -184,12 +193,36 @@ function User(props) {
                 />
             </View>
         </View>
-        <View style={{
+        {keyboardIsShow == false && <View style={{
             flex: 20,
-            backgroundColor: 'red'
+            flexDirection:'row',
+            justifyContent:'space-around'
         }}>
-
-        </View>
+            <TouchableOpacity
+            style={{
+                backgroundColor: 'blue',
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                color: 'blue',
+                width: '30%',
+                borderRadius: 14,
+                opacity: 0.5,
+            }}><Text style={{padding: 10,
+                fontSize: fontSizes.h6}}>Luu thay doi</Text></TouchableOpacity>
+            <TouchableOpacity
+            style={{
+                backgroundColor: 'red',
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                color: 'blue',
+                width: '40%',
+                borderRadius: 14,
+                opacity: 0.5,
+            }}><Text style={{padding: 10,
+                fontSize: fontSizes.h6}}>thay doi mat khau</Text></TouchableOpacity>
+        </View>}
 
     </View>
 

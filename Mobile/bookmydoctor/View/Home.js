@@ -11,7 +11,7 @@ import { fontSizes } from '../constants'
 
 import Icon from 'react-native-vector-icons/EvilIcons'
 import Icon2 from 'react-native-vector-icons/FontAwesome'
-function Wellcome({navigation},props) {
+function Home({navigation},props) {
 
 
     return <View style={{ flex: 100, backgroundColor: 'white' }}>
@@ -25,15 +25,7 @@ function Wellcome({navigation},props) {
         }}>
             <Icon name='navicon' size={50} color={'black'} />
             <Image source={require('../img/logoApp.png')} style={{ width: 180, height: 30 }} />
-            <TouchableOpacity 
-            onPress={()=>navigation.navigate("Login")}
-            style={{
-                fontWeight: 'bold',
-                fontSize: 20,
-                borderColor: 'blue',
-                borderWidth: 2,
-                borderRadius: 5
-            }}><Text style={{ color: 'blue' }}>Dang Nhap</Text></TouchableOpacity>
+            
         </View>
         <View style={{
             marginHorizontal: 10,
@@ -68,4 +60,4 @@ function Wellcome({navigation},props) {
         </View>
     </View>
 }
-export default Wellcome
+export default Home
