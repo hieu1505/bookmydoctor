@@ -8,7 +8,7 @@ import {
     TextInput
 } from "react-native";
 import { fontSizes } from '../constants'
-
+import DoctorList from "./DoctorList";
 import Icon from 'react-native-vector-icons/EvilIcons'
 import Icon2 from 'react-native-vector-icons/FontAwesome'
 function Home({navigation},props) {
@@ -27,7 +27,7 @@ function Home({navigation},props) {
             <Image source={require('../img/logoApp.png')} style={{ width: 180, height: 30 }} />
             
         </View>
-        <View style={{
+        {/* <View style={{
             marginHorizontal: 10,
             marginTop: 10,
             flexDirection: 'row',
@@ -51,12 +51,11 @@ function Home({navigation},props) {
                     borderRadius: 5,
                     opacity: 0.5,
                 }} />
-        </View>
+        </View> */}
         <View style={{
-            flex: 72,
-            backgroundColor: 'red',
-            paddingTop: 30
+            flex: 80,
         }}>
+            <DoctorList></DoctorList>
         </View>
     </View>
 }

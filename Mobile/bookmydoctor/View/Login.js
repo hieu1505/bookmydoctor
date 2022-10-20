@@ -7,9 +7,13 @@ import {
     TouchableOpacity,
     Keyboard
 } from 'react-native'
+import axios from "axios";
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
-function Login({navigation}, props) {
+import user_login from '../Api/UserApi'
+import { AsyncStorage } from "react-native";
+function Login({navigation }, props) {
+
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     const [erroremail, seterroremail] = useState('')
     const [errorPassword, seterrorPassword] = useState('')
@@ -23,6 +27,8 @@ function Login({navigation}, props) {
             setkeyboardIsShow(false)
         })
     })
+   
+   
     return <View style={{
         flex: 100,
         backgroundColor: 'white',
@@ -59,7 +65,6 @@ function Login({navigation}, props) {
                 }}>Email:</Text>
                 <TextInput
                     onChangeText={(text) => {
-
                         seterroremail(ValidateEmail(text) == true ? '' : 'Email not in correct format')
                         setemail(text)
                     }}
@@ -77,8 +82,7 @@ function Login({navigation}, props) {
             </View>
             <View style={{
                 marginHorizontal: 15
-            }}
-            >
+            }}>
                 <Text style={{
                     color: "black",
                     fontSize: fontSizes.h5
@@ -100,25 +104,31 @@ function Login({navigation}, props) {
                     marginBottom: 10
                 }} />
                 <Text style={{ color: 'red', fontSize: fontSizes.h6 }}>{errorPassword}</Text>
-
-                <TouchableOpacity style={{
-                
-            }}
-                onPress={() => { navigation.navigate('Dangky') }}>
-                <Text style={{
-                    fontSize: 10,
-                    color: "red", alignSelf: 'center',
-                }}> Quên mật khẩu?  </Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                    onPress={() => { navigation.navigate('Forgotpassword') }}>
+                    <Text style={{
+                        fontSize: 10,
+                        color: "red", alignSelf: 'center',
+                    }}> Quên mật khẩu?  </Text>
+                </TouchableOpacity>
             </View>
-            
         </View>
         {keyboardIsShow == false && <View style={{
             flex: 20, marginTop: 120
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('UITab')
+                    const data = {
+                        email: email,
+                        password: password
+                    }
+                    if (isValidatePassword(password) && ValidateEmail(email)) {
+                    //   T= CallLoginPost(data)
+                            navigation.navigate('UITab')
+                    }
+                    else {
+                        alert('nhapdung tai khoan mat khau')
+                    }
                 }}
                 style={{
                     backgroundColor: 'black',

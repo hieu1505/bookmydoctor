@@ -1,10 +1,11 @@
 import React from "react";
-import {Login,Dangky,User,Wellcome,Home}from "../View"
+import {Login,Dangky,User,Wellcome,Home,ChangePassword}from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AppTab from "./App";
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 import Icon2 from 'react-native-vector-icons/FontAwesome'
 
 const screenOption =({route})=>({
@@ -36,13 +37,18 @@ const screenOption =({route})=>({
     />
   }
 })
+function UIuser(){
+  
+
+
+}
 function UITab(props){
 return  (
       <Tab.Navigator  screenOptions={screenOption} > 
         <Tab.Screen name="Trang Chủ" component={Home} />
         <Tab.Screen name="Thông Báo" component={User} />
-        <Tab.Screen name="Lịch Hẹn" component={Login} />
-        <Tab.Screen name="Cộng Đồng" component={Login} />
+        <Tab.Screen name="Lịch Hẹn" component={User} />
+       <Tab.Screen name="Cộng Đồng" component={User} />
         <Tab.Screen name="Cá Nhân" component={User} />
       </Tab.Navigator>
 )

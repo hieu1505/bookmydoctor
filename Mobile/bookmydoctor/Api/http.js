@@ -2,7 +2,7 @@ import axios from 'axios'
 class Http {
     constructor() {
         this.instance = axios.create({
-            baseURL: 'https://api.ezfrontend.com/',
+            baseURL: 'http://localhost:3001/api/',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -16,7 +16,8 @@ class Http {
                 return result
             },
             error => {
-                return Promise.reject(error)
+
+                return Promise.reject(error.response.data)
             }
         )
         this.instance.interceptors.request.use(

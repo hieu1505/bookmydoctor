@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
-function ChangePassword(props) {
+function ChangePassword({navigation },props) {
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () => {
@@ -103,6 +103,9 @@ function ChangePassword(props) {
             }}><Text style={{padding: 10,
                 fontSize: fontSizes.h6}}>Luu thay doi</Text></TouchableOpacity>
             <TouchableOpacity
+            onPress={()=>{
+                navigation.goBack()
+            }}
             style={{
                 backgroundColor: 'red',
                 justifyContent: 'center',

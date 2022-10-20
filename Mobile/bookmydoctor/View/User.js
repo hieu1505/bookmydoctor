@@ -12,7 +12,8 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 import DatePicker from 'react-native-date-picker'
-function User(props) {
+function User({route,navigation},props) {
+    
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [gender, setgender] = useState([{
@@ -211,6 +212,7 @@ function User(props) {
             }}><Text style={{padding: 10,
                 fontSize: fontSizes.h6}}>Luu thay doi</Text></TouchableOpacity>
             <TouchableOpacity
+            onPress={()=>{navigation.navigate('ChangePassword')}}
             style={{
                 backgroundColor: 'red',
                 justifyContent: 'center',
