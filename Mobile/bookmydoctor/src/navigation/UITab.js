@@ -3,10 +3,13 @@ import {Login,Dangky,User,Wellcome,Home,ChangePassword}from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import AppTab from "./App";
+import Icon2 from 'react-native-vector-icons/FontAwesome'
+
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-import Icon2 from 'react-native-vector-icons/FontAwesome'
 
 const screenOption =({route})=>({
  
@@ -37,10 +40,7 @@ const screenOption =({route})=>({
     />
   }
 })
-function UIuser(){
-  
-
-
+function UI(){
 }
 function UITab(props){
 return  (

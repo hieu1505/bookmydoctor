@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
-import user_login from '../Api/UserApi'
+// import user_login from '../src/Api/UserApi'
 import { AsyncStorage } from "react-native";
 function Login({navigation }, props) {
 
