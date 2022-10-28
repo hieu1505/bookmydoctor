@@ -27,7 +27,7 @@ function Doctoritem(props){
             height: 100,
             width: 100,
         }}
-            source={image} />
+            source={{uri:image}} />
         <View style={{
             padding:10,
             flex: 1,
@@ -46,7 +46,7 @@ function Doctoritem(props){
                 <Text style={{
                     color: 'black',
                     fontSize: fontSizes.h6,
-                }}>phong kham: 
+                }}>
                 </Text>
                 <Text style={{
                     color: 'black',

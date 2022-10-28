@@ -8,25 +8,68 @@ import {
     Keyboard,
 
 } from 'react-native';
+import userApi from "../Api/UserApi";
 import RadioGroup from 'react-native-radio-buttons-group';
 import { fontSizes, images } from "../constants";
-import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 import DatePicker from 'react-native-date-picker'
-function User({route,navigation},props) {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+function User({ route, navigation }, props) {
+    const [user, setuser] = useState([])
     
+    
+    const [token,settoken]=useState('')
+    useEffect(() => {
+        async function usersd() {
+            await getuser();
+        }
+        usersd()
+        return () => { }
+    }, [])
+    const getuser = async () => {
+        try {
+            d = await AsyncStorage.getItem('user')
+            accesstoken=await AsyncStorage.getItem('access_token')
+            if(accesstoken==null){
+                navigation.navigate('Login')
+            }
+            settoken(accesstoken)
+            k = JSON.parse(d)
+            setuser(k)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const APIupdateuser = async (id, data, datas,token) => {
+        try {
+            const mess = await userApi.updateInfoUser(id, data,token)
+            console.log(mess)
+            AsyncStorage.setItem('user', JSON.stringify(datas))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+
+    const [firstname, setfirstname] = useState(user.firsname)
+    const [lastname, setlastname] = useState( user.lastname)
+    const [phones, setphone] = useState(user.phoneNumber)
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
+    const [adress, setadress] = useState(user.address)
+    const [g, setg] = useState('')
+    // setDate(user.birthday)
     const [gender, setgender] = useState([{
         id: '1',
         label: 'Nam',
         value: 'Nam',
-        onPress: () => console.log('nam')
+        onPress: () => setg('1')
 
     }, {
         id: '2',
         label: 'Nữ',
         value: 'Nữ',
-        onPress: () => console.log('nu')
+        onPress: () => setg('2')
     }
     ])
     function onPressRadioButton(radioArray) {
@@ -51,15 +94,15 @@ function User({route,navigation},props) {
             alignItems: 'center',
             flexDirection: 'column'
         }}><Image
-            source={require('../img/imgIntroduce1.png')} style={{
+            source={{ uri: k.image }} style={{
                 width: 120,
                 height: 120,
                 alignItems: 'center', borderRadius: 50
             }}>
             </Image>
             <Text style={{
-                fontSize: 18
-            }}>nguyen van a</Text>
+                fontSize: 20
+            }}>{user.firsname + " " + k.lastname}</Text>
         </View>
         <View style={{
             flex: 50,
@@ -74,6 +117,8 @@ function User({route,navigation},props) {
                 <View style={{
                 }}>
                     <TextInput
+                        onChangeText={(text) => { setfirstname(text) }}
+                        value={firstname}
                         style={{
                             fontSize: fontSizes.h6,
                             borderColor: 'black',
@@ -84,7 +129,7 @@ function User({route,navigation},props) {
                         placeholder=""
                         placeholderTextColor={'rgba(0,0,0,0.6'}
                     ></TextInput>
-                   
+
                 </View>
                 <View style={{
                     flexDirection: "row",
@@ -94,6 +139,8 @@ function User({route,navigation},props) {
 
                     }}>
                         <TextInput
+                            onChangeText={(text) => { setlastname(text) }}
+                            value={lastname}
                             style={{
                                 fontSize: fontSizes.h6,
                                 borderColor: 'black',
@@ -105,7 +152,7 @@ function User({route,navigation},props) {
                             placeholder=""
                             placeholderTextColor={'rgba(0,0,0,0.6'}
                         ></TextInput>
-                       
+
                     </View>
                 </View>
             </View>
@@ -114,6 +161,8 @@ function User({route,navigation},props) {
                 paddingTop: 20
             }}>
                 <TextInput
+                    onChangeText={(text) => { setphone(text) }}
+                    value={phones}
                     style={{
                         fontSize: fontSizes.h6,
                         borderColor: 'black',
@@ -130,6 +179,8 @@ function User({route,navigation},props) {
                 paddingTop: 20
             }}>
                 <TextInput
+                    onChangeText={(text) => { setadress(text) }}
+                    value={adress}
                     style={{
                         fontSize: fontSizes.h6,
                         borderColor: 'black',
@@ -177,6 +228,7 @@ function User({route,navigation},props) {
                     }}
                     placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
+                // 
                 ><Text>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Text></TouchableOpacity>
                 <Text></Text>
                 <DatePicker
@@ -196,34 +248,57 @@ function User({route,navigation},props) {
         </View>
         {keyboardIsShow == false && <View style={{
             flex: 20,
-            flexDirection:'row',
-            justifyContent:'space-around'
+            flexDirection: 'row',
+            justifyContent: 'space-around'
         }}>
             <TouchableOpacity
-            style={{
-                backgroundColor: 'blue',
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'center',
-                color: 'blue',
-                width: '30%',
-                borderRadius: 14,
-                opacity: 0.5,
-            }}><Text style={{padding: 10,
-                fontSize: fontSizes.h6}}>Luu thay doi</Text></TouchableOpacity>
+                onPress={() => {
+                    data = {
+                        email: k.email,
+                        phoneNumber: phones,
+                        firsname: firstname,
+                        lastname: lastname,
+                        gender: g,
+                        birthday: date,
+                        address: adress
+                    }
+                    k.phoneNumber = phones
+                    k.firsname = firstname
+                    k.lastname = lastname
+                    k.gender = gender
+                    k.birthday = date
+                    k.address = adress
+                    
+                    APIupdateuser(k.id, data, k,token)
+                }}
+                style={{
+                    backgroundColor: 'blue',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    color: 'blue',
+                    width: '30%',
+                    borderRadius: 14,
+                    opacity: 0.5,
+                }}><Text style={{
+                    padding: 10,
+                    fontSize: fontSizes.h6
+                }}>Luu thay doi</Text></TouchableOpacity>
             <TouchableOpacity
-            onPress={()=>{navigation.navigate('ChangePassword')}}
-            style={{
-                backgroundColor: 'red',
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'center',
-                color: 'blue',
-                width: '40%',
-                borderRadius: 14,
-                opacity: 0.5,
-            }}><Text style={{padding: 10,
-                fontSize: fontSizes.h6}}>thay doi mat khau</Text></TouchableOpacity>
+                onPress={() => { navigation.navigate('ChangePassword') }}
+                style={{
+                    backgroundColor: 'red',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    color: 'blue',
+                    width: '40%',
+                    borderRadius: 14,
+                    opacity: 0.5,
+                }}><Text style={{
+                    padding: 10,
+                    fontSize: fontSizes.h6
+                }}>thay doi mat khau</Text></TouchableOpacity>
         </View>}
 
     </View>

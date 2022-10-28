@@ -1,11 +1,14 @@
-import http from 'utils/http'
+import http from "./http"
 
 const authApi = {
     login(data) {
         return http.post('/auth/login', data)
     },
-    signup(data, config) {
-        return http.post('/auth/singup', data, config)
+    signup(data) {
+        return http.post('/auth/singup', data)
+    },
+    resetPassword(data) {
+        return http.post('/users/resetpw', data)
     }
 }
 export default authApi

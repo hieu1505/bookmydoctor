@@ -46,9 +46,9 @@ function UITab(props){
 return  (
       <Tab.Navigator  screenOptions={screenOption} > 
         <Tab.Screen name="Trang Chủ" component={Home} />
-        <Tab.Screen name="Thông Báo" component={User} />
-        <Tab.Screen name="Lịch Hẹn" component={User} />
-       <Tab.Screen name="Cộng Đồng" component={User} />
+        <Tab.Screen name="Thông Báo" component={Home} />
+        <Tab.Screen name="Lịch Hẹn" component={Home} />
+       <Tab.Screen name="Cộng Đồng" component={Home} />
         <Tab.Screen name="Cá Nhân" component={User} />
       </Tab.Navigator>
 )

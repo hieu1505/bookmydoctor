@@ -10,34 +10,49 @@ import {
 } from 'react-native';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { fontSizes, images } from "../constants";
-import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
+import { isValidatePassword, ValidateEmail, isValidatetelephone } from '../utilies/Validations'
 import DatePicker from 'react-native-date-picker'
-
-
-
-function Dangky(props) {
+import authApi from "../Api/authApi";
+function Dangky({navigation },props) {
+    const [firstname, setfirstname] = useState('')
+    const [passwordconfirm, setpasswordconfirm] = useState('')
+    const [lastname, setlastname] = useState('')
     const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
-    const [erroremail, seterroremail] = useState('')
-    const [errorPassword, seterrorPassword] = useState('')
+    const [phones, setphone] = useState('')
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
+    const [erroremail, seterroremail] = useState('')
+    const [errphone, seterrphone] = useState('')
+    const [errorPassword, seterrorPassword] = useState('')
+    const[g,setg]=useState('')
     const [gender, setgender] = useState([{
-        id: '1',
+        id: '0',
         label: 'Nam',
         value: 'Nam',
-        onPress:()=>console.log('nam')
-    
+        onPress: () => setg('0')
+
     }, {
-        id: '2',
+        id: '1',
         label: 'Nữ',
         value: 'Nữ',
-        onPress:()=>console.log('nu')
-    }
+        onPress: () => setg('1')}
     ])
+    const apiSingup= async data=>{
+        try { 
+            const mess=await authApi.signup(data)
+            console.log(mess)
+            // navigation.navigate('Login')
+            
+            
+        } catch (error) {
+            alert(error.message)
+        }
+    }
     function onPressRadioButton(radioArray) {
         setgender(radioArray);
+        // console.log(gender.id)
     }
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () => {
@@ -77,7 +92,6 @@ function Dangky(props) {
                 marginHorizontal: 10,
                 flexDirection: "row",
                 justifyContent: 'space-between'
-
             }}>
                 <View style={{
                     flexDirection: 'column',
@@ -87,6 +101,7 @@ function Dangky(props) {
                     fontSize: fontSizes.h6
                 }}>Họ</Text>
                     <TextInput
+                        onChangeText={(text) => { setfirstname(text) }}
                         style={{
                             fontSize: fontSizes.h6,
                             borderColor: 'black',
@@ -112,6 +127,9 @@ function Dangky(props) {
                         fontSize: fontSizes.h6
                     }}>Tên</Text>
                         <TextInput
+                            onChangeText={(text) => {
+                                setlastname(text)
+                            }}
                             style={{
                                 fontSize: fontSizes.h6,
                                 borderColor: 'black',
@@ -159,6 +177,9 @@ function Dangky(props) {
                     fontSize: fontSizes.h6
                 }}>Số điện thoại</Text>
                 <TextInput
+                   onChangeText={(texts) => {
+                    setphone(texts)
+                }}
                     style={{
                         fontSize: fontSizes.h6,
                         borderColor: 'black',
@@ -169,63 +190,65 @@ function Dangky(props) {
                     placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>
-                <Text></Text>
+                <Text style={{ color: 'red', fontSize: fontSizes.h6 }}></Text>
             </View>
             <View style={{
                 marginHorizontal: 10,
                 flexDirection: "row",
                 justifyContent: 'space-between'
             }}>
-            <View style={{
-                marginHorizontal: 10,
-                flexDirection: 'column'
-            }}>
-                <Text style={{
-                    color: "black",
-                    fontSize: fontSizes.h6
-                }}>Giới tính</Text>
-                <RadioGroup radioButtons={gender} onPress={onPressRadioButton} containerStyle={{justifyContent:'flex-start',
-                flexDirection:'row'}}
-                />
                 <View style={{
-
-                }}></View>
-            </View>
-            <View style={{
-                marginHorizontal: 10
-            }}>
-                <Text style={{
-                    color: "black",
-                    fontSize: fontSizes.h6
-                }}>Ngày sinh </Text>
-                <TouchableOpacity
-                onPress={() => setOpen(true)}
-                    style={{
-                        fontSize: fontSizes.h6,
-                        borderColor: 'black',
-                        borderWidth: 1,
-                        borderRadius: 3,
-                        padding: 5,
-                        height:40,width: 170
+                    marginHorizontal: 10,
+                    flexDirection: 'column'
+                }}>
+                    <Text style={{
+                        color: "black",
+                        fontSize: fontSizes.h6
+                    }}>Giới tính</Text>
+                    <RadioGroup radioButtons={gender} onPress={onPressRadioButton} containerStyle={{
+                        justifyContent: 'flex-start',
+                        flexDirection: 'row'
                     }}
-                    placeholder=""
-                    placeholderTextColor={'rgba(0,0,0,0.6'}
-                ><Text>{date.getDate()}/{date.getMonth()+1}/{date.getFullYear()}</Text></TouchableOpacity>
-                <Text></Text>
-                <DatePicker
-        modal
-        open={open}
-        date={date}
-        mode='date'
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
-            </View></View>
+                    />
+                    <View style={{
+
+                    }}></View>
+                </View>
+                <View style={{
+                    marginHorizontal: 10
+                }}>
+                    <Text style={{
+                        color: "black",
+                        fontSize: fontSizes.h6
+                    }}>Ngày sinh </Text>
+                    <TouchableOpacity
+                        onPress={() => setOpen(true)}
+                        style={{
+                            fontSize: fontSizes.h6,
+                            borderColor: 'black',
+                            borderWidth: 1,
+                            borderRadius: 3,
+                            padding: 5,
+                            height: 40, width: 170
+                        }}
+                        placeholder=""
+                        placeholderTextColor={'rgba(0,0,0,0.6'}
+                    ><Text>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Text></TouchableOpacity>
+                    <Text></Text>
+                    <DatePicker
+                        modal
+                        open={open}
+                        date={date}
+                        mode='date'
+                        onConfirm={(date) => {
+                            setOpen(false)
+                            setDate(date)
+                        }}
+                        onCancel={() => {
+                            setOpen(false)
+                        }}
+                    />
+                </View></View>
             <View style={{
                 marginHorizontal: 10
             }}>
@@ -259,8 +282,7 @@ function Dangky(props) {
                 }}>Nhập lại mật khẩu</Text>
                 <TextInput
                     onChangeText={(text) => {
-                        seterrorPassword(isValidatePassword(text) == true ? '' : 'Password must be at least 3 characters')
-                        setpassword(text)
+                        setpasswordconfirm(text)
                     }}
                     style={{
                         fontSize: fontSizes.h6,
@@ -281,7 +303,35 @@ function Dangky(props) {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    alert(password)
+                    // date.getDate()+'/'+date.getMonth() + 1+'/'+date.getFullYear(),
+
+                    alert(phones)
+                    if (isValidatePassword(password) && ValidateEmail(email) && password == passwordconfirm && lastname != '' && firstname != '') {
+                    //    const data=new FormData()
+                    //     data.append("phoneNumber", phones)
+                    //     data.append("email",email,)
+                    //     data.append("firsname", firstname)
+                    //     data.append("lastname", lastname)
+                    //     data.append("gender", g)
+                    //     data.append("birthday", "12/11/2000")
+                    //     data.append(" password", password)
+                    //     data.append("address", "macdinh")
+                        data = {
+                            phoneNumber: phones,
+                            email: email,
+                            firsname: firstname,
+                            lastname: lastname,
+                            gender: g,
+                            birthday: date,
+                            password: password,
+                            address: "macdinh"
+                        }
+                        apiSingup(data)
+                        console.log(data)
+                       
+                    } else {
+                         alert('nhap dung form')
+                    }
                 }}
                 style={{
                     backgroundColor: 'black',
@@ -289,9 +339,9 @@ function Dangky(props) {
                     alignItems: 'center',
                     width: '50%',
                     alignSelf: 'center',
-                    color:'blue',
+                    color: 'blue',
                     borderRadius: 14,
-                    opacity:0.5
+                    opacity: 0.5
                 }}>
                 <Text style={{
                     padding: 10,

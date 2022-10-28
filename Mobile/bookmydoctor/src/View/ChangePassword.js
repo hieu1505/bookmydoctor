@@ -6,10 +6,23 @@ import {
     TextInput,
     TouchableOpacity,
     Keyboard
-} from 'react-native'
+} from 'react-native';
+import userApi from "../Api/UserApi";
 import { fontSizes, images } from "../constants";
-import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 function ChangePassword({navigation },props) {
+    const [pass , setpass]=useState('')
+    const [newpass,setnewpass]=useState('')
+    const apichangepass=async (data)=>{
+        try {
+            d = await AsyncStorage.getItem('user')
+            k = JSON.parse(d)
+            const mess=await userApi.changePassword(k.id,data)
+            alert(mess)
+            
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () => {
@@ -48,6 +61,7 @@ function ChangePassword({navigation },props) {
                 }}>Mat khau cu:</Text>
                 <TextInput
                     onChangeText={(text) => {
+                        setpass(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
                     placeholder=""
@@ -71,6 +85,8 @@ function ChangePassword({navigation },props) {
                 }}>mat khau moi:</Text>
                 <TextInput
                     onChangeText={(text) => {
+                        setnewpass(text)
+
                     }}
                     style={{ fontSize: fontSizes.h5 }}
                     placeholder=""
@@ -91,6 +107,14 @@ function ChangePassword({navigation },props) {
             justifyContent:'space-around'
         }}>
             <TouchableOpacity
+            onPress={()=>{
+                data={
+                    password:pass,
+                    newpassword:newpass
+                }
+                apichangepass(data)
+                
+            }}
             style={{
                 backgroundColor: 'blue',
                 justifyContent: 'center',

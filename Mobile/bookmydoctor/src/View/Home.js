@@ -22,8 +22,10 @@ function Home({navigation},props) {
             justifyContent: 'space-between',
             paddingStart: 10,
             paddingEnd: 10
-        }}>
-            <Icon name='navicon' size={50} color={'black'} />
+        }}><TouchableOpacity onPress={()=>{
+            navigation.navigate('Tabbar')
+        }}><Icon name='navicon' size={50} color={'black'} /></TouchableOpacity>
+            
             <Image source={require('../img/logoApp.png')} style={{ width: 180, height: 30 }} />
             
         </View>

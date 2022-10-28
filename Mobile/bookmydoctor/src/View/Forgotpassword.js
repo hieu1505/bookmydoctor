@@ -10,7 +10,19 @@ import {
 import axios from "axios";
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
+import authApi from "../Api/authApi";
 function Forgotpassword(props) {
+    const [email,setemail]=useState('')
+    const [erroremail, seterroremail] = useState('')
+    const apiResetpass=async data=>{
+        try {const mess=await authApi.resetPassword(data)
+            alert(mess.message)
+
+            
+        } catch (error) {
+            alert(error.message)
+        }
+    }
     return <View style={{
         flex: 100,
         backgroundColor: 'white',
@@ -38,12 +50,14 @@ function Forgotpassword(props) {
         }}>Email:</Text>
                 <TextInput
                     onChangeText={(text) => {
+                        seterroremail(ValidateEmail(text)==true?'': 'Email not in correct format')
+                        setemail(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
                     placeholder=""
-                    secureTextEntry={true}
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 ></TextInput>
+                <Text style={{ color: 'red', fontSize: fontSizes.h6 }}>{erroremail}</Text>
                 <View style={{
                     height: 1, backgroundColor: 'black',
                     width: '100%', marginHorizontal: 10,
@@ -57,6 +71,11 @@ function Forgotpassword(props) {
         }}>
             <TouchableOpacity
                 onPress={() => {
+                    const data={
+                        email:email
+                    }
+                    apiResetpass(data)
+                    // alert('xac thuc')
                       }
                 }
                 style={{

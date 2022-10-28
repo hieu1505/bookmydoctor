@@ -11,63 +11,54 @@ import {
 import { fontSizes, } from "../constants";
 import Doctoritem from "./Doctoritem";
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import doctorApi from "../Api/doctorapi";
+import specialistApi from "../Api/specialistApi";
 function DoctorList(props) {
-    const [chuyenkhoa , setchuyenkhoa] = useState([
-        {
-            name:'tim mach',
-            img:require('../img/lao-khoa.png')
-        },
-        {
-            name:'ham mat',
-            img:require('../img/lao-khoa.png')
-        },
-        {
-            name:'noi tiet',
-            img:require('../img/lao-khoa.png')
-        },
-        {
-            name:'dinh duong',
-            img:require('../img/lao-khoa.png')
-        },
-        {
-            name:'mat',
-            img:require('../img/lao-khoa.png')
-        }
-    ])
+    const [chuyenkhoa , setchuyenkhoa] = useState([])
 
-    const [doctors, setdoctors] = useState([
-        {
-            name: 'hieu', clinic: 'phong kham bach khoa',
-            specialty: "ngoai",
-            image: require('../img/bannerSearchImg.png')
-        },
-        {
-            name: 'hieu', clinic: 'phong kham bach khoa',
-            specialty: "ngoai",
-            image: require('../img/bannerSearchImg.png')
-        },
-        {
-            name: 'nga', clinic: 'phong kham bach khoa',
-            specialty: "ngoai",
-            image: require('../img/bannerSearchImg.png')
-        },
-        {
-            name: 'toan', clinic: 'phong kham bach khoa',
-            specialty: "ngoai",
-            image: require('../img/bannerSearchImg.png')
-        },
-        {
-            name: 'hai', clinic: 'phong kham ung thu',
-            specialty: "ngoai",
-            image: require('../img/bannerSearchImg.png')
-        },
-        {
-            name: 'hieu', clinic: 'phong kham bach khoa',
-            specialty: "ngoai",
-            image: require('../img/bannerSearchImg.png')
-        }
-    ])
+    const [doctors, setdoctors] = useState([])
+    
+     
+     useEffect(() => {
+        (async () => {
+            try {
+                const data = await specialistApi.getAllSpecialist()
+                Specia=data.message
+                s=Specia.map((course)=>{
+                    let k={}
+                    k.id=course.id
+                    k.name=course.name
+                    k.img=course.image
+                    return k
+                })
+                setchuyenkhoa(s)
+            } catch (err) {
+                alert(err)
+            }
+        })()
+    }, [])
+     useEffect(() => {
+        (async () => {
+            try {
+                const data = await doctorApi.getAllDoctor()
+                doctor=data.doctor
+                l=doctor.map((course)=>{
+                    let s={}
+                    s.id=course.id
+                    s.clinic=course.clinic.name
+                    s.name=course.user.firsname+course.user.lastname
+                    s.image=course.user.image
+                    s.specialty=course.specialty.name
+                    return s
+                })
+                setdoctors(l)
+               
+            } catch (err) {
+                alert(err)
+            }
+        })()
+    }, [])
+    
     const [searchtext,setsearchtext]=useState('')
     const filltereddoctor=()=>doctors.filter(doctor=>doctor.name.toLowerCase()
     .includes(searchtext.toLowerCase()))
@@ -117,10 +108,10 @@ function DoctorList(props) {
                 width:100,height:100
             }}>
                 <Image style={{
-                    width:50,height:50,
+                    width:20,height:30,
                     resizeMode:'cover',
-                    borderRadius:25,margin:10
-                }} source={item.img}></Image>
+                    margin:10
+                }} source={{uri:item.img}}></Image>
                 <Text style={{fontSize:fontSizes.h6}}>{item.name}</Text>
             </TouchableOpacity>
            }}
@@ -131,9 +122,8 @@ function DoctorList(props) {
             {filltereddoctor().length>0?<FlatList 
            data={filltereddoctor()}
            renderItem={({item})=><Doctoritem 
-           onPress={()=>{alert('doctor name : ${doctor.name}') 
-           console.log(item.name)}}
-           doctor={item} key={item.name}
+           onPress={()=>{alert(`doctor name : ${item.id}`) }}
+           doctor={item} key={item.id}
            />}
            /> :<View style={{flex:1,justifyContent:'center',alignItems:"center"}}>
             <Text style={{color:'black',fontSize:fontSizes.h3}}>no doctor found</Text>

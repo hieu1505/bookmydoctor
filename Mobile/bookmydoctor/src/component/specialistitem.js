@@ -10,7 +10,7 @@ import {
 import { fontSizes } from '../constants'
 
 import Icon from 'react-native-vector-icons/EvilIcons'
-function specialistitem(props) {
+function Specialistitem(props) {
   return <TouchableOpacity style={{
     justifyContent: 'center',
     alignItems: 'center',
@@ -25,4 +25,4 @@ function specialistitem(props) {
     <Text style={{ fontSize: fontSizes.h6 }}>da lieu</Text>
   </TouchableOpacity>
 }
-export default specialistitem
+export default Specialistitem

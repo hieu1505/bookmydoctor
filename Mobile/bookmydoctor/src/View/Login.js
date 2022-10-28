@@ -11,9 +11,10 @@ import axios from "axios";
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 // import user_login from '../src/Api/UserApi'
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import authApi from "../Api/authApi";
 function Login({navigation }, props) {
-
+  
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     const [erroremail, seterroremail] = useState('')
     const [errorPassword, seterrorPassword] = useState('')
@@ -27,6 +28,17 @@ function Login({navigation }, props) {
             setkeyboardIsShow(false)
         })
     })
+    const apilogin=async data=>{
+        try {const user =await authApi.login(data)
+            AsyncStorage.setItem('access_token',user.token)
+            AsyncStorage.setItem('user',JSON.stringify(user.user) )
+            // console.log(user)
+            navigation.navigate('UITab')
+            alert(user)
+        } catch (error) {
+          alert(error.message)
+        }
+    }
    
    
     return <View style={{
@@ -122,13 +134,20 @@ function Login({navigation }, props) {
                         email: email,
                         password: password
                     }
-                    if (isValidatePassword(password) && ValidateEmail(email)) {
-                    //   T= CallLoginPost(data)
-                            navigation.navigate('UITab')
+                    const data1 = {
+                        email: "admin@gmail.com",
+                        password: "12345678"
+
                     }
-                    else {
-                        alert('nhapdung tai khoan mat khau')
-                    }
+                    apilogin(data1)
+                    // if (isValidatePassword(password) && ValidateEmail(email)) {
+                    //         // apilogin(data)
+                    //         // navigation.navigate('UITab')
+                           
+                    // }
+                    // else {
+                    //     // alert('nhapdung tai khoan mat khau')
+                    // }
                 }}
                 style={{
                     backgroundColor: 'black',

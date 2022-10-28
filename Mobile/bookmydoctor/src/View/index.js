@@ -7,6 +7,10 @@ import ChangePassword from "./ChangePassword";
 import Forgotpassword from "./Forgotpassword";
 import Doctoritem from "./Doctoritem";
 import DoctorList from "./DoctorList";
+import Tabbar from "./Tabbar";
+import TabSpecial from "./TabSpecial";
+import TabDoctor from "./TabDoctor";
+import TabClinic from "./TabClinic";
 export{
     Home,
     Login,
@@ -14,6 +18,7 @@ export{
     Dangky,User,
     ChangePassword,
     Forgotpassword,
-    DoctorList
+    DoctorList,Tabbar,TabSpecial,
+    TabClinic,TabDoctor
 
 }
