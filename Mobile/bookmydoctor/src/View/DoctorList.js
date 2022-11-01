@@ -13,12 +13,10 @@ import Doctoritem from "./Doctoritem";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import doctorApi from "../Api/doctorapi";
 import specialistApi from "../Api/specialistApi";
-function DoctorList(props) {
-    const [chuyenkhoa , setchuyenkhoa] = useState([])
-
-    const [doctors, setdoctors] = useState([])
+function DoctorList( props) {
     
-     
+    const [chuyenkhoa , setchuyenkhoa] = useState([])
+    const [doctors, setdoctors] = useState([])
      useEffect(() => {
         (async () => {
             try {
@@ -102,7 +100,10 @@ function DoctorList(props) {
            data={chuyenkhoa}
            keyExtractor={item=>item.name}
            renderItem={({item})=>{
-            return <TouchableOpacity style={{
+            return <TouchableOpacity 
+            
+            
+            style={{
               justifyContent:'center',
               alignItems:'center',
                 width:100,height:100
@@ -122,7 +123,7 @@ function DoctorList(props) {
             {filltereddoctor().length>0?<FlatList 
            data={filltereddoctor()}
            renderItem={({item})=><Doctoritem 
-           onPress={()=>{alert(`doctor name : ${item.id}`) }}
+           onPress={()=>{navi }}
            doctor={item} key={item.id}
            />}
            /> :<View style={{flex:1,justifyContent:'center',alignItems:"center"}}>

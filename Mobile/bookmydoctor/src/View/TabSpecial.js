@@ -9,24 +9,63 @@ import {
 
 } from 'react-native'
 import { fontSizes, } from "../constants";
-import Doctoritem from "./Doctoritem";
 import Icon from 'react-native-vector-icons/FontAwesome'
-import doctorApi from "../Api/doctorapi";
 import specialistApi from "../Api/specialistApi";
-function TabSpecial({navigation},props) {
+import Specialistitem from '../component/specialistitem';
+function TabSpecial({ navigation }, props) {
     const [chuyenkhoa, setchuyenkhoa] = useState([])
-    return <View style={{ flex: 1, backgroundColor: 'white' }}>
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await specialistApi.getAllSpecialist()
+                chuyenkhoas = data.message
+                l = chuyenkhoas.map((course) => {
+                    let s = {}
+                    s.id = course.id
+                    s.name = course.name
+                    s.image = course.image
+                    s.sumdoctor = course.sum_doctor
+                    return s
+                })
+                setchuyenkhoa(l)
+
+            } catch (err) {
+                alert(err)
+            }
+        })()
+    }, [])
+    // console.log(chuyenkhoa)
+    const [searchtext, setsearchtext] = useState('')
+    const fillterSpecial = () => chuyenkhoa.filter(chuyenkhoa => chuyenkhoa.name.toLowerCase()
+        .includes(searchtext.toLowerCase()))
+    return <View style={{
+        flex: 1, backgroundColor: 'white',
+        paddingBottom: 20
+    }}>
         <View>
-        <TouchableOpacity
-        onPress={()=>{
-            navigation.navigate('UITab')
-        }}
-        ><Icon name='close'
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingEnd: 40,
+
+            }}><TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('UITab')
+                }}
+            ><Icon name='close'
                 size={35} color={'black'}
                 style={{
                     top: 10,
                     left: 20
                 }}></Icon></TouchableOpacity>
+
+                <Text style={{
+                    fontSize: 25,
+                    color: 'blue', paddingTop: 10
+                }}>Danh sach cac khoa</Text>
+            </View>
+
             <View style={{
                 height: 50,
                 marginHorizontal: 10,
@@ -54,12 +93,20 @@ function TabSpecial({navigation},props) {
                         opacity: 0.5
                     }} />
             </View>
-            <View style={{
-                height: 100
-            }}>
+            <View >
                 <View style={{ height: 1, backgroundColor: 'black' }}></View>
+
             </View>
         </View>
+        {fillterSpecial().length > 0 ? <FlatList
+            data={fillterSpecial()}
+            renderItem={({ item }) => <Specialistitem
+                onPress={() => { navigation.navigate('Listdoctorbyspecial',{id:item.id})} }
+                Special={item} key={item.id}
+            />}
+        /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
+            <Text style={{ color: 'black', fontSize: fontSizes.h3 }}>no Special found</Text>
+        </View>}
     </View>
 }
 export default TabSpecial

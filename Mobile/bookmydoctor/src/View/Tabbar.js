@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Keyboard
 } from 'react-native'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function Tabbar({navigation},props) {
     return <View style={{
         flex: 100,
@@ -32,8 +32,6 @@ function Tabbar({navigation},props) {
                 style={{
                     fontWeight: 'bold',
                     fontSize: 30,
-                    backgroundColor: '#cccc00'
-
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25, paddingEnd: 20
@@ -45,7 +43,7 @@ function Tabbar({navigation},props) {
                 style={{
                     fontWeight: 'bold',
                     fontSize: 30,
-                    backgroundColor: '#00ff3388'
+                
 
                 }}><Text style={{
                     color: 'blue',
@@ -57,7 +55,7 @@ function Tabbar({navigation},props) {
             }}
                 style={{
                     fontWeight: 'bold',
-                    fontSize: 30, backgroundColor: '#cccc00'
+                    fontSize: 30, 
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25,
@@ -69,8 +67,7 @@ function Tabbar({navigation},props) {
                 style={{
                     fontWeight: 'bold',
                     fontSize: 30,
-                    backgroundColor: '#00ff3388'
-
+                    
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25,
@@ -82,6 +79,10 @@ function Tabbar({navigation},props) {
             alignItems: 'center',justifyContent:'center'
         }}>
             <TouchableOpacity
+            onPress={()=>{
+                AsyncStorage.removeItem('access_token')
+                navigation.navigate('Login')
+            }}
                 style={{
                     fontWeight: 'bold',
                     fontSize: 30,

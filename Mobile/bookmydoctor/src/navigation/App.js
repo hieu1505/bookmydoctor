@@ -1,5 +1,8 @@
 import React from "react";
-import { Login, Dangky, User, Wellcome, ChangePassword,Forgotpassword ,Tabbar,TabDoctor,TabClinic,TabSpecial} from "../View"
+import { Login, Dangky, User,Doctorbyid,
+     Wellcome, ChangePassword,Forgotpassword 
+     ,Tabbar,TabDoctor,TabClinic,TabSpecial,
+     Listdoctorbyspecial,ListdoctorbyClinnic} from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,6 +25,9 @@ function AppTab(props) {
                     <Stack.Screen name="TabDoctor" component={TabDoctor} />
                     <Stack.Screen name="TabClinic" component={TabClinic} />
                     <Stack.Screen name="TabSpecial" component={TabSpecial} />
+                    <Stack.Screen name="Doctorbyid" component={Doctorbyid} />
+                    <Stack.Screen name="ListdoctorbyClinnic" component={ListdoctorbyClinnic} />
+                    <Stack.Screen name="Listdoctorbyspecial" component={Listdoctorbyspecial} />
                 </Stack.Navigator>
             </NavigationContainer>
         // </Provider>

@@ -14,7 +14,6 @@ import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authApi from "../Api/authApi";
 function Login({navigation }, props) {
-  
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     const [erroremail, seterroremail] = useState('')
     const [errorPassword, seterrorPassword] = useState('')
@@ -32,9 +31,7 @@ function Login({navigation }, props) {
         try {const user =await authApi.login(data)
             AsyncStorage.setItem('access_token',user.token)
             AsyncStorage.setItem('user',JSON.stringify(user.user) )
-            // console.log(user)
             navigation.navigate('UITab')
-            alert(user)
         } catch (error) {
           alert(error.message)
         }
@@ -135,18 +132,18 @@ function Login({navigation }, props) {
                         password: password
                     }
                     const data1 = {
-                        email: "admin@gmail.com",
-                        password: "12345678"
+                        email: "anhp1@gmail.com",
+                        password: "123"
 
                     }
-                    apilogin(data1)
+                     apilogin(data1)
                     // if (isValidatePassword(password) && ValidateEmail(email)) {
-                    //         // apilogin(data)
-                    //         // navigation.navigate('UITab')
+                    //         apilogin(data)
+                    //         navigation.navigate('UITab')
                            
                     // }
                     // else {
-                    //     // alert('nhapdung tai khoan mat khau')
+                    //     alert('nhapdung tai khoan mat khau')
                     // }
                 }}
                 style={{

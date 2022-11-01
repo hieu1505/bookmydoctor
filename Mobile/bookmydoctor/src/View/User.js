@@ -6,7 +6,6 @@ import {
     TextInput,
     TouchableOpacity,
     Keyboard,
-
 } from 'react-native';
 import userApi from "../Api/UserApi";
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -15,14 +14,20 @@ import DatePicker from 'react-native-date-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 function User({ route, navigation }, props) {
     const [user, setuser] = useState([])
-    
-    
     const [token,settoken]=useState('')
+    const [firstname, setfirstname] = useState('')
+    const [lastname, setlastname] =  useState('')
+    const [phones, setphone] =  useState('')
+    const [date, setDate] = useState(new Date())
+    const [open, setOpen] = useState(false)
+    const [adress, setadress] =  useState('')
+    const [g, setg] = useState('')
     useEffect(() => {
         async function usersd() {
             await getuser();
         }
         usersd()
+        console.log('use effect api')
         return () => { }
     }, [])
     const getuser = async () => {
@@ -35,7 +40,6 @@ function User({ route, navigation }, props) {
             settoken(accesstoken)
             k = JSON.parse(d)
             setuser(k)
-
         } catch (e) {
             console.log(e)
         }
@@ -49,15 +53,17 @@ function User({ route, navigation }, props) {
             console.log(error)
         }
     }
-    
+    useEffect(()=>{
+        setfirstname(user.firsname)
+        setlastname(user.lastname)
+        // setDate(new Date(String(user.birthday) ))
+        setphone(user.phoneNumber)
+        setadress(user.address)
+        // console.log()
+        console.log(user)
+    },[user])
 
-    const [firstname, setfirstname] = useState(user.firsname)
-    const [lastname, setlastname] = useState( user.lastname)
-    const [phones, setphone] = useState(user.phoneNumber)
-    const [date, setDate] = useState(new Date())
-    const [open, setOpen] = useState(false)
-    const [adress, setadress] = useState(user.address)
-    const [g, setg] = useState('')
+    
     // setDate(user.birthday)
     const [gender, setgender] = useState([{
         id: '1',
@@ -94,7 +100,7 @@ function User({ route, navigation }, props) {
             alignItems: 'center',
             flexDirection: 'column'
         }}><Image
-            source={{ uri: k.image }} style={{
+            source={{ uri: user.image }} style={{
                 width: 120,
                 height: 120,
                 alignItems: 'center', borderRadius: 50
@@ -102,7 +108,8 @@ function User({ route, navigation }, props) {
             </Image>
             <Text style={{
                 fontSize: 20
-            }}>{user.firsname + " " + k.lastname}</Text>
+            }}> {firstname+" "+ lastname}</Text>
+         
         </View>
         <View style={{
             flex: 50,
@@ -117,7 +124,7 @@ function User({ route, navigation }, props) {
                 <View style={{
                 }}>
                     <TextInput
-                        onChangeText={(text) => { setfirstname(text) }}
+                        onChangeText={setfirstname}
                         value={firstname}
                         style={{
                             fontSize: fontSizes.h6,

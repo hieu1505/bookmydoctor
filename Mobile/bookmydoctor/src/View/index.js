@@ -11,6 +11,12 @@ import Tabbar from "./Tabbar";
 import TabSpecial from "./TabSpecial";
 import TabDoctor from "./TabDoctor";
 import TabClinic from "./TabClinic";
+import Doctorbyid from "./Doctorbyid";
+import Listdoctorbyspecial from "./Listdoctorbyspecial";
+import ListdoctorbyClinnic from "./ListdoctorbyClinnic";
+import Appointmentbyuser from "./Appointmentbyuser";
+import Appointmentitem from "./Appointmentitem";
+
 export{
     Home,
     Login,
@@ -19,6 +25,10 @@ export{
     ChangePassword,
     Forgotpassword,
     DoctorList,Tabbar,TabSpecial,
-    TabClinic,TabDoctor
+    TabClinic,TabDoctor,
+    Doctorbyid,
+    Listdoctorbyspecial,
+    ListdoctorbyClinnic,Appointmentbyuser,
+    Appointmentitem
 
 }

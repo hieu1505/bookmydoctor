@@ -8,20 +8,50 @@ import {
   TextInput
 } from "react-native";
 import { fontSizes } from '../constants'
-
-import Icon from 'react-native-vector-icons/EvilIcons'
 function Clinicitem(props) {
-  return <TouchableOpacity style={{
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 120, height: 120
+  let {name,street,image,
+  }=props.clinic
+  let opres=props.onPress
+ return <TouchableOpacity
+  onPress={opres}
+  style={{
+    height: 100,
+        paddingLeft: 10,
+        paddingTop: 20, 
+        flexDirection: 'row'
   }}>
 
     <Image style={{
-      width: 80, height: 80,
-      borderRadius: 25, margin: 10
-    }} source={require('../img/bannerHand.png')}></Image>
-    <Text style={{ fontSize: fontSizes.h6 , justifyContent: 'center',alignItems: 'center',}}>phong kham da khoa sai gon</Text>
+      width: 90, height: 90,
+    }} source={{uri:image}}></Image>
+    <View style={{
+            padding:10,
+            flex: 1,
+            marginRight: 10
+        }}> 
+        <Text style={{
+            color: 'black',
+            fontSize: 18,
+            fontWeight: 'bold'
+        }}>{name}</Text>
+        <View style={{
+                height: 1,
+                backgroundColor: 'black',
+            }} />
+          <View style={{ flexDirection: 'row' }}>
+                <Text style={{
+                    color: 'black',
+                    marginTop:20,
+                    
+                }}>
+                </Text>
+                <Text style={{
+                    color: 'black',
+                    fontSize: fontSizes.h6,
+                }}>  Dia chi: {street}
+                </Text>
+            </View>
+        </View>
   </TouchableOpacity>
 }
 export default Clinicitem

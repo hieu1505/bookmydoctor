@@ -11,21 +11,58 @@ import {
 import { fontSizes, } from "../constants";
 import Doctoritem from "./Doctoritem";
 import Icon from 'react-native-vector-icons/FontAwesome'
-import doctorApi from "../Api/doctorapi";
-import specialistApi from "../Api/specialistApi";
-function TabClinic({navigation},props){
-    return <View style={{ flex: 1, backgroundColor: 'white' }}>
+import clinicApi from "../Api/clinicApi";
+import Clinicitem from '../component/Clinicitem';
+function TabClinic({ navigation }, props) {
+    const [clinic, setclinic] = useState([])
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await clinicApi.getAllClinic()
+                clinics = data.clinic
+                l = clinics.map((course) => {
+                    let s = {}
+                    s.id = course.id
+                    s.name = course.name
+                    s.image = course.image
+                    s.street = course.street + '-' + course.city
+                    return s
+                })
+                setclinic(l)
+
+            } catch (err) {
+                alert(err)
+            }
+        })()
+    }, [])
+    // console.log(clinic)
+    const [searchtext, setsearchtext] = useState('')
+    const filltereclinic = () => clinic.filter(clinics => clinics.name.toLowerCase()
+        .includes(searchtext.toLowerCase()))
+    return <View style={{ flex: 1, backgroundColor: 'white', paddingBottom: 30 }}>
         <View>
-        <TouchableOpacity
-        onPress={()=>{
-            navigation.navigate('UITab')
-        }}
-        ><Icon name='close'
+        <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingEnd: 40,
+
+            }}><TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('UITab')
+                }}
+            ><Icon name='close'
                 size={35} color={'black'}
                 style={{
                     top: 10,
                     left: 20
                 }}></Icon></TouchableOpacity>
+
+                <Text style={{
+                    fontSize: 25,
+                    color: 'blue', paddingTop: 10
+                }}>Danh sach phong kham</Text>
+            </View>
             <View style={{
                 height: 50,
                 marginHorizontal: 10,
@@ -53,12 +90,20 @@ function TabClinic({navigation},props){
                         opacity: 0.5
                     }} />
             </View>
-            <View style={{
-                height: 100
-            }}>
+            <View >
                 <View style={{ height: 1, backgroundColor: 'black' }}></View>
+
             </View>
         </View>
+        {filltereclinic().length > 0 ? <FlatList
+            data={filltereclinic()}
+            renderItem={({ item }) => <Clinicitem
+                onPress={() => { navigation.navigate('ListdoctorbyClinnic',{id:item.id}) }}
+                clinic={item} key={item.id}
+            />}
+        /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
+            <Text style={{ color: 'black', fontSize: fontSizes.h3 }}>no clinic found</Text>
+        </View>}
     </View>
 }
 export default TabClinic

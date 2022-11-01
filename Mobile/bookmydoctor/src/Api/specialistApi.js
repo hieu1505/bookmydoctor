@@ -1,7 +1,7 @@
 import http from "./http";
 
 const specialistApi = {
-    getAllSpecialist(params) {
+    getAllSpecialist() {
         return http.get('/specialty', )
     },
     

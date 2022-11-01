@@ -6,14 +6,13 @@ import {
     TextInput,
     TouchableOpacity,
     Keyboard, ScrollView, FlatList
-
 } from 'react-native'
 import { fontSizes, } from "../constants";
 import Doctoritem from "./Doctoritem";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import doctorApi from "../Api/doctorapi";
 import specialistApi from "../Api/specialistApi";
-function TabDoctor({navigation},props) {
+function TabDoctor({ navigation }, props) {
     const [doctors, setdoctors] = useState([])
     useEffect(() => {
         (async () => {
@@ -30,7 +29,6 @@ function TabDoctor({navigation},props) {
                     return s
                 })
                 setdoctors(l)
-
             } catch (err) {
                 alert(err)
             }
@@ -41,17 +39,28 @@ function TabDoctor({navigation},props) {
         .includes(searchtext.toLowerCase()))
     return <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View>
-            <TouchableOpacity
-            onPress={()=>{
-                navigation.navigate('UITab')
-            }}
-            
+        <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingEnd: 40,
+
+            }}><TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('UITab')
+                }}
             ><Icon name='close'
                 size={35} color={'black'}
                 style={{
                     top: 10,
                     left: 20
                 }}></Icon></TouchableOpacity>
+
+                <Text style={{
+                    fontSize: 25,
+                    color: 'blue', paddingTop: 10
+                }}>Danh sach cac bac sy</Text>
+            </View>
             <View style={{
                 height: 50,
                 marginHorizontal: 10,
@@ -79,22 +88,17 @@ function TabDoctor({navigation},props) {
                         opacity: 0.5
                     }} />
             </View>
-            <View style={{
-                
-            }}>
-                <View style={{ height: 1, backgroundColor: 'black' }}></View>
-                {filltereddoctor().length>0?<FlatList 
-           data={filltereddoctor()}
-           renderItem={({item})=><Doctoritem 
-           onPress={()=>{alert(`doctor name : ${item.id}`) }}
-           doctor={item} key={item.id}
-           />}
-           /> :<View style={{flex:1,justifyContent:'center',alignItems:"center"}}>
-            <Text style={{color:'black',fontSize:fontSizes.h3}}>no doctor found</Text>
-           </View> }
-            </View>
-            
+            <View style={{ height: 1, backgroundColor: 'black' }}></View>
         </View>
+        {filltereddoctor().length > 0 ? <FlatList
+            data={filltereddoctor()}
+            renderItem={({ item }) => <Doctoritem
+                onPress={() => { navigation.navigate('Doctorbyid',{id:item.id})  }}
+                doctor={item} key={item.id}
+            />}
+        /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
+            <Text style={{ color: 'black', fontSize: fontSizes.h3 }}>no doctor found</Text>
+        </View>}
     </View>
 
 }
