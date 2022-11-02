@@ -35,7 +35,7 @@ function Tabbar({navigation},props) {
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25, paddingEnd: 20
-                }}>Trang chu</Text></TouchableOpacity>
+                }}>Trang chủ</Text></TouchableOpacity>
             <TouchableOpacity
             onPress={()=>{
                 navigation.navigate('TabSpecial')
@@ -48,7 +48,7 @@ function Tabbar({navigation},props) {
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25,
-                }}>danh sach cac khoa</Text></TouchableOpacity>
+                }}>Danh sách các khoa</Text></TouchableOpacity>
             <TouchableOpacity
             onPress={()=>{
                 navigation.navigate('TabDoctor')
@@ -59,7 +59,7 @@ function Tabbar({navigation},props) {
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25,
-                }}>danh sach cac bac sy</Text></TouchableOpacity>
+                }}>Danh sách các bác sỹ</Text></TouchableOpacity>
             <TouchableOpacity
             onPress={()=>{
                 navigation.navigate('TabClinic')
@@ -71,7 +71,7 @@ function Tabbar({navigation},props) {
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25,
-                }}>danh sach phong kham</Text></TouchableOpacity>
+                }}>Danh sách các bác sỹ</Text></TouchableOpacity>
 
         </View>
         <View style={{
@@ -96,7 +96,7 @@ function Tabbar({navigation},props) {
                     color: 'blue',
                     fontSize: 25,
                    
-                }}>Dang Xuat</Text></TouchableOpacity>
+                }}>Dăng  Xuất</Text></TouchableOpacity>
         </View>
         <View style={{
             flex: 20, alignItems: 'center', justifyContent: 'center'

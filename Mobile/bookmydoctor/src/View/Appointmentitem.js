@@ -8,62 +8,86 @@ import {
     Keyboard
 
 } from 'react-native'
-import { fontSizes } from "../constants";
-function Appointmentitem(props){
-    let {name,begin,end,img,
+import strftime from "strftime";
+function Appointmentitem(props) {
+    let {namedoctor,begin,end,cost,status
     }=props.appointment
-    let opres=props.onPress
+    let opres = props.onPress
+    let date=strftime('%d-%m-%YT%H:%M:%S',new Date(begin)).split('T')[0]
+    let h= strftime('%d-%m-%YT%H:%M:%S',new Date(begin)).split('T')[1]+'-'+strftime('%d-%m-%YT%H:%M:%S',new Date(end)).split('T')[1]
+   console.log(h)
     return <View
-    style={{ 
-        flex :1,
-        height: 110,
-        paddingLeft: 10,
-        flexDirection: 'row'
-    }}>
-        <Image style={{
-            padding:10,
-            flex:20,
+        style={{
+            flex: 1,
             height: 80,
-            width: 80,
-        }}
-            source={{uri:img}} />
-        <View style ={{
-            //  padding:10,
-            paddingStart:5,
-             flex: 50,
-             marginRight: 10
+            paddingLeft: 10,
+            flexDirection: 'row',
+            borderRadius:5,
+            backgroundColor:"F0FFF"
         }}>
-           <Text style={{
-            color: 'black',
-            fontSize: 15,
-            fontWeight: 'bold'
-        }}> Bac si:{name}</Text> 
+
         <View style={{
+            //  padding:10,
+            paddingStart: 5,
+            flex: 70,
+            marginRight: 10
+        }}>
+            <Text style={{
+                color: 'black',
+                fontSize: 15,
+                fontWeight: 'bold'
+            }}> Bác sĩ : {namedoctor}</Text>
+            <View style={{
                 height: 1,
                 backgroundColor: 'black',
             }} />
-            <Text style={{
-                fontSize:12,
-                color:'black'
+            <View style={{
+                flexDirection:'row',
+                paddingEnd:10
             }}>
-                bat dau: {begin}
-            </Text>
-            <Text style={{
-                fontSize:12,
-                color:'black'
+
+                <Text style={{
+                    fontSize: 12,
+                    color: 'black',paddingEnd:15
+                }}>
+                    Ngày khám :{date}
+                </Text>
+                <Text style={{
+                    fontSize: 12,
+                    color: 'black'
+                }}>
+                    giờ:{h}
+                </Text></View>
+                <View style={{
+                flexDirection:'row',
+                paddingEnd:10
             }}>
-                ket thuc:{end} 
-            </Text>
-            
+
+                <Text style={{
+                    fontSize: 12,
+                    color: 'black',paddingEnd:15
+                }}>
+                    Giá tiền: {cost} đ
+                </Text>
+                <Text style={{
+                    fontSize: 12,
+                    color: 'black'
+                }}>
+                    Trang thái :{status}
+                </Text></View>
+
+
         </View>
         <TouchableOpacity style={{
-          
-            justifyContent:'center',
-            height:80,
-            alignItems:'center',
-            flex:30
+            backgroundColor:'red',
+            borderRadius:15,
+            justifyContent: 'center',
+            height: 45,
+            
+            alignItems: 'center',
+            flex: 20
         }}>
-            <Text> huy cuoc hen</Text>
+            <Text> huy</Text>
         </TouchableOpacity>
 
     </View>

@@ -13,14 +13,21 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import Doctoritem from "./Doctoritem";
 import doctorApi from "../Api/doctorapi";
 import specialistApi from "../Api/specialistApi";
+import { useMemo } from "react";
 function Home({navigation},props) {
     const [chuyenkhoa , setchuyenkhoa] = useState([])
     const [doctors, setdoctors] = useState([])
+    const [idck,setidck]=useState(null)
      useEffect(() => {
         (async () => {
             try {
                 const data = await specialistApi.getAllSpecialist()
                 Specia=data.message
+                let d={
+                    id:0,
+                    name:'Tat ca',
+                    img:'asdads',
+                }
                 s=Specia.map((course)=>{
                     let k={}
                     k.id=course.id
@@ -28,33 +35,63 @@ function Home({navigation},props) {
                     k.img=course.image
                     return k
                 })
+                let  p=[...d,...s]
                 setchuyenkhoa(s)
             } catch (err) {
                 alert(err)
             }
         })()
+        
+        
     }, [])
+
+    // const doctorbyck=(name)=>{
+    //     d=doctors.map((course)=>{
+    //         if (course.specialty==name){
+    //             return course
+    //         }
+    //     }
+    //     )
+    //     setdoctors(d)
+    // }
      useEffect(() => {
+        
         (async () => {
             try {
-                const data = await doctorApi.getAllDoctor()
-                doctor=data.doctor
-                l=doctor.map((course)=>{
-                    let s={}
-                    s.id=course.id
-                    s.clinic=course.clinic.name
-                    s.name=course.user.firsname+course.user.lastname
-                    s.image=course.user.image
-                    s.specialty=course.specialty.name
-                    return s
-                })
+            
+                if(idck==null){const data = await doctorApi.getAllDoctor()
+                    doctor=data.doctor
+                    l=doctor.map((course)=>{
+                        let s={}
+                        s.id=course.id
+                        s.clinic=course.clinic.name
+                        s.name=course.user.firsname+course.user.lastname
+                        s.image=course.user.image
+                        s.specialty=course.specialty.name
+                        return s
+                    })}
+                    else{
+                        const data = await specialistApi.getDetailSpecialist(idck)
+                        doctor = data.message.doctors  
+                        l = doctor.map((course) => {
+                            let s = {}
+                            s.id = course.id
+                            s.clinic = course.clinic.name
+                            s.name = course.user.firsname + course.user.lastname
+                            s.image = course.user.image
+                            s.specialty = course.specialty.name
+                            return s  
+                        })
+                    }
+
                 setdoctors(l)
                
             } catch (err) {
-                alert(err)
+                console.log(err)
             }
         })()
-    }, [])
+       
+    }, [idck,doctors])
     
     const [searchtext,setsearchtext]=useState('')
     const filltereddoctor=()=>doctors.filter(doctor=>doctor.name.toLowerCase()
@@ -121,6 +158,7 @@ function Home({navigation},props) {
            renderItem={({item})=>{
             return <TouchableOpacity 
             onPress={()=>{
+                setidck(item.id)
                 
             }}
             

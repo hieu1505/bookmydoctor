@@ -64,7 +64,7 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
             fontSize: 18,
             color: 'blue', paddingTop: 10,
             paddingStart:30
-        }}>Cac bac sy Khoa: {name}</Text>
+        }}> bác sỹ  Các Khoa: {name}</Text>
     </View>
     <View style={{
         height: 50,

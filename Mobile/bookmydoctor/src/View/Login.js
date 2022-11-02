@@ -60,7 +60,7 @@ function Login({navigation }, props) {
                 fontSize: fontSizes.h2,
                 fontWeight: 'bold',
                 width: "50%"
-            }}>  DANG NHAP</Text>
+            }}>  ĐĂNG NHẬP</Text>
         </View>
         <View style={{
             flex: 20
@@ -95,7 +95,7 @@ function Login({navigation }, props) {
                 <Text style={{
                     color: "black",
                     fontSize: fontSizes.h5
-                }}>MAT KHAU:</Text>
+                }}>MẬT KHẨU:</Text>
                 <TextInput
                     onChangeText={(text) => {
                         seterrorPassword(isValidatePassword(text) == true ? '' : 'Password must be at least 3 characters')
@@ -159,7 +159,7 @@ function Login({navigation }, props) {
                 <Text style={{
                     padding: 8,
                     fontSize: fontSizes.h5
-                }}>Dang nhap</Text>
+                }}>Dăng Nhập</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{
                 padding: 5

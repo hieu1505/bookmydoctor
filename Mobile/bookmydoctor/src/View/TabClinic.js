@@ -61,7 +61,7 @@ function TabClinic({ navigation }, props) {
                 <Text style={{
                     fontSize: 25,
                     color: 'blue', paddingTop: 10
-                }}>Danh sach phong kham</Text>
+                }}>Danh sách phòng khám</Text>
             </View>
             <View style={{
                 height: 50,

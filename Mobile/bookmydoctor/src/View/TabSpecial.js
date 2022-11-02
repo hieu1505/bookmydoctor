@@ -63,7 +63,7 @@ function TabSpecial({ navigation }, props) {
                 <Text style={{
                     fontSize: 25,
                     color: 'blue', paddingTop: 10
-                }}>Danh sach cac khoa</Text>
+                }}>Danh  sách các khoa</Text>
             </View>
 
             <View style={{

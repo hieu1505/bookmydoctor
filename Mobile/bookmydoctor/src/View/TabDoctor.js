@@ -59,7 +59,7 @@ function TabDoctor({ navigation }, props) {
                 <Text style={{
                     fontSize: 25,
                     color: 'blue', paddingTop: 10
-                }}>Danh sach cac bac sy</Text>
+                }}>Danh sách các bác sỹ</Text>
             </View>
             <View style={{
                 height: 50,
