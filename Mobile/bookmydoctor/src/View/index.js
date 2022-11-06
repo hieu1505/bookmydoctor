@@ -16,6 +16,7 @@ import Listdoctorbyspecial from "./Listdoctorbyspecial";
 import ListdoctorbyClinnic from "./ListdoctorbyClinnic";
 import Appointmentbyuser from "./Appointmentbyuser";
 import Appointmentitem from "./Appointmentitem";
+import BookAppointment from "./BookAppointment";
 
 export{
     Home,
@@ -29,6 +30,6 @@ export{
     Doctorbyid,
     Listdoctorbyspecial,
     ListdoctorbyClinnic,Appointmentbyuser,
-    Appointmentitem
+    Appointmentitem,BookAppointment
 
 }

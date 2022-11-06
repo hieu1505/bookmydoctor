@@ -3,10 +3,7 @@ import {
     View,
     Text,
     Image,
-    TextInput,
     TouchableOpacity,
-    Keyboard
-
 } from 'react-native'
 import { fontSizes } from "../constants";
 function Doctoritem(props){

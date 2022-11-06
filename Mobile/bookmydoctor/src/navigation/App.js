@@ -1,7 +1,7 @@
 import React from "react";
 import { Login, Dangky, User,Doctorbyid,
      Wellcome, ChangePassword,Forgotpassword 
-     ,Tabbar,TabDoctor,TabClinic,TabSpecial,
+     ,Tabbar,TabDoctor,TabClinic,TabSpecial,BookAppointment,
      Listdoctorbyspecial,ListdoctorbyClinnic} from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { Provider } from "react-redux";
 // import store from '../redux/Store'
 import UITab from "./UITab";
+import UITabdoctor from "./UITabdoctor";
 const Stack = createNativeStackNavigator();
 function AppTab(props) {
     return (
@@ -18,6 +19,7 @@ function AppTab(props) {
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Dangky" component={Dangky} />
                     <Stack.Screen name="UITab" component={UITab} />
+                    <Stack.Screen name="UITabdoctor" component={UITabdoctor} />
                     <Stack.Screen name="User" component={User} />
                     <Stack.Screen name="ChangePassword" component={ChangePassword} />
                     <Stack.Screen name="Forgotpassword" component={Forgotpassword} />
@@ -28,6 +30,7 @@ function AppTab(props) {
                     <Stack.Screen name="Doctorbyid" component={Doctorbyid} />
                     <Stack.Screen name="ListdoctorbyClinnic" component={ListdoctorbyClinnic} />
                     <Stack.Screen name="Listdoctorbyspecial" component={Listdoctorbyspecial} />
+                    <Stack.Screen name="BookAppointment" component={BookAppointment} />
                 </Stack.Navigator>
             </NavigationContainer>
         // </Provider>

@@ -47,7 +47,6 @@ function User({ route, navigation }, props) {
     const APIupdateuser = async (id, data, datas,token) => {
         try {
             const mess = await userApi.updateInfoUser(id, data,token)
-            console.log(mess)
             AsyncStorage.setItem('user', JSON.stringify(datas))
         } catch (error) {
             console.log(error)

@@ -3,16 +3,15 @@ import {
     View,
     Text,
     Image,
-    TextInput,
     TouchableOpacity,
-    Keyboard, ScrollView, FlatList
+    ScrollView, FlatList
 } from 'react-native'
 import strftime from "strftime";
 import { fontSizes, } from "../constants";
 import doctorApi from "../Api/doctorapi";
 import SelectDropdown from 'react-native-select-dropdown'
 import scheduleApi from "../Api/scheduleApi";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 function Doctorbyid({ route, navigation }, props) {
     const { id } = route.params
     console.log(id)
@@ -28,7 +27,7 @@ function Doctorbyid({ route, navigation }, props) {
                 d.name = data.message.user.firsname + data.message.user.lastname
                 d.clinic = data.message.clinic.name
                 d.address = data.message.clinic.street + ',' + data.message.clinic.city
-                // console.log(d)
+            
                 setdoctor(d)
             } catch (err) {
                 console.log(err)
@@ -46,27 +45,7 @@ function Doctorbyid({ route, navigation }, props) {
     const[day,setday]=useState(new Date())
     console.log(t)
     const countries = [strftime('%Y-%m-%d', t), , strftime('%Y-%m-%d', t2), strftime('%Y-%m-%d', t3)]
-    // const getappointment = async (date) => {
-    //     const valueSubmit = {
-    //         startDate: new Date(strftime('%Y-%m-%dT00:00:00', date)).toISOString(),
-    //         endDate: new Date(strftime('%Y-%m-%dT23:59:00', date)).toISOString(),
-    //         size: 100,
-    //         page: 0
-    //     }
-    //     try {
-    //         const respone = await scheduleApi.getSchedule(
-    //             2,
-    //             {
-    //                 params: { ...valueSubmit }
-    //             }
-    //         )
-    //         console.log(respone.schedules)
-    //         // setschedules(respone.schedules)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-
-    // }
+   
     // getappointment(t)
     // console.log(doctor)
     useEffect(() => {
@@ -96,17 +75,18 @@ function Doctorbyid({ route, navigation }, props) {
                     st.id=course.id
                     st.cost=course.cost
                     st.status=course.status
+                    st.h= strftime('%d-%m-%YT%H:%M',new Date(course.begin)).split('T')[1]+'-'+strftime('%d-%m-%YT%H:%M',new Date(course.end)).split('T')[1]
                     return st}
+                    else return null
                 })
+               
                 setschedules(k)
             } catch (err) {
-                toast.error(err.message, {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                })
+                console.log(err)
             }
         })()
     }, [day])
-    console.log(schedules)
+    // console.log(schedules)
     return <ScrollView style={{
         flex: 100,
         backgroundColor: 'white'
@@ -115,9 +95,9 @@ function Doctorbyid({ route, navigation }, props) {
             backgroundColor: '#ffffcc',
             justifyContent: "center",
             alignItems: 'center',
-            flex: 15,
+            flex: 40,
             paddingTop: 10,
-
+            borderRadius:10,
             flexDirection: "column"
         }}><Image
             source={{ uri: doctor.img }} style={{
@@ -151,7 +131,7 @@ function Doctorbyid({ route, navigation }, props) {
             <View style={{
                 flexDirection: 'row',
                 paddingStart: 10
-            }}><Text style={{ fontSize: 20 }}>Chon ngay :</Text>
+            }}><Text style={{ fontSize: 20 }}>Chọn ngày  :</Text>
                 < SelectDropdown
                     data={countries}
                     onSelect={(selectedItem, index) => {
@@ -167,34 +147,35 @@ function Doctorbyid({ route, navigation }, props) {
                 /></View>
         </View>
         <View style={{
-            flex: 65,padding:5
+            flex: 47,padding:5,
+            borderRadius:15,
+            backgroundColor:'#FFDAB9'
         }}> 
             <Text style={{
                 paddingVertical:10
             }}> Ngày {strftime('%d-%m-%Y', day)} có Khung giờ khám:</Text>
-            <FlatList horizontal
+            <FlatList
+            numColumns={3}
             style={{
                 padding:5
             }}
             data={schedules}
-            keyExtractor={item=>item.id}
             renderItem={({item})=>{
-                return <TouchableOpacity 
+                return item !=null?<TouchableOpacity 
                 onPress={()=>{
-                    
+                    navigation.navigate('BookAppointment',{id:item.id})
                 }}
                 style={{
                   justifyContent:'center',
-                  marginEnd:10,
+                  margin:3,
                   alignItems:'center',
-                    width:120,height:60,
+                    width:110,height:60,
                     backgroundColor:'#8fbc8f',
-                    
                     borderRadius:10
                 }}>
-                    {/* <Text style={{fontSize:fontSizes.h6}}>{item.h}</Text> */}
-                    <Text style={{fontSize:fontSizes.h6}}>Giá:{item.cost} đ</Text>
-                </TouchableOpacity>
+                    <Text style={{fontSize:fontSizes.h6}}>{item.h}</Text>
+                    <Text style={{fontSize:fontSizes.h6}}>Giá: {item.cost} đ</Text>
+                </TouchableOpacity>:''
             }}>
 
             </FlatList>
@@ -202,7 +183,7 @@ function Doctorbyid({ route, navigation }, props) {
             
         </View>
         <View style={{
-            flex: 10,
+            flex: 8,
             justifyContent: "center",
             alignItems: 'center',
         }}>

@@ -71,7 +71,7 @@ function Tabbar({navigation},props) {
                 }}><Text style={{
                     color: 'blue',
                     fontSize: 25,
-                }}>Danh sách các bác sỹ</Text></TouchableOpacity>
+                }}>Danh sách các bệnh viện </Text></TouchableOpacity>
 
         </View>
         <View style={{
@@ -80,6 +80,7 @@ function Tabbar({navigation},props) {
         }}>
             <TouchableOpacity
             onPress={()=>{
+            
                 AsyncStorage.removeItem('access_token')
                 navigation.navigate('Login')
             }}

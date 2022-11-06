@@ -30,12 +30,13 @@ function Appointmentbyuser(props) {
                     }
                 })
                 appointments=data.appointment
+                // console.log(appointments)
                 a=appointments.map((course)=>{
                     let s={}
                     s.id=course.id
                     s.begin=course.schedule.begin
                     s.end=course.schedule.end
-                    s.namedoctor=course.schedule.doctor.user.lastname+course.schedule.doctor.user.firsname
+                    s.namedoctor=course.schedule.doctor.user.firsname+course.schedule.doctor.user.lastname
                     s.cost=course.schedule.cost
                     s.status=course.status.name
                     return s

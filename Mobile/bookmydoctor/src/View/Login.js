@@ -13,7 +13,7 @@ import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 // import user_login from '../src/Api/UserApi'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authApi from "../Api/authApi";
-function Login({navigation }, props) {
+function Login({ navigation }, props) {
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     const [erroremail, seterroremail] = useState('')
     const [errorPassword, seterrorPassword] = useState('')
@@ -27,17 +27,37 @@ function Login({navigation }, props) {
             setkeyboardIsShow(false)
         })
     })
-    const apilogin=async data=>{
-        try {const user =await authApi.login(data)
-            AsyncStorage.setItem('access_token',user.token)
-            AsyncStorage.setItem('user',JSON.stringify(user.user) )
-            navigation.navigate('UITab')
+    const apilogin = async data => {
+        try {
+            const user = await authApi.login(data)
+            console.log(user.user.role.id)
+            AsyncStorage.setItem('access_token', user.token)
+            if (user.user.role.id == 3) {
+                let u = {}
+                u.id = user.user.id
+                u.firsname = user.user.firsname
+                u.lastname = user.user.lastname
+                u.image = user.user.image
+                u.gender = user.user.gender
+                u.phoneNumber = user.user.phoneNumber
+                u.birthday = user.user.birthday
+                u.address = user.user.address
+                u.email = user.user.email
+                console.log(u)
+                AsyncStorage.setItem('user', JSON.stringify(u))
+                navigation.navigate('UITabdoctor')
+            }
+            else if (user.user.role.id ==1) {
+                AsyncStorage.setItem('user', JSON.stringify(user.user))
+                navigation.navigate('UITab')
+            }
+
         } catch (error) {
-          alert(error.message)
+            console.log(error)
         }
     }
-   
-   
+
+
     return <View style={{
         flex: 100,
         backgroundColor: 'white',
@@ -113,7 +133,7 @@ function Login({navigation }, props) {
                     marginBottom: 10
                 }} />
                 <Text style={{ color: 'red', fontSize: fontSizes.h6 }}>{errorPassword}</Text>
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={() => { navigation.navigate('Forgotpassword') }}>
                     <Text style={{
                         fontSize: 10,
@@ -134,13 +154,13 @@ function Login({navigation }, props) {
                     const data1 = {
                         email: "anhp1@gmail.com",
                         password: "123"
-
                     }
-                     apilogin(data1)
+                    // console.log(data1)
+                    apilogin(data1)
                     // if (isValidatePassword(password) && ValidateEmail(email)) {
                     //         apilogin(data)
                     //         navigation.navigate('UITab')
-                           
+
                     // }
                     // else {
                     //     alert('nhapdung tai khoan mat khau')

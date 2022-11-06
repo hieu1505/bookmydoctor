@@ -3,7 +3,7 @@ import {
     Text,
     View,
     Image,
-    ImageBackground,
+    
     TouchableOpacity,
     TextInput,FlatList
 } from "react-native";
@@ -13,7 +13,6 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import Doctoritem from "./Doctoritem";
 import doctorApi from "../Api/doctorapi";
 import specialistApi from "../Api/specialistApi";
-import { useMemo } from "react";
 function Home({navigation},props) {
     const [chuyenkhoa , setchuyenkhoa] = useState([])
     const [doctors, setdoctors] = useState([])
@@ -35,7 +34,7 @@ function Home({navigation},props) {
                     k.img=course.image
                     return k
                 })
-                let  p=[...d,...s]
+                // let  p=[...d,...s]
                 setchuyenkhoa(s)
             } catch (err) {
                 alert(err)
@@ -44,16 +43,6 @@ function Home({navigation},props) {
         
         
     }, [])
-
-    // const doctorbyck=(name)=>{
-    //     d=doctors.map((course)=>{
-    //         if (course.specialty==name){
-    //             return course
-    //         }
-    //     }
-    //     )
-    //     setdoctors(d)
-    // }
      useEffect(() => {
         
         (async () => {
