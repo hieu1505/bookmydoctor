@@ -4,7 +4,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    ScrollView, FlatList
+    ScrollView, FlatList,SafeAreaView
 } from 'react-native'
 import strftime from "strftime";
 import { fontSizes, } from "../constants";
@@ -87,7 +87,8 @@ function Doctorbyid({ route, navigation }, props) {
         })()
     }, [day])
     // console.log(schedules)
-    return <ScrollView style={{
+    return <SafeAreaView 
+    style={{
         flex: 100,
         backgroundColor: 'white'
     }}>
@@ -154,7 +155,7 @@ function Doctorbyid({ route, navigation }, props) {
             <Text style={{
                 paddingVertical:10
             }}> Ngày {strftime('%d-%m-%Y', day)} có Khung giờ khám:</Text>
-            <FlatList
+            <FlatList 
             numColumns={3}
             style={{
                 padding:5
@@ -190,7 +191,7 @@ function Doctorbyid({ route, navigation }, props) {
             <Text>Dia chi :{doctor.clinic}</Text>
             <Text>{doctor.address}</Text>
         </View>
-    </ScrollView>
+    </SafeAreaView>
 
 }
 export default Doctorbyid

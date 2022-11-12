@@ -30,7 +30,6 @@ function Login({ navigation }, props) {
     const apilogin = async data => {
         try {
             const user = await authApi.login(data)
-            console.log(user.user.role.id)
             AsyncStorage.setItem('access_token', user.token)
             if (user.user.role.id == 3) {
                 let u = {}
@@ -43,6 +42,7 @@ function Login({ navigation }, props) {
                 u.birthday = user.user.birthday
                 u.address = user.user.address
                 u.email = user.user.email
+                u.iddoctor=user.user.doctor.id
                 console.log(u)
                 AsyncStorage.setItem('user', JSON.stringify(u))
                 navigation.navigate('UITabdoctor')
@@ -51,7 +51,6 @@ function Login({ navigation }, props) {
                 AsyncStorage.setItem('user', JSON.stringify(user.user))
                 navigation.navigate('UITab')
             }
-
         } catch (error) {
             console.log(error)
         }
@@ -149,10 +148,12 @@ function Login({ navigation }, props) {
                 onPress={() => {
                     const data = {
                         email: email,
-                        password: password
+                        password: password,
+                        email: "anhp1@gmail.com",
                     }
                     const data1 = {
-                        email: "anhp1@gmail.com",
+                        email: "thanhtoanvteder@gmail.com",
+                        // email: "anhp1@gmail.com",
                         password: "123"
                     }
                     // console.log(data1)

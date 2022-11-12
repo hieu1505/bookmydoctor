@@ -15,9 +15,12 @@ import Doctorbyid from "./Doctorbyid";
 import Listdoctorbyspecial from "./Listdoctorbyspecial";
 import ListdoctorbyClinnic from "./ListdoctorbyClinnic";
 import Appointmentbyuser from "./Appointmentbyuser";
-import Appointmentitem from "./Appointmentitem";
 import BookAppointment from "./BookAppointment";
-
+import Appointmentbydoctor from "./Appointmentbydoctor";
+import Schedultments from "./schedulingappointments";
+import Appointmentinfor from "./Appointmentinfor";
+import FiveStars from "./fiveStars";
+import AddMultiSchedule from "./AddMultiSchedule";
 export{
     Home,
     Login,
@@ -30,6 +33,9 @@ export{
     Doctorbyid,
     Listdoctorbyspecial,
     ListdoctorbyClinnic,Appointmentbyuser,
-    Appointmentitem,BookAppointment
-
+    Schedultments,
+    BookAppointment,
+    Appointmentbydoctor,
+    Appointmentinfor,
+    FiveStars,AddMultiSchedule
 }

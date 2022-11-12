@@ -15,6 +15,12 @@ const appointmentApi = {
     },
     cancelAppointment(id, config) {
         return http.put(`/appointment/cancel/${id}`, { id: id }, config)
+    },
+    reportAppointment(id, config) {
+        return http.put(`/appointment/report/${id}`, { id: id }, config)
+    }, 
+    getAppointment(id,config) {
+        return http.get(`/appointment/${id}`, config)
     }
 }
 export default appointmentApi

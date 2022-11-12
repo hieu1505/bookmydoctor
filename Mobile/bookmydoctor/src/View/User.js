@@ -8,9 +8,10 @@ import {
     Keyboard,
 } from 'react-native';
 import userApi from "../Api/UserApi";
-import RadioGroup from 'react-native-radio-buttons-group';
 import { fontSizes, images } from "../constants";
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
+import { RadioButton } from 'react-native-paper';
+import strftime from "strftime";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 function User({ route, navigation }, props) {
     const [user, setuser] = useState([])
@@ -18,7 +19,6 @@ function User({ route, navigation }, props) {
     const [firstname, setfirstname] = useState('')
     const [lastname, setlastname] =  useState('')
     const [phones, setphone] =  useState('')
-    const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [adress, setadress] =  useState('')
     const [g, setg] = useState('')
@@ -55,31 +55,30 @@ function User({ route, navigation }, props) {
     useEffect(()=>{
         setfirstname(user.firsname)
         setlastname(user.lastname)
+        setg(user.gender)
         // setDate(new Date(String(user.birthday) ))
         setphone(user.phoneNumber)
         setadress(user.address)
         // console.log()
         console.log(user)
     },[user])
+    if (g !== undefined)
+        gender = g.toString();
+    const [checked, setChecked] = useState(gender)
+
+  
+    let [date, setDate] = useState(new Date());
+    var [confirm,setConfirm]=useState(false)
+    const handleConfirm = (date) => {
+        setConfirm(true)
+        setOpen(false)
+        setDate(date)
+        console.log(date);
+        return date;
+    }
 
     
-    // setDate(user.birthday)
-    const [gender, setgender] = useState([{
-        id: '1',
-        label: 'Nam',
-        value: 'Nam',
-        onPress: () => setg('1')
-
-    }, {
-        id: '2',
-        label: 'Nữ',
-        value: 'Nữ',
-        onPress: () => setg('2')
-    }
-    ])
-    function onPressRadioButton(radioArray) {
-        setgender(radioArray);
-    }
+    
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () => {
@@ -97,7 +96,9 @@ function User({ route, navigation }, props) {
             flex: 30,
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            backgroundColor:'#87CEEB',
+            borderRadius:15
         }}><Image
             source={{ uri: user.image }} style={{
                 width: 120,
@@ -139,10 +140,8 @@ function User({ route, navigation }, props) {
                 </View>
                 <View style={{
                     flexDirection: "row",
-
                 }}>
                     <View style={{
-
                     }}>
                         <TextInput
                             onChangeText={(text) => { setlastname(text) }}
@@ -208,11 +207,24 @@ function User({ route, navigation }, props) {
                     color: "black",
                     fontSize: fontSizes.h5
                 }}>Giới tính</Text>
-                <RadioGroup radioButtons={gender} onPress={onPressRadioButton} containerStyle={{
-                    justifyContent: 'flex-start',
-                    flexDirection: 'row'
-                }}
-                />
+                <RadioButton
+                    value={"1"}
+                    status={gender === "1" ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                        setChecked("1");
+                        setg("1");
+                        console.log("1");
+                    }}
+                /><Text>Nam</Text>
+                <RadioButton
+                    value={"2"}
+                    status={gender === "2" ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                        setChecked("2");
+                        setg("2");
+                        console.log("2");
+                    }}
+                /><Text>Nữ</Text>
                 <View style={{
 
                 }}></View>
@@ -221,7 +233,6 @@ function User({ route, navigation }, props) {
                 marginHorizontal: 10,
                 paddingTop: 20
             }}>
-
                 <TouchableOpacity
                     onPress={() => setOpen(true)}
                     style={{
@@ -235,17 +246,14 @@ function User({ route, navigation }, props) {
                     placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
                 // 
-                ><Text>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Text></TouchableOpacity>
+                ><Text>{`  ${confirm==false? strftime('%d-%m-%Y', new  Date(user.birthday)):strftime('%d-%m-%Y', date) }`}</Text></TouchableOpacity>
                 <Text></Text>
                 <DatePicker
                     modal
                     open={open}
                     date={date}
                     mode='date'
-                    onConfirm={(date) => {
-                        setOpen(false)
-                        setDate(date)
-                    }}
+                    onConfirm={handleConfirm}
                     onCancel={() => {
                         setOpen(false)
                     }}
@@ -271,7 +279,7 @@ function User({ route, navigation }, props) {
                     k.phoneNumber = phones
                     k.firsname = firstname
                     k.lastname = lastname
-                    k.gender = gender
+                    k.gender = g
                     k.birthday = date
                     k.address = adress
                     

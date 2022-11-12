@@ -2,7 +2,9 @@ import React from "react";
 import { Login, Dangky, User,Doctorbyid,
      Wellcome, ChangePassword,Forgotpassword 
      ,Tabbar,TabDoctor,TabClinic,TabSpecial,BookAppointment,
-     Listdoctorbyspecial,ListdoctorbyClinnic} from "../View"
+     Listdoctorbyspecial,ListdoctorbyClinnic,Appointmentinfor,
+     AddMultiSchedule,
+    FiveStars} from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -31,13 +33,12 @@ function AppTab(props) {
                     <Stack.Screen name="ListdoctorbyClinnic" component={ListdoctorbyClinnic} />
                     <Stack.Screen name="Listdoctorbyspecial" component={Listdoctorbyspecial} />
                     <Stack.Screen name="BookAppointment" component={BookAppointment} />
+                    <Stack.Screen name="Appointmentinfor" component={Appointmentinfor} />
+                    <Stack.Screen name="FiveStars" component={FiveStars} />
+                    <Stack.Screen name="AddMultiSchedule" component={AddMultiSchedule} />
                 </Stack.Navigator>
             </NavigationContainer>
         // </Provider>
     )
 }
 export default AppTab
-///qmk
-//tasbar
-//doctor
-//mat hien mk

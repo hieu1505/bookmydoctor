@@ -1,5 +1,5 @@
 import React from "react";
-import { Login, Dangky, User, Wellcome, Home, ChangePassword, Appointmentbyuser } from "../View"
+import { Login, Dangky, User, Wellcome, Home, ChangePassword, Appointmentbyuser,Schedultments,Appointmentbydoctor } from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,7 +22,7 @@ const screenOption = ({ route }) => ({
         if (screenName == "Thông Báo") {
             iconName = "bell"
         }
-        if (screenName == "Lịch Hẹn") {
+        if (screenName == "Lịch Kham") {
             iconName = "list-alt"
         }
         if (screenName == "lên lịch hẹn") {
@@ -43,10 +43,10 @@ function UI() {
 function UITabdoctor(props) {
     return (
         <Tab.Navigator screenOptions={screenOption} >
-            <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} />
+            <Tab.Screen name="Lịch Kham" component={Appointmentbydoctor} options={{unmountOnBlur: true} }/>
             <Tab.Screen name="Thông Báo" component={Home} />
-            <Tab.Screen name="lên lịch hẹn" component={Home} />
-            <Tab.Screen name="Cá Nhân" component={User} />
+            <Tab.Screen name="lên lịch hẹn" component={Schedultments} options={{unmountOnBlur: true} }/>
+            <Tab.Screen name="Cá Nhân" component={User} options={{unmountOnBlur: true} }/>
         </Tab.Navigator>
     )
 }

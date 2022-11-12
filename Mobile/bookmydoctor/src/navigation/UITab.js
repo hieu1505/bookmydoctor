@@ -45,11 +45,11 @@ function UI(){
 function UITab(props){
 return  (
       <Tab.Navigator  screenOptions={screenOption} > 
-        <Tab.Screen name="Trang Chủ" component={Home} />
+        <Tab.Screen name="Trang Chủ" component={Home} options={{unmountOnBlur: true} }/>
         <Tab.Screen name="Thông Báo" component={Home} />
-        <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} />
+        <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} options={{unmountOnBlur: true}} />
        <Tab.Screen name="Cộng Đồng" component={Home} />
-        <Tab.Screen name="Cá Nhân" component={User} />
+        <Tab.Screen name="Cá Nhân" component={User} options={{unmountOnBlur: true} }/>
       </Tab.Navigator>
 )
 }

@@ -8,47 +8,57 @@ import {
     Keyboard, FlatList
 } from 'react-native';
 import appointmentApi from "../Api/appointmentApi";
-import { fontSizes, images } from "../constants";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome'
 import Appointmentitem from "./Appointmentitem";
-function Appointmentbyuser(props) {
+function Appointmentbyuser({navigation},props) {
     const [appointment, setappointment] = useState([])
-    useEffect(() => {
-        (async () => {
-            try {
-                d = await AsyncStorage.getItem('user')
-                k = JSON.parse(d)
-                id = k.id
-                console.log(id)
-                token = await AsyncStorage.getItem('access_token')
-                console.log(token)
-                const data = await appointmentApi.getAllAppointmentOfUser(id, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: token
-                    }
-                })
-                appointments=data.appointment
-                // console.log(appointments)
-                a=appointments.map((course)=>{
-                    let s={}
-                    s.id=course.id
-                    s.begin=course.schedule.begin
-                    s.end=course.schedule.end
-                    s.namedoctor=course.schedule.doctor.user.firsname+course.schedule.doctor.user.lastname
-                    s.cost=course.schedule.cost
-                    s.status=course.status.name
-                    return s
-                })
-              setappointment(a)
-                
-
-            } catch (err) {
-                console.log(err)
+    const [token,settoken]=useState('')
+const getAllAppointment=async () => {
+    try {
+        d = await AsyncStorage.getItem('user')
+        k = JSON.parse(d)
+        id = k.id
+        console.log(id)
+        tokens = await AsyncStorage.getItem('access_token')
+      settoken(tokens)
+        const data = await appointmentApi.getAllAppointmentOfUser(id, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: tokens
             }
-        })()
+        })
+        appointments=data.appointment
+        // console.log(appointments)
+        a=appointments.map((course)=>{
+            let s={}
+            s.id=course.id
+            s.rating=course.rating
+            s.begin=course.schedule.begin
+            s.end=course.schedule.end
+            s.name=' Bác sĩ : '+course.schedule.doctor.user.firsname+course.schedule.doctor.user.lastname
+            s.cost=course.schedule.cost
+            s.status=course.status.name
+            return s
+        })
+      setappointment(a)
+    } catch (err) {
+        console.log(err)
+    }
+}
+    useEffect(() => {
+        getAllAppointment()
     }, [])
+    const cancelappoitnment= async id=>{
+        try {
+            d=appointmentApi.cancelAppointment(id,{headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: token
+            }})
+            getAllAppointment()
+        } catch (error) {
+            
+        }
+    }
 
 
     return <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -59,11 +69,12 @@ function Appointmentbyuser(props) {
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingEnd: 40,
-            backgroundColor: '#00FFFF'
+            backgroundColor: '#00FFFF', borderRadius:10
         }}>
             <Text style={{
                 fontSize: 20,
-                color: 'blue', paddingTop: 10
+                color: 'blue', paddingTop: 10,
+               
             }}>Danh sách các cuộc hẹn </Text>
         </View>
         
@@ -73,7 +84,8 @@ function Appointmentbyuser(props) {
             <FlatList
                 data={appointment}
                 renderItem={({ item }) => <Appointmentitem
-                    onPress={() => { }}
+                    onPress={() => { cancelappoitnment(item.id) }}
+                    onPress2={() => { navigation.navigate('FiveStars',{id:item.id})}}
                     appointment={item} key={item.id}
                 />} />
 

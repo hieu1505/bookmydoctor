@@ -2,24 +2,19 @@ import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
-    Image,
-    TextInput,
     TouchableOpacity,
-    Keyboard
 } from 'react-native'
 import strftime from "strftime";
-import Icon from 'react-native-vector-icons/FontAwesome' 
-function Appointmentitem(props) {
-    let { name, begin, end, cost, status,rating
+function Appointmentitemnydoctor(props) {
+    let { name, begin, end, cost, status
     } = props.appointment
     let opres = props.onPress
     let opres2 = props.onPress2
-    if(rating==null){
-        rating=0
-    }
+    let opres3 = props.onPress3
     let date = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[0]
     let h = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[1] + '-' + strftime('%d-%m-%YT%H:%M:%S', new Date(end)).split('T')[1]
-    console.log(status)
+
+
     return <View
         style={{
             flex: 1,
@@ -29,6 +24,7 @@ function Appointmentitem(props) {
             borderRadius: 5,
             backgroundColor: "F0FFF"
         }}>
+
         <View style={{
             //  padding:10,
             paddingStart: 5,
@@ -36,7 +32,7 @@ function Appointmentitem(props) {
             marginRight: 10
         }}>
             <Text style={{
-                color: '#BDB76B',
+                color: 'black',
                 fontSize: 16,
                 fontWeight: 'bold'
             }}> {name}</Text>
@@ -45,6 +41,7 @@ function Appointmentitem(props) {
                 backgroundColor: 'black',
             }} />
             <View style={{
+                flexDirection: 'row',
                 paddingEnd: 10
             }}>
                 <Text style={{
@@ -60,7 +57,7 @@ function Appointmentitem(props) {
                     giờ:{h}
                 </Text></View>
             <View style={{
-                flexDirection: 'row',
+                flexDirection: 'column',
                 paddingEnd: 10
             }}>
                 <Text style={{
@@ -75,48 +72,54 @@ function Appointmentitem(props) {
                 }}>
                     Trang thái :{status}
                 </Text></View>
-                {status=='DONE'?<View style={{width:30,flexDirection:'row'}}>
-                    <FiveStars numberofstart={rating} />
-                </View>:<View></View>}
+
         </View>
         <View style={{
-            flex: 20, padding: 5,
-            marginend: 5, justifyContent: 'space-evenly'
+            flex: 20,
+            justifyContent: 'space-evenly'
         }}>
+            <TouchableOpacity
+                onPress={opres3}
+                style={{
+                    backgroundColor: '#8fbc8f',
+                    borderRadius: 15,
+                    justifyContent: 'center',
+                    height: 40,
+                    alignItems: 'center',
+                }}>
+                <Text>chi tiet</Text>
+            </TouchableOpacity>
             {status == 'NEW' ?
                 <TouchableOpacity
                     onPress={opres}
                     style={{
-                        backgroundColor: 'red',
+                        backgroundColor: '#5F9EA0',
                         borderRadius: 15,
                         justifyContent: 'center',
-                        height: 30,
+                        height: 40,
                         alignItems: 'center',
+
                     }}>
-                    <Text> huy</Text>
+                    <Text>chấp nhận</Text>
                 </TouchableOpacity>
-                : <Text></Text>}
-{status == 'DONE' ?
+                : <View style={{ height: 1 }}></View>
+            }
+            
+                        {status == 'DONE' ?
                 <TouchableOpacity
                     onPress={opres2}
                     style={{
-                        backgroundColor: '#FFDAB9',
+                        backgroundColor: 'red',
                         borderRadius: 15,
                         justifyContent: 'center',
-                        height: 30,
+                        height: 35,
                         alignItems: 'center',
                     }}>
-                    <Text>Danh gia</Text>
+                    <Text>không khám </Text>
                 </TouchableOpacity>
-                : <Text></Text>}
+                : <View></View>
+            }
         </View>
     </View>
 }
-function FiveStars(props){
-    const {numberofstart}=props
-    // item<=numberofstart-1
-    return  [0,1,2,3,4].map(item=><Icon name="star" style={{marginEnd:5}} size={25} color={
-        item<=numberofstart-1?
-        'orange':'#B0C4DE'}/>)
-}
-export default Appointmentitem
+export default Appointmentitemnydoctor

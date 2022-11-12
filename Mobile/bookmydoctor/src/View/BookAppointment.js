@@ -68,7 +68,7 @@ function BookAppointment({ route, navigation }, props) {
         }
         ;(async () => {
             try {
-                await appointmentApi.createAppointment(
+               d= await appointmentApi.createAppointment(
                     valueSubmit,
                     {
                         headers: {
@@ -76,10 +76,10 @@ function BookAppointment({ route, navigation }, props) {
                         }
                     }
                 )
-                alert('tao thanh cong')
+                console.log(d)
                 navigation.navigate('UITab')
             } catch (err) {
-                return err.message
+                console.log(err.message) 
             }
         })()
     }
