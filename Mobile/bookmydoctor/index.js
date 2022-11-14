@@ -7,7 +7,7 @@
 //  import Clinicitem from './src/component/Clinicitem'
 import Clinicitem from './src/component/Clinicitem';
 import Specialistitem from './src/component/specialistitem';
-import { AddMultiSchedule ,FiveStars} from './src/View';
+import { AddMultiSchedule ,Chat} from './src/View';
 import AppTab from './src/navigation/App'
  AppRegistry.registerComponent(appName, ()=>() =><AppTab/>)
 

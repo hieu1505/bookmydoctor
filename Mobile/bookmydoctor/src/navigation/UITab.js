@@ -1,5 +1,5 @@
 import React from "react";
-import {Login,Dangky,User,Wellcome,Home,ChangePassword,Appointmentbyuser}from "../View"
+import {Login,Dangky,User,Wellcome,Home,ChangePassword,Appointmentbyuser,Chat}from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -48,7 +48,7 @@ return  (
         <Tab.Screen name="Trang Chủ" component={Home} options={{unmountOnBlur: true} }/>
         <Tab.Screen name="Thông Báo" component={Home} />
         <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} options={{unmountOnBlur: true}} />
-       <Tab.Screen name="Cộng Đồng" component={Home} />
+       <Tab.Screen name="Cộng Đồng" component={Chat} />
         <Tab.Screen name="Cá Nhân" component={User} options={{unmountOnBlur: true} }/>
       </Tab.Navigator>
 )

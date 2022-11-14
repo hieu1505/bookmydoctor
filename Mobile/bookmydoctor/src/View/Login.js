@@ -149,7 +149,7 @@ function Login({ navigation }, props) {
                     const data = {
                         email: email,
                         password: password,
-                        email: "anhp1@gmail.com",
+                        
                     }
                     const data1 = {
                         email: "thanhtoanvteder@gmail.com",
@@ -157,15 +157,15 @@ function Login({ navigation }, props) {
                         password: "123"
                     }
                     // console.log(data1)
-                    apilogin(data1)
-                    // if (isValidatePassword(password) && ValidateEmail(email)) {
-                    //         apilogin(data)
-                    //         navigation.navigate('UITab')
+                    // apilogin(data1)
+                    if (isValidatePassword(password) && ValidateEmail(email)) {
+                            apilogin(data)
+                            navigation.navigate('UITab')
 
-                    // }
-                    // else {
-                    //     alert('nhapdung tai khoan mat khau')
-                    // }
+                    }
+                    else {
+                        alert('nhapdung tai khoan mat khau')
+                    }
                 }}
                 style={{
                     backgroundColor: 'black',

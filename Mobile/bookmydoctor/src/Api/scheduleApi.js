@@ -11,6 +11,12 @@ const scheduleApi = {
     },
     getScheduleById(id) {
         return http.get(`/schedule/${id}`)
+    },
+    addMultiSchedule(data, config) {
+        return http.post('/schedule/multi', data, config)
+    },
+    deleteSchedule(id, config) {
+        return http.delete(`/schedule/${id}`, { id: id }, config)
     }
 }
 export default scheduleApi

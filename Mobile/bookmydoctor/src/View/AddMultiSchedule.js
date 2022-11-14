@@ -10,9 +10,11 @@ import {
 import strftime from "strftime";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import DatePicker from "react-native-date-picker";
-import { weekdays } from "moment-timezone";
+import scheduleApi from "../Api/scheduleApi";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import getDaysOfWeekBetweenDates from "../utilies/getDaysBetweenTwoDates";
 function AddMultiSchedule({ route, navigation },props) {
+    const { id } = route.params
     let [date, setDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date())
     const [open2, setOpen2] = useState(false)
@@ -54,65 +56,74 @@ function AddMultiSchedule({ route, navigation },props) {
             status: false
         }
     ]
-    const [weekdaysSubmit, setWeekDaysSubmit] = useState(weekdays
-    )
-    console.log(weekdaysSubmit)
+    const [weekdaysSubmit, setWeekDaysSubmit] = useState(weekdays  )
+ 
     const [scheduleSubmit, setScheduleSubmit] = useState(
         [
             {
                 id: 1,
-                value: '07:00:00-08:00:00',
+                label: '07:00:00-08:00:00',
+                value: '07:00:00 GMT+0700-08:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 2,
-                value: '08:00:00-09:00:00',
+                label: '08:00:00-09:00:00',
+                value: '08:00:00 GMT+0700-09:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 3,
-                value: '09:00:00-10:00:00',
+                label: '09:00:00-10:00:00',
+                value: '09:00:00 GMT+0700-10:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 4,
-                value: '10:00:00-11:00:00',
+                label: '10:00:00-11:00:00',
+                value: '10:00:00 GMT+0700-11:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 5,
-                value: '11:00:00-12:00:00',
+                label: '11:00:00-12:00:00',
+                value: '11:00:00 GMT+0700-12:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 6,
-                value: '13:00:00-14:00:00',
+                label: '13:00:00-14:00:00',
+                value: '13:00:00 GMT+0700-14:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 7,
-                value: '14:00:00-15:00:00',
+                label: '14:00:00-15:00:00',
+                value: '14:00:00 GMT+0700-15:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 8,
-                value: '15:00:00-16:00:00',
+                label: '15:00:00-16:00:00',
+                value: '15:00:00 GMT+0700-16:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 9,
-                value: '16:00:00-17:00:00',
+                label: '16:00:00-17:00:00',
+                value: '16:00:00 GMT+0700-17:00:00 GMT+0700',
                 status: false
             },
             {
                 id: 10,
-                value: '17:00:00-18:00:00',
+                label: '17:00:00-18:00:00',
+                value: '17:00:00 GMT+0700-18:00:00 GMT+0700',
                 status: false
             }
         ]
     )
     const [cost, setCost] = useState('100000')
-
+  
     useEffect(() => {
         const daysBetweenTwoDates = getDaysOfWeekBetweenDates(date, endDate)
         const weekdaysShow = []
@@ -122,7 +133,58 @@ function AddMultiSchedule({ route, navigation },props) {
         })
         setWeekDaysSubmit(weekdaysShow)
     }, [date, endDate])
-    console.log(cost)
+    
+    const handleSubmit = (iddoctor) => {
+
+    
+           
+        
+        if (date > endDate) {
+            alert('Ngày chưa hợp lệ')
+            return
+        }
+        const valueToSubmit = {
+            weekdays: [],
+            schedules: [],
+            beginDate: '',
+            endDate: '',
+            doctor_id: iddoctor,
+            cost: Number(cost)
+        }
+        weekdaysSubmit.map(weekday => {
+            if (weekday.status)
+                valueToSubmit.weekdays.push(weekday.value)
+        })
+        scheduleSubmit.map(schedule => {
+            if (schedule.status)
+                valueToSubmit.schedules.push(schedule.value)
+        })
+        if (valueToSubmit.weekdays.length <= 0 || valueToSubmit.schedules.length <=0) {
+            alert('Nhập thiếu thông tin thứ ngày hoặc khung giờ')
+            return
+        }
+        valueToSubmit.beginDate = strftime('%Y-%m-%d', date)
+        valueToSubmit.endDate = strftime('%Y-%m-%d', endDate)
+        ;(
+            async () => {
+                try {
+                    tokens = await AsyncStorage.getItem('access_token')
+                    console.log(tokens)
+                    await scheduleApi.addMultiSchedule(valueToSubmit,
+                        {
+                            headers: {
+                                Authorization: tokens
+                            }
+                        }
+                    )
+                   alert('Tạo lịch khám thành công')
+                }
+                catch (err) {
+                    alert(err.message)
+                }
+            }
+        )()
+    }
     return <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{
             flex: 10,
@@ -272,7 +334,7 @@ function AddMultiSchedule({ route, navigation },props) {
                     return item != null ? <TouchableOpacity
                         onPress={() => {
                             let cloneschedule=scheduleSubmit.map(s=>{
-                                if(item.value==s.value){
+                                if(item.label==s.label){
                                    s.status=!s.status
                                    return s
                                 }
@@ -288,7 +350,7 @@ function AddMultiSchedule({ route, navigation },props) {
                             backgroundColor: item.status == true ? 'red' : '#8fbc8f',
                             borderRadius: 10
                         }}>
-                        <Text style={{ fontSize: 14 }}>{item.value}</Text>
+                        <Text style={{ fontSize: 14 }}>{item.label}</Text>
                     </TouchableOpacity> : ''
                 }}>
             </FlatList>
@@ -310,7 +372,9 @@ function AddMultiSchedule({ route, navigation },props) {
             </View>
             <View style={{ flex: 10 }}>
                 <TouchableOpacity
-                    onPress={() => { }}
+                    onPress={() => {
+                        handleSubmit(id)
+                     }}
                     style={{
                         backgroundColor: 'red',
                         justifyContent: 'center',

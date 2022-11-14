@@ -21,6 +21,9 @@ const appointmentApi = {
     }, 
     getAppointment(id,config) {
         return http.get(`/appointment/${id}`, config)
+    }, 
+     ratingAppointment(idAppointment, data, config) {
+        return http.put(`/appointment/rate/${idAppointment}`, data, config)
     }
 }
 export default appointmentApi

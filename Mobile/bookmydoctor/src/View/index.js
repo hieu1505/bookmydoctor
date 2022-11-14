@@ -21,6 +21,7 @@ import Schedultments from "./schedulingappointments";
 import Appointmentinfor from "./Appointmentinfor";
 import FiveStars from "./fiveStars";
 import AddMultiSchedule from "./AddMultiSchedule";
+import Chat from "./chat/Chat";
 export{
     Home,
     Login,
@@ -37,5 +38,5 @@ export{
     BookAppointment,
     Appointmentbydoctor,
     Appointmentinfor,
-    FiveStars,AddMultiSchedule
+    FiveStars,AddMultiSchedule,Chat
 }

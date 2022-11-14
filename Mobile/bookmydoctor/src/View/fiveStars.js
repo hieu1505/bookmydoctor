@@ -13,6 +13,25 @@ import Appointmentitem from "./Appointmentitem";
 function FiveStars({ route, navigation },props){
     const { id } = route.params
     console.log(id)
+    const setfivestar=async (data,id) => {
+        try {
+            tokens = await AsyncStorage.getItem('access_token')
+            console.log(tokens)
+            console.log(data)
+            const d = await appointmentApi.ratingAppointment(id,data, {
+                headers: {
+                  
+                    Authorization: tokens
+                }
+            })
+           alert('danh gia thanh cong')
+           navigation.navigate('UITab')
+            
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const [rating,setrating]=useState(2)
     const [maxrating,setmaxrating]=useState([1,2,3,4,5])
     const starImg='https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true'
@@ -50,7 +69,10 @@ style={{justifyContent:'center',
 alignItems:'center',marginTop:30,
 padding:15,
 backgroundColor:'green'}}
-onPress={()=>alert(rating)}>
+onPress={()=>{let score={scores:rating}
+setfivestar(score,id)
+}
+}>
 
 <Text>Danh gia</Text>
 </TouchableOpacity>

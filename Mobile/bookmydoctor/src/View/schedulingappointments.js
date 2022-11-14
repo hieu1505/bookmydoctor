@@ -15,7 +15,27 @@ function Schedultments({  navigation },props) {
     const [schedul, setschedul] = useState([])
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
- 
+    const[ id,setid]=useState('')
+    const deleteSchedule=async (id) => {
+        try {
+            tokens = await AsyncStorage.getItem('access_token')
+            console.log(tokens)
+          
+            const d = await scheduleApi.deleteSchedule(id, {
+                headers: {
+                  
+                    Authorization: tokens
+                }
+            })
+            console.log(d)
+            
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const [reload,setreload]=useState(false)
+    
     useEffect(() => {
         // let date = new Date(day)
         const valueSubmit = {
@@ -24,14 +44,15 @@ function Schedultments({  navigation },props) {
             size: 100,
             page: 0
         }
-        console.log(valueSubmit)
+       
             ; (async () => {
                 try {
                     d = await AsyncStorage.getItem('user')
                     m = JSON.parse(d)
-                    id = m.iddoctor
+                    iddoctor = m.iddoctor
+                    setid(iddoctor)
                     const respone = await scheduleApi.getSchedule(
-                        id,
+                        iddoctor,
                         {
                             params: { ...valueSubmit }
                         }
@@ -55,7 +76,8 @@ function Schedultments({  navigation },props) {
                     console.log(err)
                 }
             })()
-    }, [date])
+         
+    }, [date,reload])
     console.log(schedul)
     return <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{
@@ -103,7 +125,7 @@ function Schedultments({  navigation },props) {
                 }}
             />
             <TouchableOpacity
-                 onPress={()=>{navigation.navigate('AddMultiSchedule')}}
+                 onPress={()=>{navigation.navigate('AddMultiSchedule',{id:id})}}
                 style={{
                     backgroundColor: '#8fbc8f',
                     borderRadius: 10,
@@ -137,9 +159,6 @@ function Schedultments({  navigation },props) {
                 data={schedul}
                 renderItem={({ item }) => {
                     return <View
-                        onPress={() => {
-
-                        }}
                         style={{
                             flexDirection:'row',
                             margin: 5,
@@ -148,8 +167,13 @@ function Schedultments({  navigation },props) {
                         <Text style={{ fontSize: 14 ,marginEnd:30}}>{item.h}</Text>
                         <Text style={{ fontSize: 14,marginEnd:30 }}>{item.cost} đ</Text>
                         <Text style={{ fontSize: 14,marginEnd:50 }}>{item.status==false?"Trống  ":"Có hẹn"}</Text>
-                        <TouchableOpacity
-                   
+                        {item.status==false?<TouchableOpacity
+                    onPress={()=>{
+                        setreload(!reload)
+                        deleteSchedule(item.id)
+                        alert('huy thanh cong')
+                        
+                    }}
                     style={{
                         backgroundColor: 'red',
                         borderRadius: 15,
@@ -159,7 +183,7 @@ function Schedultments({  navigation },props) {
                         alignItems: 'center',
                     }}>
                     <Text>Hủy</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>:<Text></Text>}
                     </View>
                 }}>
 
