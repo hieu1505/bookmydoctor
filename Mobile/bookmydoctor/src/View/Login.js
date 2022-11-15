@@ -152,20 +152,20 @@ function Login({ navigation }, props) {
                         
                     }
                     const data1 = {
-                        email: "thanhtoanvteder@gmail.com",
-                        // email: "anhp1@gmail.com",
+                        // email: "thanhtoanvteder@gmail.com",
+                        email: "anhp1@gmail.com",
                         password: "123"
                     }
-                    // console.log(data1)
-                    // apilogin(data1)
-                    if (isValidatePassword(password) && ValidateEmail(email)) {
-                            apilogin(data)
-                            navigation.navigate('UITab')
+                    console.log(data1)
+                    apilogin(data1)
+                    // if (isValidatePassword(password) && ValidateEmail(email)) {
+                    //         apilogin(data)
+                    //         navigation.navigate('UITab')
 
-                    }
-                    else {
-                        alert('nhapdung tai khoan mat khau')
-                    }
+                    // }
+                    // else {
+                    //     alert('nhapdung tai khoan mat khau')
+                    // }
                 }}
                 style={{
                     backgroundColor: 'black',

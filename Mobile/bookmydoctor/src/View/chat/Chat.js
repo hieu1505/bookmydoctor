@@ -11,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from "react-native-vector-icons/FontAwesome5";
 import UIHeader from "./UIHeader";
+import Chatitem from "./Chatitem";
 function Chat({ route, navigation },props){
     const [users,setusers]=useState([ {
         url:'https://randomuser.me/api/portraits/women/58.jpg',
@@ -38,7 +39,7 @@ function Chat({ route, navigation },props){
     lefIconname={'arrow-left'}
     rightIconname={'search'}
     onpresslefIcon={()=>{
-        alert('aaaa')
+        navigation.goBack()
     }}
     onpressrightIcon={()=>{
         alert('aaaa')
@@ -48,7 +49,7 @@ function Chat({ route, navigation },props){
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
-        paddingStart:10
+        marginStart:10
     }}> 
     <Text style={{
         color:'black',
@@ -63,16 +64,14 @@ function Chat({ route, navigation },props){
     }}
     />
     </View>
+    
     <FlatList 
-    style={{
-        flex:1,
-        backgroundColor:'red'
-
-    }}
-    data={users}
-    renderItem ={({item})=><Chatitem 
-    />}
-    />
+           data={users}
+           renderItem={({item})=>< Chatitem
+           onPress={()=>{ navigation.navigate('Messenger',{user:item})}}
+           user={item} key={item.id}
+           />}
+           />
     </View>
 }
 

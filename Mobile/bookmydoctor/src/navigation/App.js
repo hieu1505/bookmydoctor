@@ -4,6 +4,7 @@ import { Login, Dangky, User,Doctorbyid,
      ,Tabbar,TabDoctor,TabClinic,TabSpecial,BookAppointment,
      Listdoctorbyspecial,ListdoctorbyClinnic,Appointmentinfor,
      AddMultiSchedule,
+     Messenger,
     FiveStars} from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -36,6 +37,7 @@ function AppTab(props) {
                     <Stack.Screen name="Appointmentinfor" component={Appointmentinfor} />
                     <Stack.Screen name="FiveStars" component={FiveStars} />
                     <Stack.Screen name="AddMultiSchedule" component={AddMultiSchedule} />
+                    <Stack.Screen name="Messenger" component={Messenger} />
                 </Stack.Navigator>
             </NavigationContainer>
         // </Provider>
