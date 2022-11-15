@@ -46,6 +46,7 @@ function Login({ navigation }, props) {
                 console.log(u)
                 AsyncStorage.setItem('user', JSON.stringify(u))
                 navigation.navigate('UITabdoctor')
+
             }
             else if (user.user.role.id ==1) {
                 AsyncStorage.setItem('user', JSON.stringify(user.user))
@@ -151,21 +152,21 @@ function Login({ navigation }, props) {
                         password: password,
                         
                     }
-                    const data1 = {
-                        // email: "thanhtoanvteder@gmail.com",
-                        email: "anhp1@gmail.com",
-                        password: "123"
-                    }
-                    console.log(data1)
-                    apilogin(data1)
-                    // if (isValidatePassword(password) && ValidateEmail(email)) {
-                    //         apilogin(data)
-                    //         navigation.navigate('UITab')
+                    // const data1 = {
+                    //     // email: "thanhtoanvteder@gmail.com",
+                    //     email: "anhp1@gmail.com",
+                    //     password: "123"
+                    // }
+                    // console.log(data1)
+                    // apilogin(data1)
+                    if (isValidatePassword(password) && ValidateEmail(email)) {
+                            apilogin(data)
+                            navigation.navigate('UITab')
 
-                    // }
-                    // else {
-                    //     alert('nhapdung tai khoan mat khau')
-                    // }
+                    }
+                    else {
+                        alert('nhapdung tai khoan mat khau')
+                    }
                 }}
                 style={{
                     backgroundColor: 'black',
