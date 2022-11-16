@@ -150,7 +150,6 @@ function Login({ navigation }, props) {
                     const data = {
                         email: email,
                         password: password,
-                        
                     }
                     // const data1 = {
                     //     // email: "thanhtoanvteder@gmail.com",
@@ -162,7 +161,6 @@ function Login({ navigation }, props) {
                     if (isValidatePassword(password) && ValidateEmail(email)) {
                             apilogin(data)
                             navigation.navigate('UITab')
-
                     }
                     else {
                         alert('nhapdung tai khoan mat khau')

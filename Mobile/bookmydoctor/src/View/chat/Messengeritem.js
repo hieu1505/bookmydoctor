@@ -10,38 +10,58 @@ import {
 } from 'react-native';
 function Messengeritem(props) {
     let { isSender, url, messenger } = props.user
-    let opres=props.onPress
+    let opres = props.onPress
     return <View
         onPress={opres}
         style={{
-         
-            paddingLeft: 10,
+       
+            paddingLeft: 8,
             paddingTop: 10,
             flexDirection: 'row'
         }}>
-        <Image style={{
+        {isSender == false ? <Image style={{
             height: 50,
             width: 50,
             borderRadius: 25,
             marginRight: 10,
             marginStart: 10
         }}
-            source={{ uri: url }} />   
-            <View style={{flexDirection:'row',
-        paddingEnd:20,
-        flex:1}}>
+            source={{ uri: url }} /> : <View style={{
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+                marginRight: 10,
+                marginStart: 10
+            }}></View>}
+        <View style={{
+            flexDirection: 'row',
+            justifyContent:isSender==false?'flex-start':'flex-end',
+            flex: 1
+        }}>
 
             <Text style={{
                 color: 'black',
                 fontSize: 14,
-                paddingHorizontal:7,
-                borderRadius:10,
-                backgroundColor:'#66CDAA'
-            }}>{messenger}</Text>  
-            </View>
+                paddingHorizontal: 7,
+                borderRadius: 10,
+                backgroundColor: '#66CDAA'
+            }}>{messenger}</Text>
+        </View>
+        {isSender == true ? <Image style={{
+            height: 50,
+            width: 50,
+            borderRadius: 25,
+            marginRight: 10,
+            marginStart: 10
+        }}
+            source={{ uri: url }} /> : <View style={{
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+                marginRight: 10,
+                marginStart: 10
+            }}></View>}
             
-      
-       
     </View>
 }
 export default Messengeritem
