@@ -16,7 +16,7 @@ function Messenger({ route, navigation },props){
     const {url,name}=route.params.user
     const [chathistory,setchathistory]=useState([ {
         url:'https://randomuser.me/api/portraits/women/58.jpg',
-        isSender:true,
+        isSender:false,
         messenger:'hello', 
     },
     {
@@ -26,7 +26,7 @@ function Messenger({ route, navigation },props){
     },
     {
         url:'https://randomuser.me/api/portraits/women/58.jpg',
-        isSender:true,
+        isSender:false,
         messenger:'sdaas', 
     },{
         url:'https://randomuser.me/api/portraits/women/53.jpg',
@@ -35,6 +35,7 @@ function Messenger({ route, navigation },props){
     }])
    return <View style={{
     flexDirection:'column',
+    flex:1
    }}>
     <UIHeader title={name}
     lefIconname={'arrow-left'}
@@ -54,6 +55,25 @@ function Messenger({ route, navigation },props){
            user={item} key={item.id}
            />}
            />
+           <View style={{
+                height:50,
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center'
+               
+            }}>
+            <TextInput
+            style={{ fontSize: 20,
+                color:'black',
+            paddingStart:20,
+            backgroundColor:'#C0C0C0',
+            borderRadius:10,
+        width:340}}
+            placeholder="hihi"
+            placeholderTextColor={'rgba(0,0,0,0.6'}
+        ></TextInput>
+        <TouchableOpacity><Icon name="paper-plane" size={23} color={'red'} style={{padding:10}}/></TouchableOpacity>
+        </View>
     </View>
 }
 

@@ -51,10 +51,6 @@ function Chat({ route, navigation },props){
         alignItems:'center',
         marginStart:10
     }}> 
-    <Text style={{
-        color:'black',
-        fontSize:16,
-    }}>6 unred messages</Text>
     <Icon name="search"
     style={{padding:15}}
     size={15}

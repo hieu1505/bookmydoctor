@@ -40,7 +40,6 @@ function Chatitem(props) {
         </View>
         <View style={{
             padding: 10,
-        
             marginRight: 10,flexDirection:'column'
         }}>
             <Text style={{
