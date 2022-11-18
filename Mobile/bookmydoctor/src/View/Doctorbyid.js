@@ -11,23 +11,23 @@ import { fontSizes, } from "../constants";
 import doctorApi from "../Api/doctorapi";
 import SelectDropdown from 'react-native-select-dropdown'
 import scheduleApi from "../Api/scheduleApi";
-
+import Icon from 'react-native-vector-icons/Ionicons' 
 function Doctorbyid({ route, navigation }, props) {
     const { id } = route.params
-    console.log(id)
     const [doctor, setdoctor] = useState({})
     useEffect(() => {
         (async () => {
             try {
                 const data = await doctorApi.getDetailDoctor(id)
+                console.log(data)
                 let d = {}
+                d.id=data.message.user_id
                 d.description = data.message.description
                 d.specialty = data.message.specialty.name
                 d.img = data.message.user.image
                 d.name = data.message.user.firsname + data.message.user.lastname
                 d.clinic = data.message.clinic.name
                 d.address = data.message.clinic.street + ',' + data.message.clinic.city
-            
                 setdoctor(d)
             } catch (err) {
                 console.log(err)
@@ -124,6 +124,12 @@ function Doctorbyid({ route, navigation }, props) {
                     fontSize: 15
                 }}>Khoa:{doctor.specialty}</Text>
             </View>
+           <View  style={{flexDirection:'row'}}> 
+            <Text style={{fontSize:18}}>Hỏi bác sỹ :</Text>
+           <TouchableOpacity onPress={()=>{navigation.navigate('Messenger',{doctor:doctor})}}><Icon name="chatbubble-ellipses" size={30} color={'blue'} style={{paddingLeft:20,padding:6
+        
+        }}/></TouchableOpacity>
+           </View>
         </View>
 
         <View style={{
@@ -193,5 +199,14 @@ function Doctorbyid({ route, navigation }, props) {
         </View>
     </SafeAreaView>
 
+}
+function FiveStars(props){
+    const {numberofstart}=props
+    // item<=numberofstart-1
+    return <View style={{
+        flexDirection:'row'
+    }}>{ [0,1,2,3,4].map(item=><Icon name="star" style={{marginEnd:5}} size={25} color={
+        item<=numberofstart-1?
+        'orange':'#B0C4DE'}/>)}</View>
 }
 export default Doctorbyid
