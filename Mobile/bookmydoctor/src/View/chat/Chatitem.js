@@ -9,7 +9,7 @@ import {
     Keyboard, FlatList
 } from 'react-native';
 function Chatitem(props) {
-    let { name, url, firstmessage } = props.user
+    let { name, img, firstmessage } = props.user
     let opres=props.onPress
     return <TouchableOpacity
         onPress={opres}
@@ -26,7 +26,7 @@ function Chatitem(props) {
             marginRight: 15,
             marginStart: 10
         }}
-            source={{ uri: url }} />
+            source={{ uri: img }} />
             <Text
              style={{ backgroundColor: '#FA8072',
              position:'absolute',
@@ -50,7 +50,7 @@ function Chatitem(props) {
             <Text style={{
                 color: '#B0C4DE',
                 fontSize: 18,  
-            }}>{firstmessage}</Text>
+            }}>llll</Text>
            
         </View>
         <View style={{
