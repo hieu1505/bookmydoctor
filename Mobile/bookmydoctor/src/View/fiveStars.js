@@ -20,14 +20,11 @@ function FiveStars({ route, navigation },props){
             console.log(data)
             const d = await appointmentApi.ratingAppointment(id,data, {
                 headers: {
-                  
                     Authorization: tokens
                 }
             })
            alert('danh gia thanh cong')
            navigation.navigate('UITab')
-            
-
         } catch (err) {
             console.log(err)
         }
@@ -73,7 +70,6 @@ onPress={()=>{let score={scores:rating}
 setfivestar(score,id)
 }
 }>
-
 <Text>Danh gia</Text>
 </TouchableOpacity>
 </View>

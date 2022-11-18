@@ -14,9 +14,9 @@ function Appointmentitem(props) {
     } = props.appointment
     let opres = props.onPress
     let opres2 = props.onPress2
-    if(rating==null){
-        rating=0
-    }
+    // if(rating==null){
+    //     rating=0
+    // }
     let date = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[0]
     let h = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[1] + '-' + strftime('%d-%m-%YT%H:%M:%S', new Date(end)).split('T')[1]
     console.log(status)
@@ -75,7 +75,7 @@ function Appointmentitem(props) {
                 }}>
                     Trang thái :{status}
                 </Text></View>
-                {status=='DONE'?<View style={{width:30,flexDirection:'row'}}>
+                {status=='DONE'&&rating!=null?<View style={{width:30,flexDirection:'row'}}>
                     <FiveStars numberofstart={rating} />
                 </View>:<View></View>}
         </View>
@@ -96,7 +96,7 @@ function Appointmentitem(props) {
                     <Text> huy</Text>
                 </TouchableOpacity>
                 : <Text></Text>}
-{status == 'DONE' ?
+{status == 'DONE'&&rating==null ?
                 <TouchableOpacity
                     onPress={opres2}
                     style={{
