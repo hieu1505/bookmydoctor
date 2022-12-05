@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
     View,
     Text,
@@ -7,15 +7,15 @@ import {
     TouchableOpacity,
     Keyboard, FlatList
 } from 'react-native';
-
+import { SocketContext } from '../../a';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from "react-native-vector-icons/FontAwesome5";
 import UIHeader from "./UIHeader";
 import Messengeritem from "./Messengeritem";
 import messageApi from "../../Api/messageApi"
 function Messenger({ route, navigation },props){
+    const socket = useContext(SocketContext)
     const {id,img,name}=route.params.doctor
-    console.log(id)
     const[iduser,setiduser]=useState('')
      const [chathistory,setchathistory]=useState([])
     useEffect(() => {(async () => {  
@@ -44,7 +44,7 @@ function Messenger({ route, navigation },props){
 
           })
           console.log(t)
-          setchathistory(t)
+          setchathistory(respone.messages)
         }
         catch (err) {
             console.log(err)
@@ -71,27 +71,26 @@ function Messenger({ route, navigation },props){
                         'Content-Type': 'multipart/form-data',
                         Authorization: token
                     }
-                    
                 })
                 setmess('')
-                // // const valueSocket = {
-                // //     to_user: respone.message.to_user,
-                // //     text: respone.message.text,
-                // //     from_user: respone.message.from_user,
-                // //     date: respone.message.date,
-                // //     image:  respone.message.image
-                // // }
-                // // handleDeleteImg()
-                // // socket.emit('addMessage', valueSocket)
-                // // setMessage('')
-                // if (listMessageChat.length > 19) {
-                //     const arrTemp = [...listMessageChat, respone.message]
-                //     arrTemp.splice(0, 1)
-                //     setListMessageChat(arrTemp)
-                // }
-                // else {
-                //     setListMessageChat([...listMessageChat, respone.message])
-                // }
+                const valueSocket = {
+                    to_user: respone.message.to_user,
+                    text: respone.message.text,
+                    from_user: respone.message.from_user,
+                    date: respone.message.date,
+                    image:  respone.message.image
+                }
+                // handleDeleteImg()
+                socket.emit('addMessage', valueSocket)
+                // setMessage('')
+                if (chathistory.length > 19) {
+                    const arrTemp = [...chathistory, respone.message]
+                    arrTemp.splice(0, 1)
+                    setchathistory(arrTemp)
+                }
+                else {
+                    setchathistory([...chathistory, respone.message])
+                }
                 // if (!listUserChat.find (user => user.id === userReceive.id))
                 //     getListUserChat()
             }
@@ -100,6 +99,27 @@ function Messenger({ route, navigation },props){
             }
         })()
     }
+    useEffect(() => {
+        socket.on('addMessageToClient', msg => {
+            const userReceiveId = id
+            console.log('msg', msg)
+            if (msg.from_user === userReceiveId) {
+                console.log('chathistory arr', chathistory)
+                if (chathistory.length > 19) {
+                    
+                    const arrTemp = [...chathistory, msg]
+                    arrTemp.splice(0, 1)
+                    setchathistory(arrTemp)
+                }
+                else {
+                    setchathistory([...chathistory, msg])
+                }
+            }
+        })
+
+        return () => socket.off('addMessageToClient')
+    }, [socket])
+    // console.log('chat', chathistory)
    return <View style={{
     flexDirection:'column',
     flex:1
@@ -110,15 +130,14 @@ function Messenger({ route, navigation },props){
     onpresslefIcon={()=>{
         navigation.goBack()
     }}
-    onpressrightIcon={()=>{
-        
+    onpressrightIcon={()=>{   
     }}
     />
  
     <FlatList 
-           data={chathistory}
+           data={chathistory.sort((item, item1) => item.id - item1.id)}
            renderItem={({item})=>< Messengeritem
-           onPress={()=>{navi }}
+           id={id}
            user={item} key={item.id}
            />}
            />
@@ -127,7 +146,6 @@ function Messenger({ route, navigation },props){
                 flexDirection:'row',
                 justifyContent:'space-between',
                 alignItems:'center'
-               
             }}>
             <TextInput
             onChangeText={(text)=>
@@ -143,11 +161,9 @@ function Messenger({ route, navigation },props){
             placeholderTextColor={'rgba(0,0,0,0.6'}
         ></TextInput>
         <TouchableOpacity onPress={
-       
         ()=>{ if(mess!=''){
             handleSendMess(mess)
             } 
-        
         }}><Icon name="paper-plane" size={23} color={'red'} style={{padding:10}}/></TouchableOpacity>
         </View>
     </View>

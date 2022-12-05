@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     Keyboard
 } from 'react-native'
-import axios from "axios";
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
 // import user_login from '../src/Api/UserApi'
@@ -43,7 +42,6 @@ function Login({ navigation }, props) {
                 u.address = user.user.address
                 u.email = user.user.email
                 u.iddoctor=user.user.doctor.id
-                console.log(u)
                 AsyncStorage.setItem('user', JSON.stringify(u))
                 navigation.navigate('UITabdoctor')
 
@@ -152,9 +150,9 @@ function Login({ navigation }, props) {
                         password: password,
                     }
                     const data1 = {
-                        // email: "thanhtoanvteder@gmail.com",
-                        // email: "anhp1@gmail.com",
-                        email: "thanhtoanurus@gmail.com",
+                        email: "thanhtoanvteder@gmail.com",
+                        // email: "nguyentronganh53@gmail.com",
+                        // email: "thanhtoanurus@gmail.com",
                         password: "123"
                     }
                     console.log(data1)

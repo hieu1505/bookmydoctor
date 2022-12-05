@@ -27,7 +27,7 @@ function Chatitem(props) {
             marginStart: 10
         }}
             source={{ uri: img }} />
-            <Text
+            {/* <Text
              style={{ backgroundColor: '#FA8072',
              position:'absolute',
              color:'white',
@@ -36,7 +36,7 @@ function Chatitem(props) {
              borderRadius:10,
              paddingHorizontal:4
 
-        }}>1</Text>
+        }}>1</Text> */}
         </View>
         <View style={{
             padding: 10,
@@ -47,10 +47,10 @@ function Chatitem(props) {
                 fontSize: 18,
                 fontWeight: 'bold'
             }}>{name}</Text>
-            <Text style={{
+            {/* <Text style={{
                 color: '#B0C4DE',
                 fontSize: 18,  
-            }}>llll</Text>
+            }}>llll</Text> */}
            
         </View>
         <View style={{
@@ -61,11 +61,11 @@ function Chatitem(props) {
             marginRight: 10,flexDirection:'column',
             marginRight:10
         }}>
-            <Text style={{
+            {/* <Text style={{
                 color: 'black',
                 fontSize: 12,
               
-            }}>4 phut truoc</Text>
+            }}>4 phut truoc</Text> */}
            
            
         </View>

@@ -23,6 +23,7 @@ import FiveStars from "./fiveStars";
 import AddMultiSchedule from "./AddMultiSchedule";
 import Chat from "./chat/Chat";
 import Messenger from "./chat/Messenger";
+import Notification from "./notification/Notification";
 export{
     Home,
     Login,
@@ -40,5 +41,5 @@ export{
     Appointmentbydoctor,
     Appointmentinfor,
     FiveStars,AddMultiSchedule,Chat,
-    Messenger
+    Messenger,Notification
 }
