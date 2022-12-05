@@ -90,6 +90,7 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
     <TouchableOpacity onPress={()=>{
             
             AsyncStorage.removeItem('access_token')
+            AsyncStorage.removeItem('user')
             navigation.navigate('Login')
         }}><Text style={{
         fontSize: 18,

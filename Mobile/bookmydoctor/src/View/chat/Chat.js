@@ -69,14 +69,7 @@ function Chat({ route, navigation }, props) {
             alignItems: 'center',
             marginStart: 10
         }}>
-            <Icon name="search"
-                style={{ padding: 15 }}
-                size={15}
-                color={'black'}
-                onPress={() => {
-                    alert('xoa')
-                }}
-            />
+           
         </View>
 
         <FlatList

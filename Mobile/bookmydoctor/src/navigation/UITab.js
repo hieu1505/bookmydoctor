@@ -1,9 +1,9 @@
 import React from "react";
-import {Login,Dangky,User,Wellcome,Home,ChangePassword,Appointmentbyuser,Chat}from "../View"
+import { Login, Dangky, User, Wellcome, Home, ChangePassword, Appointmentbyuser, Chat,Notification } from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import SocketClient from "../SocketClient";
 import AppTab from "./App";
 import Icon2 from 'react-native-vector-icons/FontAwesome'
 
@@ -11,46 +11,48 @@ import Icon2 from 'react-native-vector-icons/FontAwesome'
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const screenOption =({route})=>({
- 
+const screenOption = ({ route }) => ({
 
-  headerShown:false,
-  tabBarIcon:({focused,color,size})=>{
-    let screenName=route.name;
+
+  headerShown: false,
+  tabBarIcon: ({ focused, color, size }) => {
+    let screenName = route.name;
     let iconName
-    if(screenName=="Trang Chủ"){
-      iconName="home"
+    if (screenName == "Trang Chủ") {
+      iconName = "home"
     }
-    if(screenName=="Thông Báo"){
-      iconName="bell"
+    if (screenName == "Thông Báo") {
+      iconName = "bell"
     }
-    if(screenName=="Lịch Hẹn"){
-      iconName="list-alt"
+    if (screenName == "Lịch Hẹn") {
+      iconName = "list-alt"
     }
-    if(screenName=="Cộng Đồng"){
-      iconName="comments"
+    if (screenName == "Cộng Đồng") {
+      iconName = "comments"
     }
-    if(screenName=="Cá Nhân"){
-      iconName="user"
+    if (screenName == "Cá Nhân") {
+      iconName = "user"
     }
     return <Icon2
-    name={iconName}
-    size={23}
-    color={focused?'blue':'black'}
+      name={iconName}
+      size={23}
+      color={focused ? 'blue' : 'black'}
     />
   }
 })
-function UI(){
+function UI() {
 }
-function UITab(props){
-return  (
-      <Tab.Navigator  screenOptions={screenOption} > 
-        <Tab.Screen name="Trang Chủ" component={Home} options={{unmountOnBlur: true} }/>
-        <Tab.Screen name="Thông Báo" component={Home} />
-        <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} options={{unmountOnBlur: true}} />
-       <Tab.Screen name="Cộng Đồng" component={Chat} />
-        <Tab.Screen name="Cá Nhân" component={User} options={{unmountOnBlur: true} }/>
-      </Tab.Navigator>
-)
+function UITab(props) {
+  return (<>
+    <SocketClient />
+    <Tab.Navigator screenOptions={screenOption} >
+      <Tab.Screen name="Trang Chủ" component={Home} options={{ unmountOnBlur: true }} />
+      <Tab.Screen name="Thông Báo" component={Notification} options={{unmountOnBlur: true} } />
+      <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} options={{ unmountOnBlur: true }} />
+      <Tab.Screen name="Cộng Đồng" component={Chat} />
+      <Tab.Screen name="Cá Nhân" component={User} options={{ unmountOnBlur: true }} />
+    </Tab.Navigator>
+  </>
+  )
 }
 export default UITab
