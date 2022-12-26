@@ -7,9 +7,9 @@ import {
     TouchableOpacity,
     Keyboard
 } from 'react-native'
+import jwt_decode from "jwt-decode";
 import { fontSizes, images } from "../constants";
 import { isValidatePassword, ValidateEmail } from '../utilies/Validations'
-// import user_login from '../src/Api/UserApi'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authApi from "../Api/authApi";
 function Login({ navigation }, props) {
@@ -29,8 +29,9 @@ function Login({ navigation }, props) {
     const apilogin = async data => {
         try {
             const user = await authApi.login(data)
+            console.log(jwt_decode(user.token))
             AsyncStorage.setItem('access_token', user.token)
-            if (user.user.role.id == 3) {
+            if (jwt_decode(user.token)?.role_name =='ROLE_DOCTOR') {
                 let u = {}
                 u.id = user.user.id
                 u.firsname = user.user.firsname
@@ -44,25 +45,23 @@ function Login({ navigation }, props) {
                 u.iddoctor=user.user.doctor.id
                 AsyncStorage.setItem('user', JSON.stringify(u))
                 navigation.navigate('UITabdoctor')
-
             }
-            else if (user.user.role.id ==1) {
+            else if (jwt_decode(user.token)?.role_name =='ROLE_PATIENT') {
+                console.log('ROLE_PATIENT')
                 AsyncStorage.setItem('user', JSON.stringify(user.user))
                 navigation.navigate('UITab')
             }
         } catch (error) {
-            console.log(error)
+            alert(error.message)
         }
     }
-
-
     return <View style={{
         flex: 100,
         backgroundColor: 'white',
     }}>
         <View style={{
             height: 200,
-            flexDirection: 'column',
+            flexDirection: 'column', 
             justifyContent: "space-around",
             alignItems: 'center',
             flex: 20
@@ -145,39 +144,40 @@ function Login({ navigation }, props) {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    const data = {
-                        email: email,
-                        password: password,
-                    }
+                    // const data = {
+                    //     email: email,
+                    //     password: password,
+                    // }
                     const data1 = {
                         email: "thanhtoanvteder@gmail.com",
                         // email: "nguyentronganh53@gmail.com",
                         // email: "thanhtoanurus@gmail.com",
-                        password: "123"
+                        password: "123456"
                     }
-                    console.log(data1)
+                    // console.log(data1)
                     apilogin(data1)
                     // if (isValidatePassword(password) && ValidateEmail(email)) {
                     //         apilogin(data)
                     // }
                     // else {
-                    //     alert('nhapdung tai khoan mat khau')
+                    //     alert('nhập đúng tài khoản mật khẩu đăng nhập ')
                     // }
                 }}
                 style={{
-                    backgroundColor: 'black',
+                    backgroundColor: '#056edf',
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '50%',
                     alignSelf: 'center',
-                    color: 'blue',
+                    
                     borderRadius: 14,
-                    opacity: 0.5,
+                    
                 }}>
                 <Text style={{
                     padding: 8,
+                    color: 'white',
                     fontSize: fontSizes.h5
-                }}>Dăng Nhập</Text>
+                }}>Đăng Nhập</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{
                 padding: 5

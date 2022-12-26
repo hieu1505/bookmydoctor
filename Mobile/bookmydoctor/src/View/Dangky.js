@@ -334,16 +334,17 @@ function Dangky({navigation },props) {
                     }
                 }}
                 style={{
-                    backgroundColor: 'black',
+                    backgroundColor: '#056edf',
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '50%',
                     alignSelf: 'center',
-                    color: 'blue',
+                    
                     borderRadius: 14,
-                    opacity: 0.5
+                    
                 }}>
                 <Text style={{
+                    color: 'white',
                     padding: 10,
                     fontSize: fontSizes.h5
                 }}>Đăng ký</Text>

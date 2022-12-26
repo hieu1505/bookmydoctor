@@ -5,15 +5,19 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
-    Keyboard, FlatList
+    Keyboard, FlatList,ActivityIndicator
 } from 'react-native';
 import appointmentApi from "../Api/appointmentApi";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Appointmentitemnydoctor from "./Appointmentitembydoctor";
+
 function Appointmentbydoctor({navigation},props){
     const [appointment, setappointment] = useState([])
     const [token,settoken]=useState('')
-    const getAllAppointment=async () => {
+    const [page,setpage] = useState(0)
+    const [islLoading,setislLoading] = useState(false)
+    const [totalpage,settotalpage]=useState('')
+    const getAllAppointment=async (page) => {
         try {
             d = await AsyncStorage.getItem('user')
             k = JSON.parse(d)
@@ -26,9 +30,12 @@ function Appointmentbydoctor({navigation},props){
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: tokens
-                }
+                },
+                params: { page:page }
             })
             appointments=data.appointment
+           settotalpage(data?.page?.totalPages)
+         
             a=appointments.map((course)=>{
                 let s={}
                 s.id=course.id
@@ -39,16 +46,23 @@ function Appointmentbydoctor({navigation},props){
                 s.status=course.status.name
                 return s
             })
-          setappointment(a)
-            
-
+            if(page==0){
+                setappointment(a)
+            }
+            else{
+                console.log('trang tiepr')
+                setappointment(appointment.concat(...a))
+                
+            }
+            console.log(appointment)
+          
         } catch (err) {
             console.log(err)
         }
     }
     useEffect(() => {
-        getAllAppointment()
-    }, [])
+        getAllAppointment(page)
+    }, [page])
     const confirmAppointment= async id=>{
         try {
             d=appointmentApi.confirmAppointment(id,{headers: {
@@ -110,7 +124,33 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
             onPress2={( )=> { reportAppointment(item.id) }}
             onPress3={( )=> { navigation.navigate('Appointmentinfor',{id:item.id})}}
             appointment={item} key={item.id}
-        />} />
+        />}
+        ListFooterComponent={()=>{
+            islLoading?<View style={{
+            marginTop:10,
+            alignItems:'center',
+            justifyContent:'center',
+            flexDirection:'row',
+            justifyContent:'space-around',
+            padding:10  ,
+           
+        }}> <ActivityIndicator size='large' color="#0000ff"/></View>:null
+        }} 
+        onEndReached={()=>{
+            setislLoading(true)
+            console.log(totalpage)
+            if(page<=totalpage){
+                console.log('load')
+                setpage(page+1) 
+            }
+
+            setTimeout(()=>{
+                setislLoading(false)
+            },10000)
+            console.log(islLoading)
+        }}
+        onEndReachedThreshold={0.1}
+        />
 
 </View>
 </View>

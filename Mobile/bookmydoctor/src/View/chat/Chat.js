@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-    View,
-    Text,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    Keyboard, FlatList
+    View, FlatList
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,20 +25,20 @@ function Chat({ route, navigation }, props) {
                         }
                     }
                 )
-                console.log(respone.users)
+                // console.log(respone.users)
                 data = respone.users
+                console.log(data)
                 user=data.map((course)=>{
                     let s={}
                     s.id=course.id
                     s.name=course.firsname+" "+course.lastname
                     s.img=course.image
-                    // s.firstmessage=course.message.text
+                    s.date=course['message.date']
+                    s.firstmessage=course['message.text']
                     return s
                 })
                 console.log(user)
                 setusers(user)
-
-
             }
             catch (err) {
                 console.log(err)
@@ -53,14 +48,14 @@ function Chat({ route, navigation }, props) {
     return <View style={{
         flexDirection: 'column',
     }}>
-        <UIHeader title={'Tin nhan'}
+        <UIHeader title={'Tin Nhắn'}
             lefIconname={'arrow-left'}
             rightIconname={'search'}
             onpresslefIcon={() => {
                 navigation.goBack()
             }}
             onpressrightIcon={() => {
-                alert('aaaa')
+               
             }}
         />
         <View style={{

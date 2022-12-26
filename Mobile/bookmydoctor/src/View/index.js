@@ -10,7 +10,6 @@ import DoctorList from "./DoctorList";
 import Tabbar from "./Tabbar";
 import TabSpecial from "./TabSpecial";
 import TabDoctor from "./TabDoctor";
-import TabClinic from "./TabClinic";
 import Doctorbyid from "./Doctorbyid";
 import Listdoctorbyspecial from "./Listdoctorbyspecial";
 import ListdoctorbyClinnic from "./ListdoctorbyClinnic";
@@ -31,8 +30,8 @@ export{
     Dangky,User,
     ChangePassword,
     Forgotpassword,
-    DoctorList,Tabbar,TabSpecial,
-    TabClinic,TabDoctor,
+    DoctorList,Tabbar,TabSpecial
+    ,TabDoctor,
     Doctorbyid,
     Listdoctorbyspecial,
     ListdoctorbyClinnic,Appointmentbyuser,

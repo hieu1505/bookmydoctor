@@ -4,14 +4,15 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    ScrollView, FlatList,SafeAreaView
+    ScrollView, FlatList, SafeAreaView
 } from 'react-native'
 import strftime from "strftime";
 import { fontSizes, } from "../constants";
 import doctorApi from "../Api/doctorapi";
 import SelectDropdown from 'react-native-select-dropdown'
 import scheduleApi from "../Api/scheduleApi";
-import Icon from 'react-native-vector-icons/Ionicons' 
+import Icon from 'react-native-vector-icons/Ionicons'
+import DatePicker from 'react-native-date-picker'
 function Doctorbyid({ route, navigation }, props) {
     const { id } = route.params
     const [doctor, setdoctor] = useState({})
@@ -21,7 +22,7 @@ function Doctorbyid({ route, navigation }, props) {
                 const data = await doctorApi.getDetailDoctor(id)
                 console.log(data)
                 let d = {}
-                d.id=data.message.user_id
+                d.id = data.message.user_id
                 d.description = data.message.description
                 d.specialty = data.message.specialty.name
                 d.img = data.message.user.image
@@ -35,19 +36,11 @@ function Doctorbyid({ route, navigation }, props) {
         })()
     }, [])
     const [schedules, setschedules] = useState([])
-    const t = new Date()
-    const t2 = new Date()
-    const t3 = new Date()
-    t.setDate(t.getDate() + 1)
-    t2.setDate(t2.getDate() + 2)
-    t3.setDate(t3.getDate() + 3)
+    let tomorrow =  new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    const [open, setOpen] = useState(false)
+    const [day, setday] = useState(tomorrow)
    
-    const[day,setday]=useState(new Date())
-    console.log(t)
-    const countries = [strftime('%Y-%m-%d', t), , strftime('%Y-%m-%d', t2), strftime('%Y-%m-%d', t3)]
-   
-    // getappointment(t)
-    // console.log(doctor)
     useEffect(() => {
         // let date = new Date(day)
         const valueSubmit = {
@@ -57,49 +50,62 @@ function Doctorbyid({ route, navigation }, props) {
             page: 0
         }
         console.log(valueSubmit)
-        ;(async () => {
-            try {
-                const respone = await scheduleApi.getSchedule(
-                    id,
-                    {
-                        params: { ...valueSubmit }
-                    }
-                )
-                
-                s=respone.schedules
-                k=s.map((course)=>{
-                    if(course.status==false){
-                    let st={}
-                    st.begin=course.begin
-                    st.end=course.end
-                    st.id=course.id
-                    st.cost=course.cost
-                    st.status=course.status
-                    st.h= strftime('%d-%m-%YT%H:%M',new Date(course.begin)).split('T')[1]+'-'+strftime('%d-%m-%YT%H:%M',new Date(course.end)).split('T')[1]
-                    return st}
-                    else return null
-                })
-               
-                setschedules(k)
-            } catch (err) {
-                console.log(err)
-            }
-        })()
+            ; (async () => {
+                try {
+                    const respone = await scheduleApi.getSchedule(
+                        id,
+                        {
+                            params: { ...valueSubmit }
+                        }
+                    )
+                    s = respone.schedules
+                    k = s.map((course) => {
+                        if (course.status == false) {
+                            let st = {}
+                            st.begin = course.begin
+                            st.end = course.end
+                            st.id = course.id
+                            st.cost = course.cost
+                            st.status = course.status
+                            st.h = strftime('%d-%m-%YT%H:%M', new Date(course.begin)).split('T')[1] + '-' + strftime('%d-%m-%YT%H:%M', new Date(course.end)).split('T')[1]
+                            return st
+                        }
+                        else return null
+                    })
+
+                    setschedules(k)
+                } catch (err) {
+                    console.log(err)
+                }
+            })()
     }, [day])
-    // console.log(schedules)
-    return <SafeAreaView 
-    style={{
-        flex: 100,
-        backgroundColor: 'white'
-    }}>
-        <View style={{
-            backgroundColor: '#ffffcc',
-            justifyContent: "center",
+ 
+    return <ScrollView
+        style={{
+            flex: 100,
+            backgroundColor: 'white'
+        }}>
+             <View style={{
+            flex: 10,
+            flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingEnd: 40,
+            backgroundColor: 'white', borderRadius:10,height:80,
+        }}>
+            <TouchableOpacity style={{
+                paddingLeft:10
+            }} onPress={()=>{
+            navigation.goBack()
+        }}><Icon name='arrow-back' size={40} color={'black'} /></TouchableOpacity>
+           <Image source={require('../img/logoApp.png')} style={{ width: 180, height: 30 }} />
+        </View>
+        <View style={{
+            backgroundColor: 'white',
             flex: 40,
             paddingTop: 10,
-            borderRadius:10,
-            flexDirection: "column"
+            borderRadius: 10,
+            flexDirection: "row",
         }}><Image
             source={{ uri: doctor.img }} style={{
                 width: 100,
@@ -108,28 +114,22 @@ function Doctorbyid({ route, navigation }, props) {
             }}>
             </Image>
             <View style={{
-                padding: 8,
-                justifyContent: "center",
-                alignItems: 'center',
+                paddingStart: 10,
+                paddingEnd: 110,
+                alignItems: 'baseline',
+                flexDirection: 'column'
             }}>
-                <Text style={{ fontSize: 20 }}>{doctor.name}</Text>
+                <Text style={{ fontSize: 20 ,color:'#056edf' }}>{doctor.name}</Text>
                 <Text style={{
-
                     fontSize: 15
                 }}> {doctor.description}
-
                 </Text>
                 <Text style={{
-                    paddingEnd: 10,
                     fontSize: 15
                 }}>Khoa:{doctor.specialty}</Text>
+
             </View>
-           <View  style={{flexDirection:'row'}}> 
-            <Text style={{fontSize:18}}>Hỏi bác sỹ :</Text>
-           <TouchableOpacity onPress={()=>{navigation.navigate('Messenger',{doctor:doctor})}}><Icon name="chatbubble-ellipses" size={30} color={'blue'} style={{paddingLeft:20,padding:6
-        
-        }}/></TouchableOpacity>
-           </View>
+
         </View>
 
         <View style={{
@@ -137,9 +137,16 @@ function Doctorbyid({ route, navigation }, props) {
         }}>
             <View style={{
                 flexDirection: 'row',
-                paddingStart: 10
-            }}><Text style={{ fontSize: 20 }}>Chọn ngày  :</Text>
-                < SelectDropdown
+                paddingStart: 10,
+                backgroundColor: 'white',
+                paddingTop:15
+            }}><Icon name="calendar" size={25} color={'blue'} style={{
+                paddingLeft: 1, paddingTop:0
+
+            }} />
+                <Text style={{ fontSize: 15 }}>Lịch khám:</Text>
+                {/* < SelectDropdown
+
                     data={countries}
                     onSelect={(selectedItem, index) => {
                         console.log(selectedItem)
@@ -151,62 +158,111 @@ function Doctorbyid({ route, navigation }, props) {
                     rowTextForSelection={(item, index) => {
                         return item
                     }}
-                /></View>
+                /> */}
+                <TouchableOpacity
+                        onPress={() => setOpen(true)}
+                        style={{
+                            fontSize: fontSizes.h6,
+                            borderColor: 'black',
+                            borderWidth: 1,
+                            borderRadius: 3,
+                            padding: 5,
+                            height: 35, width: 170
+                        }}
+                        placeholder=""
+                        placeholderTextColor={'rgba(0,0,0,0.6'}
+                    ><Text>{day.getDate()}/{day.getMonth() + 1}/{day.getFullYear()}</Text></TouchableOpacity>
+                    <Text></Text>
+                    <DatePicker
+                        modal
+                        open={open}
+                        date={day}
+                        minimumDate={day}
+                        mode='date'
+                        onConfirm={(day) => {
+                            setOpen(false)
+                            setday(day)
+                        }}
+                        onCancel={() => {
+                            setOpen(false)
+                        }}
+                    />
+                </View>
         </View>
         <View style={{
-            flex: 47,padding:5,
-            borderRadius:15,
-            backgroundColor:'#FFDAB9'
-        }}> 
+            flex: 20, padding: 5,
+            borderRadius: 15,
+            backgroundColor: 'white'
+        }}>
             <Text style={{
-                paddingVertical:10
+                paddingVertical: 10
             }}> Ngày {strftime('%d-%m-%Y', day)} có Khung giờ khám:</Text>
-            <FlatList 
-            numColumns={3}
-            style={{
-                padding:5
-            }}
-            data={schedules}
-            renderItem={({item})=>{
-                return item !=null?<TouchableOpacity 
-                onPress={()=>{
-                    navigation.navigate('BookAppointment',{id:item.id})
-                }}
-                style={{
-                  justifyContent:'center',
-                  margin:3,
-                  alignItems:'center',
-                    width:110,height:60,
-                    backgroundColor:'#8fbc8f',
-                    borderRadius:10
+            <FlatList
+                horizontal
+                data={schedules}
+                renderItem={({ item }) => {
+                    return item != null ? <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate('BookAppointment', { id: item.id })
+                        }}
+                        style={{
+                            justifyContent: 'center',
+                            margin: 3,
+                            alignItems: 'center',
+                            width: 100, height: 50,
+                            backgroundColor: '#EEEEEE',
+                            borderRadius: 10
+                        }}>
+                        <Text style={{ fontSize: fontSizes.h6 }}>{item.h}</Text>
+                        <Text style={{ fontSize: fontSizes.h6 }}>Giá: {item.cost} đ</Text>
+                    </TouchableOpacity> : ''
                 }}>
-                    <Text style={{fontSize:fontSizes.h6}}>{item.h}</Text>
-                    <Text style={{fontSize:fontSizes.h6}}>Giá: {item.cost} đ</Text>
-                </TouchableOpacity>:''
-            }}>
 
             </FlatList>
 
-            
+
         </View>
         <View style={{
-            flex: 8,
+            flex: 25,
             justifyContent: "center",
-            alignItems: 'center',
+
         }}>
-            <Text>Dia chi :{doctor.clinic}</Text>
-            <Text>{doctor.address}</Text>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Text style={{ fontSize: 18 }}>Hỏi bác sỹ :</Text>
+                <TouchableOpacity onPress={() => { navigation.navigate('Messenger', { doctor: doctor }) }}>
+                    <Icon name="chatbubble-ellipses" size={30} color={'blue'} style={{
+                        paddingLeft: 19, padding: 6
+
+                    }} /></TouchableOpacity>
+            </View>
+            <View style={{
+                alignItems: 'baseline'
+            }}>
+                <Text>Địa chỉ: {doctor.address}</Text>
+                <View style={{
+            
+                    height: 1, backgroundColor: 'black',
+                    width: '100%', marginHorizontal: 10,
+                    alignSelf: "center",
+                    marginBottom: 10
+                }} />
+                <Text>{doctor.clinic}</Text>
+            </View>
         </View>
-    </SafeAreaView>
+    </ScrollView>
 
 }
-function FiveStars(props){
-    const {numberofstart}=props
+function FiveStars(props) {
+    const { numberofstart } = props
     // item<=numberofstart-1
     return <View style={{
-        flexDirection:'row'
-    }}>{ [0,1,2,3,4].map(item=><Icon name="star" style={{marginEnd:5}} size={25} color={
-        item<=numberofstart-1?
-        'orange':'#B0C4DE'}/>)}</View>
+        flexDirection: 'row'
+    }}>{[0, 1, 2, 3, 4].map(item => <Icon name="star" style={{ marginEnd: 5 }} size={25} color={
+        item <= numberofstart - 1 ?
+            'orange' : '#B0C4DE'} />)}</View>
 }
 export default Doctorbyid

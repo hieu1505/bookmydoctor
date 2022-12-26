@@ -19,6 +19,7 @@ function BookAppointment({ route, navigation }, props) {
     const [doctor, setdoctor] = useState([])
     const [user, setuser] = useState([])
     const [token, settoken] = useState('')
+    const [g,setg]=useState('')
     useEffect(() => {
         (async () => {
             try {

@@ -60,19 +60,7 @@ function Tabbar({navigation},props) {
                     color: 'blue',
                     fontSize: 25,
                 }}>Danh sách các bác sỹ</Text></TouchableOpacity>
-            <TouchableOpacity
-            onPress={()=>{
-                navigation.navigate('TabClinic')
-            }}
-                style={{
-                    fontWeight: 'bold',
-                    fontSize: 30,
-                    
-                }}><Text style={{
-                    color: 'blue',
-                    fontSize: 25,
-                }}>Danh sách các bệnh viện </Text></TouchableOpacity>
-
+            
         </View>
         <View style={{
             flex: 10, backgroundColor: "#ffffcc",

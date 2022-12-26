@@ -136,7 +136,8 @@ function Schedultments({  navigation },props) {
                 <Text>Thêm lịch khám mới</Text>
             </TouchableOpacity>
         </View>
-        <View style={{ flex: 85 }}>
+        <View style={{ flex: 85 ,borderColor: 'black',
+                borderWidth: 1}}>
         <View
                         onPress={() => {
 
@@ -154,7 +155,8 @@ function Schedultments({  navigation },props) {
             <FlatList
                 numColumns={1}
                 style={{
-                    padding: 5
+                    padding: 5,
+                    
                 }}
                 data={schedul}
                 renderItem={({ item }) => {
@@ -162,7 +164,8 @@ function Schedultments({  navigation },props) {
                         style={{
                             flexDirection:'row',
                             margin: 5,
-                            borderRadius: 10
+                            borderRadius: 10,
+                            paddingTop:5
                         }}>
                         <Text style={{ fontSize: 14 ,marginEnd:30}}>{item.h}</Text>
                         <Text style={{ fontSize: 14,marginEnd:30 }}>{item.cost} đ</Text>

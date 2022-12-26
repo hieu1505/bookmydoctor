@@ -1,19 +1,11 @@
 import React from "react";
-import { Login, Dangky, User, Wellcome, Home, ChangePassword, Appointmentbyuser, Chat,Notification } from "../View"
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {  User, Home, Appointmentbyuser, Chat,Notification } from "../View"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SocketClient from "../SocketClient";
-import AppTab from "./App";
 import Icon2 from 'react-native-vector-icons/FontAwesome'
 
-
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-
 const screenOption = ({ route }) => ({
-
-
   headerShown: false,
   tabBarIcon: ({ focused, color, size }) => {
     let screenName = route.name;
@@ -49,7 +41,7 @@ function UITab(props) {
       <Tab.Screen name="Trang Chủ" component={Home} options={{ unmountOnBlur: true }} />
       <Tab.Screen name="Thông Báo" component={Notification} options={{unmountOnBlur: true} } />
       <Tab.Screen name="Lịch Hẹn" component={Appointmentbyuser} options={{ unmountOnBlur: true }} />
-      <Tab.Screen name="Cộng Đồng" component={Chat} />
+      <Tab.Screen name="Cộng Đồng" component={Chat} options={{ unmountOnBlur: true }}/>
       <Tab.Screen name="Cá Nhân" component={User} options={{ unmountOnBlur: true }} />
     </Tab.Navigator>
   </>

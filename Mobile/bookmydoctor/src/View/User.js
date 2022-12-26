@@ -13,14 +13,32 @@ import DatePicker from 'react-native-date-picker';
 import { RadioButton } from 'react-native-paper';
 import strftime from "strftime";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+const options = {
+    title: 'Select Image',
+    type: 'library',
+    options: {
+        selectionLimit: 1,
+        mediaType: 'photo',
+        includeBase64: false
+    }
+}
+
 function User({ route, navigation }, props) {
+    const [img, setimg] = useState()
+    const opengallery = async () => {
+        const result = await launchImageLibrary(options)
+        console.log(result);
+        setimg(result.assets[0])
+        setimguri(result.assets[0].uri)
+    }
     const [user, setuser] = useState([])
-    const [token,settoken]=useState('')
+    const [token, settoken] = useState('')
     const [firstname, setfirstname] = useState('')
-    const [lastname, setlastname] =  useState('')
-    const [phones, setphone] =  useState('')
+    const [lastname, setlastname] = useState('')
+    const [phones, setphone] = useState('')
     const [open, setOpen] = useState(false)
-    const [adress, setadress] =  useState('')
+    const [adress, setadress] = useState('')
     const [g, setg] = useState('')
     useEffect(() => {
         async function usersd() {
@@ -33,42 +51,47 @@ function User({ route, navigation }, props) {
     const getuser = async () => {
         try {
             d = await AsyncStorage.getItem('user')
-            accesstoken=await AsyncStorage.getItem('access_token')
-            if(accesstoken==null){
+            accesstoken = await AsyncStorage.getItem('access_token')
+            if (accesstoken == null) {
                 navigation.navigate('Login')
             }
             settoken(accesstoken)
             k = JSON.parse(d)
+            setimguri(k.image)
             setuser(k)
         } catch (e) {
             console.log(e)
         }
     }
-    const APIupdateuser = async (id, data, datas,token) => {
+    const APIupdateuser = async (id, data, datas, token) => {
         try {
-            const mess = await userApi.updateInfoUser(id, data,token)
             AsyncStorage.setItem('user', JSON.stringify(datas))
+            const mess = await userApi.updateInfoUser(id, data, {
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'form-data'
+                }
+            })
+            console.log(datas)
+            
         } catch (error) {
-            console.log(error)
+            console.log("sadas"+error)
         }
     }
-    useEffect(()=>{
+    const [imguri, setimguri] = useState('')
+    useEffect(() => {
         setfirstname(user.firsname)
         setlastname(user.lastname)
         setg(user.gender)
-        // setDate(new Date(String(user.birthday) ))
         setphone(user.phoneNumber)
         setadress(user.address)
-        // console.log()
         console.log(user)
-    },[user])
+    }, [user])
     if (g !== undefined)
         gender = g.toString();
     const [checked, setChecked] = useState(gender)
-
-  
     let [date, setDate] = useState(new Date());
-    var [confirm,setConfirm]=useState(false)
+    var [confirm, setConfirm] = useState(false)
     const handleConfirm = (date) => {
         setConfirm(true)
         setOpen(false)
@@ -76,9 +99,6 @@ function User({ route, navigation }, props) {
         console.log(date);
         return date;
     }
-
-    
-    
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () => {
@@ -97,19 +117,24 @@ function User({ route, navigation }, props) {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            backgroundColor:'#87CEEB',
-            borderRadius:15
-        }}><Image
-            source={{ uri: user.image }} style={{
-                width: 120,
-                height: 120,
-                alignItems: 'center', borderRadius: 50
-            }}>
-            </Image>
+            backgroundColor: '#87CEEB',
+            borderRadius: 15
+        }}><TouchableOpacity onPress={() => {
+            opengallery()
+
+        }}>
+                <Image
+                    source={{ uri: (imguri)?imguri:user.image }} style={{
+                        width: 120,
+                        height: 120,
+                        alignItems: 'center', borderRadius: 50
+                    }}>
+                </Image>
+            </TouchableOpacity>
             <Text style={{
                 fontSize: 20
-            }}> {firstname+" "+ lastname}</Text>
-         
+            }}> {firstname + " " + lastname}</Text>
+
         </View>
         <View style={{
             flex: 50,
@@ -245,8 +270,7 @@ function User({ route, navigation }, props) {
                     }}
                     placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
-                // 
-                ><Text>{`  ${confirm==false? strftime('%d-%m-%Y', new  Date(user.birthday)):strftime('%d-%m-%Y', date) }`}</Text></TouchableOpacity>
+                ><Text>{`  ${confirm == false ? strftime('%d-%m-%Y', new Date(user.birthday)) : strftime('%d-%m-%Y', date)}`}</Text></TouchableOpacity>
                 <Text></Text>
                 <DatePicker
                     modal
@@ -267,23 +291,31 @@ function User({ route, navigation }, props) {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    data = {
-                        email: k.email,
-                        phoneNumber: phones,
-                        firsname: firstname,
-                        lastname: lastname,
-                        gender: g,
-                        birthday: date,
-                        address: adress
-                    }
+                    let data = new FormData()
+                    data.append('image',(img)? {
+                        uri: img.uri,
+                        type: img.type,
+                        name: img.fileName
+                    }:k.imager)
+                    data.append('email', k.email)
+                    data.append('firsname', firstname)
+                    data.append('phoneNumber', phones)
+                    data.append('lastname', lastname)
+                    data.append('gender', g)
+                    data.append('address', adress)
+                    data.append('birthday', date)
+
+
+                    console.log(imguri)
                     k.phoneNumber = phones
                     k.firsname = firstname
                     k.lastname = lastname
+                    k.image=(imguri)?imguri:user.image
                     k.gender = g
                     k.birthday = date
                     k.address = adress
-                    
-                    APIupdateuser(k.id, data, k,token)
+
+                    APIupdateuser(k.id, data, k, token)
                 }}
                 style={{
                     backgroundColor: 'blue',
@@ -297,7 +329,7 @@ function User({ route, navigation }, props) {
                 }}><Text style={{
                     padding: 10,
                     fontSize: fontSizes.h6
-                }}>Luu thay doi</Text></TouchableOpacity>
+                }}>Lưu thay đổi</Text></TouchableOpacity>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('ChangePassword') }}
                 style={{
@@ -312,7 +344,7 @@ function User({ route, navigation }, props) {
                 }}><Text style={{
                     padding: 10,
                     fontSize: fontSizes.h6
-                }}>thay doi mat khau</Text></TouchableOpacity>
+                }}>Thay đổi mật khẩu</Text></TouchableOpacity>
         </View>}
 
     </View>
