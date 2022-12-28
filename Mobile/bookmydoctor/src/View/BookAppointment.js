@@ -8,7 +8,7 @@ import {
     Keyboard, ScrollView, FlatList
 } from 'react-native'
 import strftime from "strftime";
-import RadioGroup from 'react-native-radio-buttons-group';
+import { RadioButton } from 'react-native-paper';
 import { fontSizes, } from "../constants";
 import scheduleApi from "../Api/scheduleApi";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,23 +44,12 @@ function BookAppointment({ route, navigation }, props) {
             }
         })()
     }, [])
+    useEffect(() => { setg(user.gender)}, [user])
     // console.log(user)
-    const [gender, setgender] = useState([{
-        id: '1',
-        label: 'Nam',
-        value: 'Nam',
-        onPress: () => setg('1')
-
-    }, {
-        id: '2',
-        label: 'Nữ',
-        value: 'Nữ',
-        onPress: () => setg('2')
-    }
-    ])
-    function onPressRadioButton(radioArray) {
-        setgender(radioArray);
-    }
+    if (g !== undefined)
+        gender = g.toString();
+    const [checked, setChecked] = useState(gender)
+    
     const [symptom,setsymptom]=useState('')
     const handleSubmit = value => {
         const valueSubmit = {
@@ -92,7 +81,7 @@ function BookAppointment({ route, navigation }, props) {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        backgroundColor: '#99FFCC',
+        backgroundColor: '#9ec723',
         borderRadius: 20,
 
     }}><Image
@@ -210,11 +199,24 @@ function BookAppointment({ route, navigation }, props) {
                     color: "black",
                     fontSize: fontSizes.h5
                 }}>Giới tính</Text>
-                <RadioGroup radioButtons={gender} onPress={onPressRadioButton} containerStyle={{
-                    justifyContent: 'flex-start',
-                    flexDirection: 'row'
-                }}
-                />
+               <RadioButton
+                    value={"1"}
+                    status={gender === "1" ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                        setChecked("1");
+                        setg("1");
+                        console.log("1");
+                    }}
+                /><Text>Nam</Text>
+                <RadioButton
+                    value={"2"}
+                    status={gender === "2" ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                        setChecked("2");
+                        setg("2");
+                        console.log("2");
+                    }}
+                /><Text>Nữ</Text>
                 <View style={{
 
                 }}></View>
@@ -269,11 +271,11 @@ function BookAppointment({ route, navigation }, props) {
             color: 'blue',
             width: '40%',
             borderRadius: 14,
-            opacity: 0.5,
+           
         }}><Text style={{
             padding: 10,
             fontSize: fontSizes.h6
-        }}>Hủy dặt lịch</Text></TouchableOpacity>
+        }}>Hủy đặt lịch</Text></TouchableOpacity>
          <TouchableOpacity
                 onPress={() => {
                     if(symptom!=null){handleSubmit(symptom)}
@@ -281,14 +283,14 @@ function BookAppointment({ route, navigation }, props) {
                     
                 }}
                 style={{
-                    backgroundColor: 'blue',
+                    backgroundColor: '#28a745',
                     justifyContent: 'center',
                     alignItems: 'center',
                     alignSelf: 'center',
-                    color: 'blue',
+                    color: 'black',
                     width: '30%',
-                    borderRadius: 14,
-                    opacity: 0.5,
+                    borderRadius: 16,
+                    
                 }}><Text style={{
                     padding: 10,
                     fontSize: fontSizes.h6

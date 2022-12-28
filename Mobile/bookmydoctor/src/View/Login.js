@@ -115,7 +115,7 @@ function Login({ navigation }, props) {
                 }}>MẬT KHẨU:</Text>
                 <TextInput
                     onChangeText={(text) => {
-                        seterrorPassword(isValidatePassword(text) == true ? '' : 'Password must be at least 3 characters')
+                        seterrorPassword(isValidatePassword(text) == true ? '' : 'Password must be at least 5 characters')
                         setpassword(text)
                     }}
                     style={{ fontSize: fontSizes.h5 }}
@@ -144,24 +144,24 @@ function Login({ navigation }, props) {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    // const data = {
-                    //     email: email,
-                    //     password: password,
-                    // }
-                    const data1 = {
-                        email: "thanhtoanvteder@gmail.com",
-                        // email: "nguyentronganh53@gmail.com",
-                        // email: "thanhtoanurus@gmail.com",
-                        password: "123456"
+                    const data = {
+                        email: email,
+                        password: password,
                     }
-                    // console.log(data1)
-                    apilogin(data1)
-                    // if (isValidatePassword(password) && ValidateEmail(email)) {
-                    //         apilogin(data)
+                    // const data1 = {
+                    //     // email: "thanhtoanvteder@gmail.com",
+                    //     // email: "nguyentronganh53@gmail.com",
+                    //     email: "thanhtoanurus@gmail.com",
+                    //     password: "123456"
                     // }
-                    // else {
-                    //     alert('nhập đúng tài khoản mật khẩu đăng nhập ')
-                    // }
+                    // // console.log(data1)
+                    // apilogin(data1)
+                    if (isValidatePassword(password) && ValidateEmail(email)) {
+                            apilogin(data)
+                    }
+                    else {
+                        alert('nhập đúng tài khoản mật khẩu đăng nhập ')
+                    }
                 }}
                 style={{
                     backgroundColor: '#056edf',

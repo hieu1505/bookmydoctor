@@ -4,7 +4,7 @@ import { Login, Dangky, User,Doctorbyid, ChangePassword,Forgotpassword
      Listdoctorbyspecial,ListdoctorbyClinnic,Appointmentinfor,
      AddMultiSchedule,
      Messenger,
-    FiveStars} from "../View"
+    FiveStars,Img} from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UITab from "./UITab";
@@ -38,6 +38,7 @@ function AppTab(props) {
                     <Stack.Screen name="FiveStars" component={FiveStars} />
                     <Stack.Screen name="AddMultiSchedule" component={AddMultiSchedule} />
                     <Stack.Screen name="Messenger" component={Messenger} />
+                    <Stack.Screen name="Img" component={Img} />
                 </Stack.Navigator>
             </NavigationContainer>
         // </Provider>

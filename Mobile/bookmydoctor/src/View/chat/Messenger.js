@@ -49,11 +49,16 @@ function Messenger({route, navigation}) {
       d = await AsyncStorage.getItem('user');
       k = JSON.parse(d);
       setiduser(k.id);
-      const respone = await messageApi.getMessage({
+      token = await AsyncStorage.getItem('access_token');
+      const respone = await messageApi.getMessage({ params: {
         from_user: k.id,
         to_user: id,
         page: page,
-      });
+      },
+        headers: {
+          Authorization: token,
+        }}
+      );
       d=respone.messages
       settotalpage(respone.page.totalPages)
       if(page==0){ setchathistory(respone.messages);}
@@ -149,7 +154,9 @@ function Messenger({route, navigation}) {
       <FlatList
         data={chathistory.sort((item, item1) => item.id - item1.id)}
         renderItem={({item}) => (
-          <Messengeritem id={id} user={item} key={item.id} />
+          <Messengeritem 
+          onPress={()=>{ navigation.navigate('Img',{image:item.image})}}
+          id={id} user={item}/>
         )}
         refreshControl={<RefreshControl refreshing={refreshControl} onRefresh={()=>{
           setrefreshControl(true)

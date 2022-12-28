@@ -10,6 +10,25 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 function Appointmentitem(props) {
     let { name, begin, end, cost, status,rating
     } = props.appointment
+    console.log(status)
+    if(status=='REPORT'){
+        status='Admin xử lí ...'
+    }
+    else if(status=='DONE'){
+        status='Hoàn thành'
+    }
+    else if(status=='CANCEL'){
+        status='Đã hủy'
+    }
+    else if(status=='CONFIRMED'){
+        status='Đã chấp nhận'
+    }
+    else if(status=='PATIENT VIOLATE'){
+        status='Vi phạm'
+    }
+    else if(status=='NEW'){
+        status='Chờ xử lí'
+    }
     let opres = props.onPress
     let opres2 = props.onPress2
     let date = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[0]
@@ -68,9 +87,9 @@ function Appointmentitem(props) {
                     fontSize: 12,
                     color: 'black'
                 }}>
-                    Trang thái :{status}
+                    Trang thái : {status}
                 </Text></View>
-                {status=='DONE'&&rating!=null?<View style={{width:30,flexDirection:'row'}}>
+                {status=='Hoàn thành'&&rating!=null?<View style={{width:30,flexDirection:'row'}}>
                     <FiveStars numberofstart={rating} />
                 </View>:<View></View>}
         </View>
@@ -78,7 +97,7 @@ function Appointmentitem(props) {
             flex: 20, padding: 5,
             marginend: 5, justifyContent: 'space-evenly'
         }}>
-            {status == 'NEW' ?
+            {status == 'Chờ xử lí' ?
                 <TouchableOpacity
                     onPress={opres}
                     style={{
@@ -88,10 +107,10 @@ function Appointmentitem(props) {
                         height: 30,
                         alignItems: 'center',
                     }}>
-                    <Text> huy</Text>
+                    <Text> hủy</Text>
                 </TouchableOpacity>
                 : <Text></Text>}
-{status == 'DONE'&&rating==null ?
+{status == 'Hoàn thành'&&rating==null ?
                 <TouchableOpacity
                     onPress={opres2}
                     style={{

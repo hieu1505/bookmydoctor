@@ -22,6 +22,8 @@ function Doctorbyid({ route, navigation }, props) {
                 const data = await doctorApi.getDetailDoctor(id)
                 console.log(data)
                 let d = {}
+                d.numberOfReviews=data.message.numberOfReviews
+                d.rate=data.message.rate
                 d.id = data.message.user_id
                 d.description = data.message.description
                 d.specialty = data.message.specialty.name
@@ -119,19 +121,24 @@ function Doctorbyid({ route, navigation }, props) {
                 alignItems: 'baseline',
                 flexDirection: 'column'
             }}>
-                <Text style={{ fontSize: 20 ,color:'#056edf' }}>{doctor.name}</Text>
+                <Text style={{ fontSize: 22 ,color:'#056edf' }}>{doctor.name}</Text>
                 <Text style={{
                     fontSize: 15
                 }}> {doctor.description}
                 </Text>
                 <Text style={{
-                    fontSize: 15
+                    fontSize: 19
                 }}>Khoa:{doctor.specialty}</Text>
 
             </View>
 
         </View>
-
+        <View style={{
+                    height: 1, backgroundColor: 'black',
+                    width: '100%', marginHorizontal: 10,
+                    alignSelf: "center",
+                    marginBottom: 10
+                }} />
         <View style={{
             flex: 5,
         }}>
@@ -141,24 +148,11 @@ function Doctorbyid({ route, navigation }, props) {
                 backgroundColor: 'white',
                 paddingTop:15
             }}><Icon name="calendar" size={25} color={'blue'} style={{
-                paddingLeft: 1, paddingTop:0
+                paddingStart: 10, paddingEnd:5
 
             }} />
-                <Text style={{ fontSize: 15 }}>Lịch khám:</Text>
-                {/* < SelectDropdown
-
-                    data={countries}
-                    onSelect={(selectedItem, index) => {
-                        console.log(selectedItem)
-                        setday(new Date(selectedItem))
-                    }}
-                    buttonTextAfterSelection={(selectedItem, index) => {
-                        return selectedItem
-                    }}
-                    rowTextForSelection={(item, index) => {
-                        return item
-                    }}
-                /> */}
+                <Text style={{ fontSize: 17 ,paddingEnd:5}}>Lịch khám:</Text>
+               
                 <TouchableOpacity
                         onPress={() => setOpen(true)}
                         style={{
@@ -177,7 +171,7 @@ function Doctorbyid({ route, navigation }, props) {
                         modal
                         open={open}
                         date={day}
-                        minimumDate={day}
+                        minimumDate={tomorrow}
                         mode='date'
                         onConfirm={(day) => {
                             setOpen(false)
@@ -252,17 +246,22 @@ function Doctorbyid({ route, navigation }, props) {
                 }} />
                 <Text>{doctor.clinic}</Text>
             </View>
+            <View style={{ alignItems:'center',paddingTop:30}}>
+                    <Text style={{fontSize:14 ,color:'#056edf'}}>{doctor.rate} trên 5</Text>
+                    <Text>{doctor.numberOfReviews} đánh giá</Text>
+                <View style={{flexDirection:'row',alignSelf:'center',}}>
+                    <FiveStars numberofstart={doctor.rate} />
+                </View>
+                </View>
         </View>
     </ScrollView>
 
 }
-function FiveStars(props) {
-    const { numberofstart } = props
+function FiveStars(props){
+    const {numberofstart}=props
     // item<=numberofstart-1
-    return <View style={{
-        flexDirection: 'row'
-    }}>{[0, 1, 2, 3, 4].map(item => <Icon name="star" style={{ marginEnd: 5 }} size={25} color={
-        item <= numberofstart - 1 ?
-            'orange' : '#B0C4DE'} />)}</View>
+    return  [0,1,2,3,4].map((item,index)=><Icon key={index} name="star" style={{marginEnd:5}} size={25} color={
+        item<=numberofstart-1?
+        'orange':'#B0C4DE'}/>)
 }
 export default Doctorbyid

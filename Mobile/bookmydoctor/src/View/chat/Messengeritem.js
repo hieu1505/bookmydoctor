@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
-    Image
+    Image,TouchableOpacity
 } from 'react-native';
 function Messengeritem(props) {
     let { from_user, to_user,image, text,fromUser,toUser } = props.user
     let id=props.id
+    
    
     if(from_user==id){
         isSender=true
@@ -21,7 +22,7 @@ function Messengeritem(props) {
     }
     let opres = props.onPress
     return <View
-        onPress={opres}
+        
         style={{
             paddingLeft:10,
             paddingTop: 10,
@@ -60,13 +61,15 @@ function Messengeritem(props) {
                 height: 0,
                 width: 0,
             }}></View>} 
-           {image!=""?<Image style={{
+           {image!=""?<TouchableOpacity onPress={opres}>
+           <Image style={{
             height: 50,
             width: 50,
             marginRight: 10,
             marginStart: 10
         }}
-            source={{ uri: image }} />:<View style={{
+            source={{ uri: image }} />
+           </TouchableOpacity>:<View style={{
                 height: 0,
                 width: 0,
             }}></View> }  

@@ -10,15 +10,19 @@ import {
 import appointmentApi from "../Api/appointmentApi";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Appointmentitemnydoctor from "./Appointmentitembydoctor";
-
+import DatePicker from 'react-native-date-picker'
+import Icon from 'react-native-vector-icons/Ionicons'
 function Appointmentbydoctor({navigation},props){
     const [appointment, setappointment] = useState([])
     const [token,settoken]=useState('')
     const [page,setpage] = useState(0)
     const [islLoading,setislLoading] = useState(false)
     const [totalpage,settotalpage]=useState('')
-    const getAllAppointment=async (page) => {
+    const [open, setOpen] = useState(false)
+    const [day, setday] = useState(new Date())
+    const getAllAppointment=async (page,days) => {
         try {
+            console.log(days)
             d = await AsyncStorage.getItem('user')
             k = JSON.parse(d)
             id = k.id
@@ -31,7 +35,8 @@ function Appointmentbydoctor({navigation},props){
                     'Content-Type': 'multipart/form-data',
                     Authorization: tokens
                 },
-                params: { page:page }
+                params: { page:page,
+                    date:days }
             })
             appointments=data.appointment
            settotalpage(data?.page?.totalPages)
@@ -61,15 +66,15 @@ function Appointmentbydoctor({navigation},props){
         }
     }
     useEffect(() => {
-        getAllAppointment(page)
-    }, [page])
+        getAllAppointment('','')
+    }, [])
     const confirmAppointment= async id=>{
         try {
             d=appointmentApi.confirmAppointment(id,{headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: token
             }})
-            getAllAppointment()
+            getAllAppointment('','')
         } catch (error) {
             
         }
@@ -80,7 +85,7 @@ function Appointmentbydoctor({navigation},props){
                 'Content-Type': 'multipart/form-data',
                 Authorization: token
             }})
-            getAllAppointment()
+            getAllAppointment('','')
         } catch (error) {
             
         }
@@ -108,8 +113,7 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
             navigation.navigate('Login')
         }}><Text style={{
         fontSize: 18,
-        color: 'red', paddingTop: 10,
-       
+        color: 'red', paddingTop: 10,    
     }}>Đăng xuất</Text></TouchableOpacity>
     
 </View>
@@ -117,6 +121,46 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
 <View style={{
     flex: 90
 }}>
+      <View style={{
+                flexDirection: 'row',
+                backgroundColor: 'white',
+                justifyContent: 'center',
+                padding:10
+            }}><Icon name="calendar" size={28} color={'blue'} style={{
+                paddingLeft: 1, paddingEnd:5
+
+            }} />
+                <Text style={{ fontSize: 17,paddingEnd:5 }}>Lịch khám:</Text>
+               
+                <TouchableOpacity
+                        onPress={() => setOpen(true)}
+                        style={{
+                            fontSize: 14,
+                            borderColor: 'black',
+                            borderWidth: 1,
+                            borderRadius: 3,
+                            padding: 5,
+                            height: 35, width: 170
+                        }}
+                        placeholder=""
+                        placeholderTextColor={'rgba(0,0,0,0.6'}
+                    ><Text>{day.getDate()}/{day.getMonth() + 1}/{day.getFullYear()}</Text></TouchableOpacity>
+                    <Text></Text>
+                    <DatePicker
+                        modal
+                        open={open}
+                        date={day}
+                        mode='date'
+                        onConfirm={(days) => {
+                            setOpen(false)
+                            setday(days)
+                            getAllAppointment('',days)
+                        }}
+                        onCancel={() => {
+                            setOpen(false)
+                        }}
+                    />
+                </View>
     <FlatList
         data={appointment}
         renderItem={({ item }) => <Appointmentitemnydoctor
@@ -141,7 +185,8 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
             console.log(totalpage)
             if(page<=totalpage){
                 console.log('load')
-                setpage(page+1) 
+                setpage(page+1)
+                getAllAppointment(page+1) 
             }
 
             setTimeout(()=>{

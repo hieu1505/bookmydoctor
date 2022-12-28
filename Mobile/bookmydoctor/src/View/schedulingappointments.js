@@ -92,7 +92,7 @@ function Schedultments({  navigation },props) {
                 fontSize: 20,
                 color: 'blue', paddingTop: 10,
 
-            }}>Danh sách các lich hẹn </Text>
+            }}>Danh sách các lich khám </Text>
         </View>
 
         <View style={{ flex: 5, flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>

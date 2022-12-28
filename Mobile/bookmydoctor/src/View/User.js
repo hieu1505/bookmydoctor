@@ -12,6 +12,9 @@ import { fontSizes, images } from "../constants";
 import DatePicker from 'react-native-date-picker';
 import { RadioButton } from 'react-native-paper';
 import strftime from "strftime";
+import Icon from "react-native-vector-icons/Foundation";
+import Icon2 from "react-native-vector-icons/Entypo";
+import Icon3 from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 const options = {
@@ -113,7 +116,7 @@ function User({ route, navigation }, props) {
         backgroundColor: 'white'
     }}>
         <View style={{
-            flex: 30,
+            flex: 40,
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
@@ -146,8 +149,9 @@ function User({ route, navigation }, props) {
                 flexDirection: "row",
                 justifyContent: 'space-between'
             }}>
-                <View style={{
+                <View style={{ flexDirection: "row",
                 }}>
+                    {/* <Icon  name='arrow-left'style={{padding:10}} size={25} color={'black'}  /> */}
                     <TextInput
                         onChangeText={setfirstname}
                         value={firstname}
@@ -190,10 +194,18 @@ function User({ route, navigation }, props) {
                 marginHorizontal: 10,
                 paddingTop: 20
             }}>
+                <Icon name='telephone'
+                size={23} color={'blue'}
+                style={{
+                    position:'absolute',
+                    top:28,
+                    left:8
+                }}></Icon>
                 <TextInput
                     onChangeText={(text) => { setphone(text) }}
                     value={phones}
                     style={{
+                        paddingStart:35,
                         fontSize: fontSizes.h6,
                         borderColor: 'black',
                         borderWidth: 1,
@@ -208,6 +220,13 @@ function User({ route, navigation }, props) {
                 marginHorizontal: 10,
                 paddingTop: 20
             }}>
+                <Icon2 name='location'
+                size={23} color={'blue'}
+                style={{
+                    position:'absolute',
+                    top:28,
+                    left:8
+                }}></Icon2>
                 <TextInput
                     onChangeText={(text) => { setadress(text) }}
                     value={adress}
@@ -216,7 +235,10 @@ function User({ route, navigation }, props) {
                         borderColor: 'black',
                         borderWidth: 1,
                         borderRadius: 3,
-                        padding: 5
+                        padding: 5,
+                        paddingStart:35,
+                        
+                    
                     }}
                     placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
@@ -258,6 +280,13 @@ function User({ route, navigation }, props) {
                 marginHorizontal: 10,
                 paddingTop: 20
             }}>
+                <Icon3 name='calendar'
+                size={23} color={'blue'}
+                style={{
+                    position:'absolute',
+                    top:27,
+                    left:8
+                }}></Icon3>
                 <TouchableOpacity
                     onPress={() => setOpen(true)}
                     style={{
@@ -266,7 +295,7 @@ function User({ route, navigation }, props) {
                         borderWidth: 1,
                         borderRadius: 3,
                         padding: 5,
-                        height: 40
+                        height: 40, paddingStart:35,
                     }}
                     placeholder=""
                     placeholderTextColor={'rgba(0,0,0,0.6'}
@@ -316,19 +345,21 @@ function User({ route, navigation }, props) {
                     k.address = adress
 
                     APIupdateuser(k.id, data, k, token)
+                   alert('Cập nhật thành công')
                 }}
                 style={{
-                    backgroundColor: 'blue',
+                    backgroundColor: '#056edf',
                     justifyContent: 'center',
                     alignItems: 'center',
                     alignSelf: 'center',
-                    color: 'blue',
+                    color: 'white',
                     width: '30%',
                     borderRadius: 14,
-                    opacity: 0.5,
+                   
                 }}><Text style={{
                     padding: 10,
-                    fontSize: fontSizes.h6
+                    fontSize: fontSizes.h6,
+                    color: 'white',
                 }}>Lưu thay đổi</Text></TouchableOpacity>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('ChangePassword') }}
@@ -340,10 +371,10 @@ function User({ route, navigation }, props) {
                     color: 'blue',
                     width: '40%',
                     borderRadius: 14,
-                    opacity: 0.5,
+                  
                 }}><Text style={{
                     padding: 10,
-                    fontSize: fontSizes.h6
+                    fontSize: fontSizes.h6,color: 'white',
                 }}>Thay đổi mật khẩu</Text></TouchableOpacity>
         </View>}
 

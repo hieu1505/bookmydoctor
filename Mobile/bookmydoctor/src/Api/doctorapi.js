@@ -2,7 +2,7 @@ import http from "./http";
 import axios from "axios";
 const doctorApi = {
     getAllDoctor() {
-        return http.get('/doctor')
+        return http.get('/doctor?page=0&limit=20')
     },
    
     getDetailDoctor(id) {

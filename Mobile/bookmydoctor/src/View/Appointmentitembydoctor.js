@@ -11,7 +11,25 @@ function Appointmentitemnydoctor(props) {
     strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[1] +
     '-' +
     strftime('%d-%m-%YT%H:%M:%S', new Date(end)).split('T')[1];
-
+    console.log(status)
+    if(status=='REPORT'){
+        status='Admin xử lí ...'
+    }
+    else if(status=='DONE'){
+        status='Hoàn thành'
+    }
+    else if(status=='CANCEL'){
+        status='Đã hủy'
+    }
+    else if(status=='CONFIRMED'){
+        status='Đã chấp nhận'
+    }
+    else if(status=='PATIENT VIOLATE'){
+        status='Vi phạm'
+    }
+    else if(status=='NEW'){
+        status='Chờ xử lí'
+    }
   return (
     <View
       style={{
@@ -106,7 +124,7 @@ function Appointmentitemnydoctor(props) {
           }}>
           <Text>Chi Tiết</Text>
         </TouchableOpacity>
-        {status == 'NEW' ? (
+        {status == 'Chờ xử lí' ? (
           <TouchableOpacity
             onPress={opres}
             style={{
@@ -122,7 +140,7 @@ function Appointmentitemnydoctor(props) {
           <View style={{height: 0, width: 0}}></View>
         )}
 
-        {status == 'DONE' ? (
+        {status == 'Hoàn thành' ? (
           <TouchableOpacity
             onPress={opres2}
             style={{

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { fontSizes, images } from "../constants";
+import strftime from "strftime";
 import { isValidatePassword, ValidateEmail, isValidatetelephone } from '../utilies/Validations'
 import DatePicker from 'react-native-date-picker'
 import authApi from "../Api/authApi";
@@ -42,10 +43,8 @@ function Dangky({navigation },props) {
     const apiSingup= async data=>{
         try { 
             const mess=await authApi.signup(data)
-            console.log(mess)
-            // navigation.navigate('Login')
-            
-            
+            alert(mess)
+            navigation.navigate('Login')
         } catch (error) {
             alert(error.message)
         }
@@ -258,7 +257,7 @@ function Dangky({navigation },props) {
                 }}>Mật khẩu</Text>
                 <TextInput
                     onChangeText={(text) => {
-                        seterrorPassword(isValidatePassword(text) == true ? '' : 'Password must be at least 3 characters')
+                        seterrorPassword(isValidatePassword(text) == true ? '' : 'Password must be at least 5 characters')
                         setpassword(text)
                     }}
                     style={{
@@ -305,7 +304,7 @@ function Dangky({navigation },props) {
                 onPress={() => {
                     // date.getDate()+'/'+date.getMonth() + 1+'/'+date.getFullYear(),
 
-                    alert(phones)
+                
                     if (isValidatePassword(password) && ValidateEmail(email) && password == passwordconfirm && lastname != '' && firstname != '') {
                     //    const data=new FormData()
                     //     data.append("phoneNumber", phones)
@@ -322,12 +321,12 @@ function Dangky({navigation },props) {
                             firsname: firstname,
                             lastname: lastname,
                             gender: g,
-                            birthday: date,
+                            birthday: strftime('%Y-%m-%d', date),
                             password: password,
                             address: "macdinh"
                         }
                         apiSingup(data)
-                        console.log(data)
+                        
                        
                     } else {
                          alert('nhap dung form')
@@ -369,7 +368,7 @@ function Dangky({navigation },props) {
                     padding: 8,
                     fontSize: fontSizes.h6,
                     color: "black", alignSelf: 'center',
-                }}>ggg</Text>
+                }}></Text>
                 <View style={{
                     height: 1, backgroundColor: 'black',
                     flex: 1

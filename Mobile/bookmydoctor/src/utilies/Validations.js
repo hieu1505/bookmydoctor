@@ -2,5 +2,5 @@ export const ValidateEmail = (stringEmail) => {
     return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(stringEmail))
 }
 export const isValidatePassword = (stringPassword) => {
-    return stringPassword.length >=2
+    return stringPassword.length >=4
 }

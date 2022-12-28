@@ -15,10 +15,10 @@ const screenOption = ({ route }) => ({
         if (screenName == "Thông Báo") {
             iconName = "bell"
         }
-        if (screenName == "Lịch Kham") {
+        if (screenName == "Lịch hẹn") {
             iconName = "list-alt"
         }
-        if (screenName == "lên lịch hẹn") {
+        if (screenName == "lên lịch khám") {
             iconName = "wpforms"
         }
         if (screenName == "Cá Nhân") {
@@ -42,9 +42,9 @@ function UITabdoctor(props) {
         <>
         <SocketClient />
         <Tab.Navigator screenOptions={screenOption} >
-            <Tab.Screen name="Lịch Kham" component={Appointmentbydoctor} options={{unmountOnBlur: true} }/>
+            <Tab.Screen name="Lịch hẹn" component={Appointmentbydoctor} options={{unmountOnBlur: true} }/>
             <Tab.Screen name="Thông Báo" component={Notification} options={{unmountOnBlur: true} } />
-            <Tab.Screen name="lên lịch hẹn" component={Schedultments} options={{unmountOnBlur: true} }/>
+            <Tab.Screen name="lên lịch khám" component={Schedultments} options={{unmountOnBlur: true} }/>
             <Tab.Screen name="Tin Nhắn" component={Chat} options={{ unmountOnBlur: true }} />
             <Tab.Screen name="Cá Nhân" component={User} options={{unmountOnBlur: true} }/>
         </Tab.Navigator>
