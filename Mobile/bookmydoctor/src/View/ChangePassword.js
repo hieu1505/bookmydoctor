@@ -9,18 +9,24 @@ import {
 } from 'react-native';
 import userApi from "../Api/UserApi";
 import { fontSizes, images } from "../constants";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function ChangePassword({navigation },props) {
     const [pass , setpass]=useState('')
     const [newpass,setnewpass]=useState('')
+    const [newpass22,setnewpass2]=useState('')
     const apichangepass=async (data)=>{
         try {
             d = await AsyncStorage.getItem('user')
             k = JSON.parse(d)
-            const mess=await userApi.changePassword(k.id,data)
-            alert(mess)
-            
+            token = await AsyncStorage.getItem('access_token')
+            const mess=await userApi.changePassword(k.id,data,{
+                headers: {
+                    'Authorization': token,
+                }
+            })
+               
         } catch (error) {
-            console.log(error.message)
+            alert(error.message)
         }
     }
     const [keyboardIsShow, setkeyboardIsShow] = useState(false)
@@ -47,7 +53,7 @@ function ChangePassword({navigation },props) {
             fontSize: fontSizes.h2,
             fontWeight: 'bold',
             width: "100%"
-        }}>  Thay doi mat khau</Text>
+        }}>  Thay Đổi Mật Khẩu</Text>
         </View>
         <View style={{
             flex: 20
@@ -58,7 +64,7 @@ function ChangePassword({navigation },props) {
                 <Text style={{
                     color: "black",
                     fontSize: fontSizes.h5
-                }}>Mat khau cu:</Text>
+                }}>Mật khẩu cũ:</Text>
                 <TextInput
                     onChangeText={(text) => {
                         setpass(text)
@@ -82,10 +88,34 @@ function ChangePassword({navigation },props) {
                 <Text style={{
                     color: "black",
                     fontSize: fontSizes.h5
-                }}>mat khau moi:</Text>
+                }}>Mật khẩu mới:</Text>
                 <TextInput
                     onChangeText={(text) => {
                         setnewpass(text)
+
+                    }}
+                    style={{ fontSize: fontSizes.h5 }}
+                    placeholder=""
+                    secureTextEntry={true}
+                    placeholderTextColor={'rgba(0,0,0,0.6'}
+                ></TextInput>
+                <View style={{
+                    height: 1, backgroundColor: 'black',
+                    width: '100%', marginHorizontal: 10,
+                    alignSelf: "center",
+                    marginBottom: 10
+                }} />
+            </View>
+            <View style={{
+                marginHorizontal: 15
+            }}>
+                <Text style={{
+                    color: "black",
+                    fontSize: fontSizes.h5
+                }}>Nhập lại mật khẩu  mới:</Text>
+                <TextInput
+                    onChangeText={(text) => {
+                        setnewpass2(text)
 
                     }}
                     style={{ fontSize: fontSizes.h5 }}
@@ -110,7 +140,7 @@ function ChangePassword({navigation },props) {
             onPress={()=>{
                 data={
                     password:pass,
-                    newpassword:newpass
+                    newPassword:newpass
                 }
                 apichangepass(data)
                 
@@ -125,7 +155,7 @@ function ChangePassword({navigation },props) {
                 borderRadius: 14,
                 opacity: 0.5,
             }}><Text style={{padding: 10,
-                fontSize: fontSizes.h6}}>Luu thay doi</Text></TouchableOpacity>
+                fontSize: fontSizes.h6}}>Lưu thay đổi</Text></TouchableOpacity>
             <TouchableOpacity
             onPress={()=>{
                 navigation.goBack()
@@ -140,7 +170,7 @@ function ChangePassword({navigation },props) {
                 borderRadius: 14,
                 opacity: 0.5,
             }}><Text style={{padding: 10,
-                fontSize: fontSizes.h6}}>huy bo</Text></TouchableOpacity>
+                fontSize: fontSizes.h6}}>Hủy bỏ</Text></TouchableOpacity>
         </View>}
     </View>
 }

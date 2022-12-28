@@ -64,7 +64,7 @@ function Notification({ route, navigation }, props) {
         flexDirection: 'column',
         flex: 1
     }}>
-        <UIHeader title={"Thong bao"}
+        <UIHeader title={"Thông Báo"}
             lefIconname={'arrow-left'}
             rightIconname={'ellipsis-v'}
             onpresslefIcon={() => {

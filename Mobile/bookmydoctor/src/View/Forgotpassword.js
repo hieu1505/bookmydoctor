@@ -38,7 +38,7 @@ function Forgotpassword(props) {
             fontSize: fontSizes.h2,
             fontWeight: 'bold',
             width: "100%"
-        }}>  Quen  mat khau</Text>
+        }}>  Lấy Mật Khẩu </Text>
         </View>
         <View style={{
             flex: 20
@@ -79,19 +79,20 @@ function Forgotpassword(props) {
                       }
                 }
                 style={{
-                    backgroundColor: 'black',
+                    backgroundColor: '#056edf',
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '50%',
                     alignSelf: 'center',
-                    color: 'blue',
+                    
                     borderRadius: 14,
-                    opacity: 0.5,
+                   
                 }}>
                 <Text style={{
                     padding: 8,
+                    color: 'white',
                     fontSize: fontSizes.h5
-                }}>Xac Thuc</Text>
+                }}>Lấy Mật Khẩu</Text>
             </TouchableOpacity>
         </View>
     </View>

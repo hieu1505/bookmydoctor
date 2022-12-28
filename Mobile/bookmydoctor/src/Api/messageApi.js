@@ -4,8 +4,8 @@ const messageApi = {
     addMessage(data, config) {
         return http.post('/messagechat', data, config)
     },
-    getMessage(params) {
-        return http.get('/messagechat', { params: params })
+    getMessage(config) {
+        return http.get('/messagechat', config)
     },
     getListUserChat(idUser, config) {
         return http.get(`/users/${idUser}/userchat`, config)

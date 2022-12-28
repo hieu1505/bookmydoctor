@@ -10,7 +10,6 @@ import DoctorList from "./DoctorList";
 import Tabbar from "./Tabbar";
 import TabSpecial from "./TabSpecial";
 import TabDoctor from "./TabDoctor";
-import TabClinic from "./TabClinic";
 import Doctorbyid from "./Doctorbyid";
 import Listdoctorbyspecial from "./Listdoctorbyspecial";
 import ListdoctorbyClinnic from "./ListdoctorbyClinnic";
@@ -24,6 +23,7 @@ import AddMultiSchedule from "./AddMultiSchedule";
 import Chat from "./chat/Chat";
 import Messenger from "./chat/Messenger";
 import Notification from "./notification/Notification";
+import Img from "./chat/img";
 export{
     Home,
     Login,
@@ -31,8 +31,8 @@ export{
     Dangky,User,
     ChangePassword,
     Forgotpassword,
-    DoctorList,Tabbar,TabSpecial,
-    TabClinic,TabDoctor,
+    DoctorList,Tabbar,TabSpecial
+    ,TabDoctor,
     Doctorbyid,
     Listdoctorbyspecial,
     ListdoctorbyClinnic,Appointmentbyuser,
@@ -41,5 +41,5 @@ export{
     Appointmentbydoctor,
     Appointmentinfor,
     FiveStars,AddMultiSchedule,Chat,
-    Messenger,Notification
+    Messenger,Notification,Img
 }

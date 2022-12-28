@@ -31,7 +31,7 @@ function Doctoritem(props){
             marginRight: 10
         }}>
         <Text style={{
-            color: 'black',
+            color: '#056edf',
             fontSize: fontSizes.h3,
             fontWeight: 'bold'
         }}>{name}</Text>

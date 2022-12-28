@@ -1,20 +1,21 @@
 import React from "react";
-import { Login, Dangky, User,Doctorbyid,
-     Wellcome, ChangePassword,Forgotpassword 
-     ,Tabbar,TabDoctor,TabClinic,TabSpecial,BookAppointment,
+import { Login, Dangky, User,Doctorbyid, ChangePassword,Forgotpassword 
+     ,Tabbar,TabDoctor,TabSpecial,BookAppointment,
      Listdoctorbyspecial,ListdoctorbyClinnic,Appointmentinfor,
      AddMultiSchedule,
      Messenger,
-    FiveStars} from "../View"
+    FiveStars,Img} from "../View"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { Provider } from "react-redux";
-// import store from '../redux/Store'
 import UITab from "./UITab";
 import UITabdoctor from "./UITabdoctor";
+import jwt_decode from "jwt-decode";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createNativeStackNavigator();
 function AppTab(props) {
+ 
+// let token = await AsyncStorage.getItem("token");
+
     return (
         // <Provider store={store}>
             <NavigationContainer >
@@ -28,7 +29,6 @@ function AppTab(props) {
                     <Stack.Screen name="Forgotpassword" component={Forgotpassword} />
                     <Stack.Screen name="Tabbar" component={Tabbar} />
                     <Stack.Screen name="TabDoctor" component={TabDoctor} />
-                    <Stack.Screen name="TabClinic" component={TabClinic} />
                     <Stack.Screen name="TabSpecial" component={TabSpecial} />
                     <Stack.Screen name="Doctorbyid" component={Doctorbyid} />
                     <Stack.Screen name="ListdoctorbyClinnic" component={ListdoctorbyClinnic} />
@@ -38,6 +38,7 @@ function AppTab(props) {
                     <Stack.Screen name="FiveStars" component={FiveStars} />
                     <Stack.Screen name="AddMultiSchedule" component={AddMultiSchedule} />
                     <Stack.Screen name="Messenger" component={Messenger} />
+                    <Stack.Screen name="Img" component={Img} />
                 </Stack.Navigator>
             </NavigationContainer>
         // </Provider>

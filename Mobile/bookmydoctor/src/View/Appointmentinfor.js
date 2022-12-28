@@ -66,7 +66,7 @@ return <View style={{ flex: 1, backgroundColor: 'white' }}>
         color: 'blue', paddingTop: 10,
        
     }}>Thông tin cuộc hẹn  </Text>
-    <Text>Da chap nhan</Text>
+  
 </View>
 <View style={{
             flex: 20,

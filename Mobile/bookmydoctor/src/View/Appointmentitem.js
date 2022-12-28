@@ -2,22 +2,38 @@ import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
-    Image,
-    TextInput,
     TouchableOpacity,
-    Keyboard
+   
 } from 'react-native'
 import strftime from "strftime";
 import Icon from 'react-native-vector-icons/FontAwesome' 
 function Appointmentitem(props) {
     let { name, begin, end, cost, status,rating
     } = props.appointment
+    console.log(status)
+    if(status=='REPORT'){
+        status='Admin xử lí ...'
+    }
+    else if(status=='DONE'){
+        status='Hoàn thành'
+    }
+    else if(status=='CANCEL'){
+        status='Đã hủy'
+    }
+    else if(status=='CONFIRMED'){
+        status='Đã chấp nhận'
+    }
+    else if(status=='PATIENT VIOLATE'){
+        status='Vi phạm'
+    }
+    else if(status=='NEW'){
+        status='Chờ xử lí'
+    }
     let opres = props.onPress
     let opres2 = props.onPress2
-   
     let date = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[0]
     let h = strftime('%d-%m-%YT%H:%M:%S', new Date(begin)).split('T')[1] + '-' + strftime('%d-%m-%YT%H:%M:%S', new Date(end)).split('T')[1]
-    console.log(status)
+
     return <View
         style={{
             flex: 1,
@@ -71,9 +87,9 @@ function Appointmentitem(props) {
                     fontSize: 12,
                     color: 'black'
                 }}>
-                    Trang thái :{status}
+                    Trang thái : {status}
                 </Text></View>
-                {status=='DONE'&&rating!=null?<View style={{width:30,flexDirection:'row'}}>
+                {status=='Hoàn thành'&&rating!=null?<View style={{width:30,flexDirection:'row'}}>
                     <FiveStars numberofstart={rating} />
                 </View>:<View></View>}
         </View>
@@ -81,7 +97,7 @@ function Appointmentitem(props) {
             flex: 20, padding: 5,
             marginend: 5, justifyContent: 'space-evenly'
         }}>
-            {status == 'NEW' ?
+            {status == 'Chờ xử lí' ?
                 <TouchableOpacity
                     onPress={opres}
                     style={{
@@ -91,10 +107,10 @@ function Appointmentitem(props) {
                         height: 30,
                         alignItems: 'center',
                     }}>
-                    <Text> huy</Text>
+                    <Text> hủy</Text>
                 </TouchableOpacity>
                 : <Text></Text>}
-{status == 'DONE'&&rating==null ?
+{status == 'Hoàn thành'&&rating==null ?
                 <TouchableOpacity
                     onPress={opres2}
                     style={{
@@ -113,7 +129,7 @@ function Appointmentitem(props) {
 function FiveStars(props){
     const {numberofstart}=props
     // item<=numberofstart-1
-    return  [0,1,2,3,4].map(item=><Icon name="star" style={{marginEnd:5}} size={25} color={
+    return  [0,1,2,3,4].map((item,index)=><Icon key={index} name="star" style={{marginEnd:5}} size={25} color={
         item<=numberofstart-1?
         'orange':'#B0C4DE'}/>)
 }

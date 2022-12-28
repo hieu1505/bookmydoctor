@@ -3,7 +3,6 @@ import {
     Text,
     View,
     Image,
-    
     TouchableOpacity,
     TextInput,FlatList
 } from "react-native";
@@ -34,7 +33,7 @@ function Home({navigation},props) {
                     k.img=course.image
                     return k
                 })
-                // let  p=[...d,...s]
+                
                 setchuyenkhoa(s)
             } catch (err) {
                 alert(err)
@@ -116,11 +115,11 @@ function Home({navigation},props) {
 
             }}>
                 <Icon name='search'
-                size={15} color={'black'}
+                size={25} color={'black'}
                 style={{
                     position:'absolute',
                     top:10,
-                    left:10
+                    left:5
                 }}></Icon>
                 <TextInput autoCorrect={false}
                 onChangeText={(text)=>{
@@ -134,7 +133,6 @@ function Home({navigation},props) {
                     borderRadius:5,
                     opacity:0.5
                 }} />
-           
             </View>
             <View style={{
                 height:100
@@ -148,16 +146,14 @@ function Home({navigation},props) {
             return <TouchableOpacity 
             onPress={()=>{
                 setidck(item.id)
-                
             }}
-            
             style={{
               justifyContent:'center',
               alignItems:'center',
                 width:100,height:100
             }}>
                 <Image style={{
-                    width:20,height:30,
+                    width:30,height:30,
                     resizeMode:'cover',
                     margin:10
                 }} source={{uri:item.img}}></Image>

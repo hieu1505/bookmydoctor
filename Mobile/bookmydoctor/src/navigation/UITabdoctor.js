@@ -1,12 +1,8 @@
 import React from "react";
-import { Login, Dangky, User, Wellcome, Home,Notification, ChangePassword, Appointmentbyuser,Schedultments,Appointmentbydoctor,Chat } from "../View"
-import { NavigationContainer } from '@react-navigation/native';
+import {  User,Notification,Schedultments,Appointmentbydoctor,Chat } from "../View"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import AppTab from "./App";
 import Icon2 from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocketClient from "../SocketClient";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -19,10 +15,10 @@ const screenOption = ({ route }) => ({
         if (screenName == "Thông Báo") {
             iconName = "bell"
         }
-        if (screenName == "Lịch Kham") {
+        if (screenName == "Lịch hẹn") {
             iconName = "list-alt"
         }
-        if (screenName == "lên lịch hẹn") {
+        if (screenName == "lên lịch khám") {
             iconName = "wpforms"
         }
         if (screenName == "Cá Nhân") {
@@ -46,10 +42,10 @@ function UITabdoctor(props) {
         <>
         <SocketClient />
         <Tab.Navigator screenOptions={screenOption} >
-            <Tab.Screen name="Lịch Kham" component={Appointmentbydoctor} options={{unmountOnBlur: true} }/>
+            <Tab.Screen name="Lịch hẹn" component={Appointmentbydoctor} options={{unmountOnBlur: true} }/>
             <Tab.Screen name="Thông Báo" component={Notification} options={{unmountOnBlur: true} } />
-            <Tab.Screen name="lên lịch hẹn" component={Schedultments} options={{unmountOnBlur: true} }/>
-            <Tab.Screen name="Tin Nhắn" component={Chat} />
+            <Tab.Screen name="lên lịch khám" component={Schedultments} options={{unmountOnBlur: true} }/>
+            <Tab.Screen name="Tin Nhắn" component={Chat} options={{ unmountOnBlur: true }} />
             <Tab.Screen name="Cá Nhân" component={User} options={{unmountOnBlur: true} }/>
         </Tab.Navigator>
         

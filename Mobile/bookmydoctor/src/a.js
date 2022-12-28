@@ -20,7 +20,6 @@ function App() {
     // const dispatch = useDispatch()
     const token = AsyncStorage.getItem('access_token')
     const socket = useMemo(() => io('https://bookmydoctor.onrender.com', { transports: ['websocket'],forceNew: true}), [])
- 
     return (
         <SocketContext.Provider value={socket}>
             <AppTab/>

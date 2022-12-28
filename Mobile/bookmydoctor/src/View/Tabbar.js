@@ -36,6 +36,12 @@ function Tabbar({navigation},props) {
                     color: 'blue',
                     fontSize: 25, paddingEnd: 20
                 }}>Trang chủ</Text></TouchableOpacity>
+                <View style={{
+                    height: 1, backgroundColor: 'black',
+                    width: '100%', marginHorizontal: 10,
+                    alignSelf: "center",
+                    marginBottom: 10
+                }} />
             <TouchableOpacity
             onPress={()=>{
                 navigation.navigate('TabSpecial')
@@ -49,6 +55,12 @@ function Tabbar({navigation},props) {
                     color: 'blue',
                     fontSize: 25,
                 }}>Danh sách các khoa</Text></TouchableOpacity>
+                <View style={{
+                    height: 1, backgroundColor: 'black',
+                    width: '100%', marginHorizontal: 10,
+                    alignSelf: "center",
+                    marginBottom: 10
+                }} />
             <TouchableOpacity
             onPress={()=>{
                 navigation.navigate('TabDoctor')
@@ -60,19 +72,13 @@ function Tabbar({navigation},props) {
                     color: 'blue',
                     fontSize: 25,
                 }}>Danh sách các bác sỹ</Text></TouchableOpacity>
-            <TouchableOpacity
-            onPress={()=>{
-                navigation.navigate('TabClinic')
-            }}
-                style={{
-                    fontWeight: 'bold',
-                    fontSize: 30,
-                    
-                }}><Text style={{
-                    color: 'blue',
-                    fontSize: 25,
-                }}>Danh sách các bệnh viện </Text></TouchableOpacity>
-
+                <View style={{
+                    height: 1, backgroundColor: 'black',
+                    width: '100%', marginHorizontal: 10,
+                    alignSelf: "center",
+                    marginBottom: 10
+                }} />
+            
         </View>
         <View style={{
             flex: 10, backgroundColor: "#ffffcc",
